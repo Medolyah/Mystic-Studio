@@ -1,1 +1,1 @@
-# Mysitc-Studio
+# Mystic-Studio
