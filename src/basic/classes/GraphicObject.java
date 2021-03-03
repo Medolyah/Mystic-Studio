@@ -5,10 +5,10 @@ import org.newdawn.slick.geom.Shape;
 
 public class GraphicObject {
 
-	private int xPos;
-	private int yPos;
-	private Shape hitbox;
-	private Image image;
+	protected int xPos;
+	protected int yPos;
+	protected Shape hitbox;
+	protected Image image;
 
 	public GraphicObject() {
 		this.xPos = 0;
@@ -24,4 +24,38 @@ public class GraphicObject {
 		this.image = image;
 	}
 
+	public int getxPos() {
+		return xPos;
+	}
+
+	public void setxPos(int xPos) {
+		this.xPos = xPos;
+	}
+
+	public int getyPos() {
+		return yPos;
+	}
+
+	public void setyPos(int yPos) {
+		this.yPos = yPos;
+	}
+
+	public Shape getHitbox() {
+		return hitbox;
+	}
+
+	public void setHitbox(Shape hitbox) {
+		this.hitbox = hitbox;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	
+	
 }

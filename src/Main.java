@@ -10,7 +10,7 @@ public class Main extends BasicGame {
 
 	private static String gameName = "Mysitc Heroes of Melodies";
 	
-	Input input;
+	private Input input;
 	private MysticStudioGame game;
 
 	public Main() {
@@ -19,14 +19,14 @@ public class Main extends BasicGame {
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer container = new AppGameContainer(new Main());
-		container.setDisplayMode(1920, 1080, false);
+		container.setDisplayMode(1920, 1080, true);
 		container.start();
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		input = container.getInput();
-		game = new MysticStudioGame();
+		this.input = container.getInput();
+		this.game = new MysticStudioGame();
 	}
 
 	@Override

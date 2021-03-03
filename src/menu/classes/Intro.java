@@ -39,6 +39,9 @@ public class Intro {
 	 */
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		g.drawImage(introImage, introImagePosX, introImagePosY);
+		if (waitForIntro > 2000) {
+			g.drawString("Press ESC to skip.", container.getWidth() / 2, 900);
+		}
 
 	}
 
