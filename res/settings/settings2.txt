@@ -1,0 +1,2 @@
+musicVolume 15
+soundVolume 100
