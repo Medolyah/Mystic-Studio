@@ -1,5 +1,7 @@
 package menu.classes;
 
+import java.io.IOException;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -18,6 +20,8 @@ public class MainMenu extends Menu {
 	private MysticButton creditsButton;
 	private MysticButton exitButton;
 	
+	private Options options;
+	private boolean optionsMenu = false;
 	
 	public MainMenu() throws SlickException {
 		backgroundImage = new Image("res/images/Titelbild_ohne_Menu_FS.png");
@@ -25,18 +29,30 @@ public class MainMenu extends Menu {
 		menuButtons();
 	}
 
-	public void update(GameContainer container, int delta) throws SlickException {
-		checkClick(container);
+	public void update(GameContainer container, int delta) throws SlickException, IOException {
+		if (options != null) {
+			optionsMenu = options.getActive();
+		}
+		if (optionsMenu) {
+			options.update(container, delta);
+		} else {
+			checkClick(container);	
+		}
+		
 	}
 
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		g.drawImage(backgroundImage, backgroundImagePosX, backgroundImagePosY);
 		
-		newButton.render(g);
-		loadButton.render(g);
-		optionsButton.render(g);
-		creditsButton.render(g);
-		exitButton.render(g);
+		if (!optionsMenu) {
+			newButton.render(g);
+			loadButton.render(g);
+			optionsButton.render(g);
+			creditsButton.render(g);
+			exitButton.render(g);	
+		} else {
+			options.render(container, g);
+		}
 	}
 
 	private void menuButtons() throws SlickException {
@@ -63,7 +79,7 @@ public class MainMenu extends Menu {
 
 	}
 	
-	private void checkClick(GameContainer container) {
+	private void checkClick(GameContainer container) throws SlickException, IOException {
 		
 		if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			if (newButton.isClicked(container.getInput())) {
@@ -88,8 +104,9 @@ public class MainMenu extends Menu {
 		System.out.println("Load Game");		
 	}
 
-	private void gameOptions() {
-		System.out.println("Options");
+	private void gameOptions() throws SlickException, IOException {
+		optionsMenu = true;
+		options = new Options();
 	}
 
 	private void gameCredits() {

@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -27,12 +30,25 @@ public class Main extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		this.input = container.getInput();
-		this.game = new MysticStudioGame();
+		try {
+			this.game = new MysticStudioGame();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		game.update(container, delta);
+		try {
+			game.update(container, delta);
+		} catch (SlickException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

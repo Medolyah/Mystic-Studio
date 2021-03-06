@@ -1,5 +1,10 @@
 package basic.classes;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Music;
@@ -18,7 +23,7 @@ public class MysticStudioGame {
 	
 	private Music bgMusic;
 	
-	public MysticStudioGame() throws SlickException {
+	public MysticStudioGame() throws SlickException, FileNotFoundException {
 
 		intro = new Intro();
 		mainMenu = new MainMenu();
@@ -26,12 +31,10 @@ public class MysticStudioGame {
 //		player = new TestPlayer();
 		// load game stats
 		
-		bgMusic = new Music("res/music/bgMusic.wav");
-		bgMusic.loop();
-		bgMusic.setVolume(0.2f);
+		loadMusic();
 	}
 
-	public void update(GameContainer container, int delta) throws SlickException {
+	public void update(GameContainer container, int delta) throws SlickException, IOException {
 		if (!introFinished) {
 			introFinished = intro.update(container, delta);
 		} else {
@@ -49,5 +52,31 @@ public class MysticStudioGame {
 		}
 //		level.render(container, g);
 //		player.render(container, g);
+	}
+	
+	private void loadMusic() throws SlickException, FileNotFoundException {
+		File settingsFile = new File("res/settings/settings.txt");
+		
+		try (Scanner scanner = new Scanner(settingsFile)) {
+			int musicVolume = 0;
+			int lineNumber = 0;
+			while (scanner.hasNext()) {
+				scanner.next();
+				int settingValue = scanner.nextInt();
+				switch (lineNumber) {
+				case 0: {
+					musicVolume = settingValue;
+					lineNumber++;
+				}
+				default:
+					lineNumber++;
+				}
+			}
+			
+			bgMusic = new Music("res/music/bgMusic.wav");
+			Float musicVolumeFloat = (float) musicVolume / 100;
+			bgMusic.loop();
+			bgMusic.setVolume(musicVolumeFloat);
+		}
 	}
 }
