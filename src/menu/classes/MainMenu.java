@@ -25,6 +25,10 @@ public class MainMenu extends Menu {
 		menuButtons();
 	}
 
+	public void update(GameContainer container, int delta) throws SlickException {
+		checkClick(container);
+	}
+
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		g.drawImage(backgroundImage, backgroundImagePosX, backgroundImagePosY);
 		
@@ -33,10 +37,6 @@ public class MainMenu extends Menu {
 		optionsButton.render(g);
 		creditsButton.render(g);
 		exitButton.render(g);
-	}
-
-	public void update(GameContainer container, int delta) throws SlickException {
-		checkClick(container);
 	}
 
 	private void menuButtons() throws SlickException {

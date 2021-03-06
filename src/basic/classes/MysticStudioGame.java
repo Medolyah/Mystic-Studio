@@ -2,6 +2,7 @@ package basic.classes;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 
 import menu.classes.Intro;
@@ -15,6 +16,8 @@ public class MysticStudioGame {
 //	private Level level;
 //	private Player player;
 	
+	private Music bgMusic;
+	
 	public MysticStudioGame() throws SlickException {
 
 		intro = new Intro();
@@ -22,6 +25,10 @@ public class MysticStudioGame {
 //		level = new TestLevel1();
 //		player = new TestPlayer();
 		// load game stats
+		
+		bgMusic = new Music("res/music/bgMusic.wav");
+		bgMusic.loop();
+		bgMusic.setVolume(0.2f);
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException {
