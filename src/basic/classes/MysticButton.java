@@ -35,7 +35,7 @@ public class MysticButton extends GraphicObject {
 	public void render(Graphics g) {
 		g.drawImage(image, xPos, yPos);
 
-		Color transparent = new Color(0.5f, 0.2f, 0.2f, 0.3f);
+		Color transparent = new Color(0.5f, 0.2f, 0.2f, 0.0f);
 		g.setColor(transparent);
 		g.fill(hitbox);
 	}

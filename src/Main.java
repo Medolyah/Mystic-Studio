@@ -23,7 +23,7 @@ public class Main extends BasicGame {
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer container = new AppGameContainer(new Main());
-		container.setDisplayMode(1920, 1080, true);
+		container.setDisplayMode(1920, 1080, false);
 		container.start();
 	}
 
@@ -54,7 +54,15 @@ public class Main extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 
-		game.render(container, g);
+		try {
+			game.render(container, g);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 }

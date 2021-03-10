@@ -20,9 +20,9 @@ public class MysticStudioGame {
 	private MainMenu mainMenu;
 //	private Level level;
 //	private Player player;
-	
+
 	private Music bgMusic;
-	
+
 	public MysticStudioGame() throws SlickException, FileNotFoundException {
 
 		intro = new Intro();
@@ -30,7 +30,7 @@ public class MysticStudioGame {
 //		level = new TestLevel1();
 //		player = new TestPlayer();
 		// load game stats
-		
+
 		loadMusic();
 	}
 
@@ -43,22 +43,37 @@ public class MysticStudioGame {
 //		level.update(container, delta);
 //		player.update(container, delta);
 	}
-	
-	public void render(GameContainer container, Graphics g) throws SlickException {
+
+	public void render(GameContainer container, Graphics g) throws SlickException, FileNotFoundException {
 		if (!introFinished) {
-			intro.render(container, g);	
+			intro.render(container, g);
 		} else {
 			mainMenu.render(container, g);
+			bgMusic.setVolume((float) getVolume() / 100);
 		}
 //		level.render(container, g);
 //		player.render(container, g);
 	}
-	
+
 	private void loadMusic() throws SlickException, FileNotFoundException {
+
+		int musicVolume = 0;
+		musicVolume = getVolume();
+
+		bgMusic = new Music("res/music/bgMusic.wav");
+		Float musicVolumeFloat = (float) musicVolume / 100;
+		bgMusic.loop();
+		bgMusic.setVolume(musicVolumeFloat);
+
+	}
+
+	private int getVolume() throws FileNotFoundException {
+
+		int musicVolume = 0;
 		File settingsFile = new File("res/settings/settings.txt");
-		
+
 		try (Scanner scanner = new Scanner(settingsFile)) {
-			int musicVolume = 0;
+//			int musicVolume = 0;
 			int lineNumber = 0;
 			while (scanner.hasNext()) {
 				scanner.next();
@@ -72,11 +87,7 @@ public class MysticStudioGame {
 					lineNumber++;
 				}
 			}
-			
-			bgMusic = new Music("res/music/bgMusic.wav");
-			Float musicVolumeFloat = (float) musicVolume / 100;
-			bgMusic.loop();
-			bgMusic.setVolume(musicVolumeFloat);
 		}
+		return musicVolume;
 	}
 }

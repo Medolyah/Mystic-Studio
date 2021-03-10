@@ -50,21 +50,21 @@ public class Options extends Menu {
 		active = true;
 		readsettings();
 
-		textFont = new Font("Comic Sans MS", Font.BOLD, 25);
+		textFont = new Font("Distant Galaxy", Font.PLAIN, 25);
 		ttTextFont = new TrueTypeFont(textFont, true);
 
-		titleFont = new Font("Comic Sans MS", Font.BOLD, 50);
+		titleFont = new Font("Distant Galaxy", Font.PLAIN, 50);
 		ttTitleFont = new TrueTypeFont(titleFont, true);
 
-		musicBar = new Rectangle(800, 760, 400, 25);
-		musicController = new Circle(800 + (musicVolume * 4), 772, 15);
+		musicBar = new Rectangle(800, 750, 400, 25);
+		musicController = new Circle(800 + (musicVolume * 4), 762, 15);
 
-		soundBar = new Rectangle(800, 860, 400, 25);
-		soundController = new Circle(800 + (soundVolume * 4), 872, 15);
+		soundBar = new Rectangle(800, 850, 400, 25);
+		soundController = new Circle(800 + (soundVolume * 4), 862, 15);
 
-		Image newButtonImage = new Image("res/images/New_Button.png");
-		Shape newButtonShape = new Rectangle(790, 920, 400, 61);
-		confirmButton = new MysticButton(790, 920, newButtonShape, newButtonImage);
+		Image confirmButtonImage = new Image("res/images/Confirm_Button.png");
+		Shape confirmButtonShape = new Rectangle(790, 920, 400, 61);
+		confirmButton = new MysticButton(790, 920, confirmButtonShape, confirmButtonImage);
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException, FileNotFoundException {
@@ -141,7 +141,6 @@ public class Options extends Menu {
 	}
 	
 	private void saveOptions() throws FileNotFoundException {
-		System.out.println("music: " + musicVolume + ", sound: " + soundVolume);
 		Formatter formatter = new Formatter("res/settings/settings.txt");
 		formatter.format("%s%d%s%d", "musicVolume ", musicVolume, "\nsoundVolume ", soundVolume);
 		formatter.close();
