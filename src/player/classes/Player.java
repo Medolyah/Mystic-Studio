@@ -16,16 +16,16 @@ public abstract class Player {
 		// movement
 		// check arrow keys and move user
 		if (input.isKeyDown(Input.KEY_UP) == true) {
-			graphicObject.setY(graphicObject.getY() - 1);
+			graphicObject.setyPos(graphicObject.getyPos() - 1);
 		}
 		if (input.isKeyDown(Input.KEY_DOWN) == true) {
-			graphicObject.setY(graphicObject.getY() + 1);
+			graphicObject.setyPos(graphicObject.getyPos() + 1);
 		}
 		if (input.isKeyDown(Input.KEY_LEFT) == true) {
-			graphicObject.setX(graphicObject.getX() - 1);
+			graphicObject.setxPos(graphicObject.getxPos() - 1);
 		}
 		if (input.isKeyDown(Input.KEY_RIGHT) == true) {
-			graphicObject.setX(graphicObject.getX() + 1);
+			graphicObject.setxPos(graphicObject.getxPos() + 1);
 		}
 	};
 	

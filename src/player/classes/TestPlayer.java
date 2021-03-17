@@ -30,7 +30,7 @@ public class TestPlayer extends Player {
 
 	@Override
 	public void render(GameContainer container, Graphics g) {
-		g.drawImage(graphicObject.getImage(), graphicObject.getX(), graphicObject.getY());
+		g.drawImage(graphicObject.getImage(), graphicObject.getxPos(), graphicObject.getyPos());
 		
 	}
 

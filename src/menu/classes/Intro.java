@@ -6,6 +6,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import basic.classes.MysticStudioGame;
+
 /**
  * The intro is the first thing that is shown in the game. Players can skip it
  * by pressing the ESC key. After the intro the player will be in the main menu.
@@ -19,14 +21,16 @@ public class Intro {
 	private int introImagePosX = 0;
 	private int introImagePosY = 1080;
 	private int waitForIntro = 0;
+	private MysticStudioGame game;
 
 	/**
 	 * When creating the intro, load the intro image.
 	 * 
 	 * @throws SlickException if the image could not be loaded.
 	 */
-	public Intro() throws SlickException {
+	public Intro(MysticStudioGame game) throws SlickException {
 		introImage = new Image("res/images/Intro_Skizze_FS.png");
+		this.game = game;
 	}
 
 	/**
@@ -56,8 +60,7 @@ public class Intro {
 	 *         playing or was skipped.
 	 * @throws SlickException if the update went wrong
 	 */
-	public boolean update(GameContainer container, int delta) throws SlickException {
-		boolean introFinished = false;
+	public void update(GameContainer container, int delta) throws SlickException {
 		/*
 		 * Check if the intro was skipped
 		 */
@@ -75,7 +78,9 @@ public class Intro {
 			 * If intro has finished playing or was skipped set the bool to true
 			 */
 			if (waitForIntro > 8000) {
-				introFinished = true;
+				// show main menu
+				game.setMainMenu(new MainMenu(game));
+				game.setIntro(true);
 				/*
 				 * If the first intro image has finished playing show the title image
 				 */
@@ -89,7 +94,5 @@ public class Intro {
 				waitForIntro += delta;
 			}
 		}
-		return introFinished;
 	}
-
 }

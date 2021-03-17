@@ -11,6 +11,9 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 import basic.classes.MysticButton;
+import basic.classes.MysticStudioGame;
+import level.classes.TestLevel1;
+import player.classes.TestPlayer;
 
 public class MainMenu extends Menu {
 
@@ -25,11 +28,15 @@ public class MainMenu extends Menu {
 
 	private Credits credits;
 	private boolean creditsMenu = false;
+	
+	private MysticStudioGame game;
 
-	public MainMenu() throws SlickException {
+	public MainMenu(MysticStudioGame game) throws SlickException {
 		backgroundImage = new Image("res/images/Titelbild_ohne_Menu_FS.png");
 
 		menuButtons();
+		
+		this.game = game;
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException, IOException {
@@ -111,6 +118,9 @@ public class MainMenu extends Menu {
 
 	private void newGame() {
 		System.out.println("New Game");
+		game.setLevel(new TestLevel1());
+		game.setPlayer(new TestPlayer());
+		game.setMainMenu(true);
 	}
 
 	private void loadGame() {
