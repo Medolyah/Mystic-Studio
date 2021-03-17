@@ -1,12 +1,19 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.newdawn.slick.*;
+
 import basic.classes.MysticStudioGame;
 
 public class Main extends BasicGame {
 
+	private static String gameName = "Mysitc Heroes of Melodies";
+
+	private Input input;
 	private MysticStudioGame game;
 
 	public Main() {
-		super("Hallo World");
+		super(gameName);
 	}
 
 	public static void main(String[] args) throws SlickException {
@@ -17,18 +24,35 @@ public class Main extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		game = new MysticStudioGame(container);
+		this.input = container.getInput();
+		try {
+			this.game = new MysticStudioGame(container);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void update(GameContainer container, int delta)
-			throws SlickException {
-		game.update(container, delta);
+	public void update(GameContainer container, int delta) throws SlickException {
+		try {
+			game.update(container, delta);
+		} catch (SlickException | IOException e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	@Override
-	public void render(GameContainer container, Graphics g)
-			throws SlickException {
-		game.render(container, g);	
+	public void render(GameContainer container, Graphics g) throws SlickException {
+
+		try {
+			game.render(container, g);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+
 	}
 }
