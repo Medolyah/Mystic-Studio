@@ -24,4 +24,23 @@ public class GraphicObject {
 		this.image = image;
 	}
 
+	public void setX(int newPosition) {
+		xPos = newPosition;
+	}
+	
+	public void setY(int newPosition) {
+		yPos = newPosition;
+	}
+	
+	public int getX() {
+		return xPos;
+	}
+	
+	public int getY() {
+		return yPos;
+	}
+	
+	public Image getImage() {
+		return image;
+	}
 }

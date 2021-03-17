@@ -1,8 +1,4 @@
-import java.util.Random;
-
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.*;
-
 import basic.classes.MysticStudioGame;
 
 public class Main extends BasicGame {
@@ -15,13 +11,13 @@ public class Main extends BasicGame {
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer container = new AppGameContainer(new Main());
-		container.setDisplayMode(1780, 1000, false);
+		container.setDisplayMode(1920, 1080, true);
 		container.start();
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		game = new MysticStudioGame();
+		game = new MysticStudioGame(container);
 	}
 
 	@Override
