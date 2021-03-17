@@ -1,2 +1,2 @@
-musicVolume 4
+musicVolume 15
 soundVolume 99

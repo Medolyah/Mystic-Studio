@@ -44,6 +44,9 @@ public class MainMenu extends Menu {
 		} else if (creditsMenu) {			
 			credits.update(container, delta);
 		} else {
+			options = null;
+			credits = null;
+			System.gc();
 			checkClick(container);
 		}
 
