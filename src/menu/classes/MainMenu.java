@@ -7,13 +7,15 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Ellipse;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 import basic.classes.MysticButton;
 import basic.classes.MysticStudioGame;
+import level.classes.Level;
 import level.classes.TestLevel1;
-import player.classes.TestPlayer;
+import player.classes.Player;
 
 public class MainMenu extends Menu {
 
@@ -33,9 +35,7 @@ public class MainMenu extends Menu {
 
 	public MainMenu(MysticStudioGame game) throws SlickException {
 		backgroundImage = new Image("res/images/Titelbild_ohne_Menu_FS.png");
-
 		menuButtons();
-		
 		this.game = game;
 	}
 
@@ -63,11 +63,11 @@ public class MainMenu extends Menu {
 		g.drawImage(backgroundImage, backgroundImagePosX, backgroundImagePosY);
 
 		if (!optionsMenu && !creditsMenu) {
-			newButton.render(g);
-			loadButton.render(g);
-			optionsButton.render(g);
-			creditsButton.render(g);
-			exitButton.render(g);
+			newButton.render(container, g);
+			loadButton.render(container, g);
+			optionsButton.render(container, g);
+			creditsButton.render(container, g);
+			exitButton.render(container, g);
 		} else if (optionsMenu){
 			options.render(container, g);
 		} else if (creditsMenu) {
@@ -118,9 +118,28 @@ public class MainMenu extends Menu {
 
 	private void newGame() {
 		System.out.println("New Game");
-		game.setLevel(new TestLevel1());
-		game.setPlayer(new TestPlayer());
-		game.setMainMenu(true);
+		
+		// set level
+		Level level = new TestLevel1();
+		game.setLevel(level);
+		
+		// set player
+		// TODO: Verbesserbar?!? Unbedingt überarbeiten!!!
+		int xPos = 300;
+		int yPos = 300;
+		Shape hitbox = new Ellipse(xPos, yPos, 35, 35);
+		hitbox.setX(xPos);
+		hitbox.setY(yPos);
+		Image playerImage = null;
+		try {
+			playerImage = new Image("testdata/circle_orange_basis_t_75.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		game.setPlayer(new Player(level, xPos, yPos, hitbox, playerImage));
+		
+		// unset main menu
+		game.setMainMenu(true);	
 	}
 
 	private void loadGame() {

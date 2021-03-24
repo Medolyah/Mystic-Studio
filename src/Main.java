@@ -9,7 +9,6 @@ public class Main extends BasicGame {
 
 	private static String gameName = "Mysitc Heroes of Melodies";
 
-	private Input input;
 	private MysticStudioGame game;
 
 	public Main() {
@@ -24,7 +23,6 @@ public class Main extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		this.input = container.getInput();
 		try {
 			this.game = new MysticStudioGame(container);
 		} catch (FileNotFoundException e) {

@@ -6,10 +6,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 
-import level.classes.TestLevel1;
 import level.classes.Level;
 import player.classes.Player;
-import player.classes.TestPlayer;
 import menu.classes.Intro;
 import menu.classes.MainMenu;
 
