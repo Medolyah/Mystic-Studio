@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 musicVolume 4
 soundVolume 47
+=======
+musicVolume 3
+soundVolume 4
+>>>>>>> d7c18c52200cede093e54570376044855b84dd2f

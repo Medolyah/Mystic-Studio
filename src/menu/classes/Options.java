@@ -96,7 +96,7 @@ public class Options extends Menu {
 			g.fill(musicController);
 			g.fill(soundController);
 
-			confirmButton.render(g);
+			confirmButton.render(container, g);
 		}
 
 	}
