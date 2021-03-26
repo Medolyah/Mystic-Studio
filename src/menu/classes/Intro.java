@@ -1,5 +1,7 @@
 package menu.classes;
 
+import java.io.FileNotFoundException;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -59,8 +61,9 @@ public class Intro {
 	 * @return a boolean to let the calling program know if the intro has finished
 	 *         playing or was skipped.
 	 * @throws SlickException if the update went wrong
+	 * @throws FileNotFoundException 
 	 */
-	public void update(GameContainer container, int delta) throws SlickException {
+	public void update(GameContainer container, int delta) throws SlickException, FileNotFoundException {
 		/*
 		 * Check if the intro was skipped
 		 */

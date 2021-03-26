@@ -19,12 +19,15 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 import basic.classes.MysticButton;
+import basic.classes.MysticStudioGame;
 
 @SuppressWarnings("deprecation")
 public class Options extends Menu {
 
 	private boolean active = false;
 
+	private MysticStudioGame game;
+	
 	private int musicVolume;
 	private int soundVolume;
 
@@ -45,7 +48,8 @@ public class Options extends Menu {
 
 	private MysticButton confirmButton;
 
-	public Options() throws SlickException, IOException {
+	public Options(MysticStudioGame game) throws SlickException, IOException {
+		this.game = game;
 		backgroundImage = new Image("res/images/Titelbild_ohne_Menu_FS.png");
 		active = true;
 		readsettings();
@@ -132,8 +136,10 @@ public class Options extends Menu {
 		}
 	}
 	
-	private void setMusicVolume(float volume) {
-		this.musicVolume = ((int) volume - 800) / 4;
+	private void setMusicVolume(float volumeControllerPos) throws FileNotFoundException {
+		this.musicVolume = ((int) volumeControllerPos - 800) / 4;
+		game.getMusic().setVolume((float) musicVolume / 100);
+		
 	}
 	
 	private void setSoundVolume(float volume) {

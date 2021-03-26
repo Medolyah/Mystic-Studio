@@ -1,5 +1,6 @@
 package menu.classes;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.newdawn.slick.GameContainer;
@@ -31,7 +32,7 @@ public class MainMenu extends Menu {
 	
 	private MysticStudioGame game;
 
-	public MainMenu(MysticStudioGame game) throws SlickException {
+	public MainMenu(MysticStudioGame game) throws SlickException, FileNotFoundException {
 		backgroundImage = new Image("res/images/Titelbild_ohne_Menu_FS.png");
 
 		menuButtons();
@@ -75,7 +76,7 @@ public class MainMenu extends Menu {
 		}
 	}
 
-	private void menuButtons() throws SlickException {
+	private void menuButtons() throws SlickException, FileNotFoundException {
 
 		Image newButtonImage = new Image("res/images/New_Button.png");
 		Shape newButtonShape = new Rectangle(760, 625, 400, 61);
@@ -129,7 +130,7 @@ public class MainMenu extends Menu {
 
 	private void gameOptions() throws SlickException, IOException {
 		optionsMenu = true;
-		options = new Options();
+		options = new Options(game);
 	}
 
 	private void gameCredits() throws SlickException, IOException {
