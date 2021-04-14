@@ -17,6 +17,8 @@ import basic.classes.MysticStudioGame;
 import level.classes.Level;
 import level.classes.TestLevel1;
 import player.classes.Player;
+import player.classes.PlayerStats;
+import ui.classes.Overlay;
 
 public class MainMenu extends Menu {
 
@@ -118,7 +120,6 @@ public class MainMenu extends Menu {
 	}
 
 	private void newGame() {
-		System.out.println("New Game");
 		
 		// set level
 		Level level = new TestLevel1();
@@ -138,6 +139,8 @@ public class MainMenu extends Menu {
 			e.printStackTrace();
 		}
 		game.setPlayer(new Player(level, xPos, yPos, hitbox, playerImage));
+		Player player = game.getPlayer();
+		game.setOverlay(new Overlay(player));
 		
 		// unset main menu
 		game.setMainMenu(true);	

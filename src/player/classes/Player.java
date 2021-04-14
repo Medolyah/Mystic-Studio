@@ -11,6 +11,7 @@ import level.classes.Level;
 public class Player extends GraphicObject {
 
 	private Level environment;
+	private PlayerStats stats;
 	
 	enum Movement {
 		UP,
@@ -21,7 +22,8 @@ public class Player extends GraphicObject {
 	
 	public Player(Level environment, int xPos, int yPos, Shape hitbox, Image image) {
 		super(xPos, yPos, hitbox, image);
-		this.environment = environment;	
+		this.environment = environment;
+		stats = new PlayerStats();
 	}
 	
 	@Override
@@ -31,36 +33,50 @@ public class Player extends GraphicObject {
 		// movement
 		// check arrow keys and move user
 		// move user and check for collisions, undo the movement if necessary
-		if (input.isKeyDown(Input.KEY_UP)) {
+		if (input.isKeyDown(Input.KEY_W)) {
 			super.setyPos(super.getyPos() - 1);
 			if (checkEnvironmentAndUndo(container, Movement.UP)) {
 				// undo movement
 				super.setyPos(super.getyPos() + 1);
 			}
 		}
-		if (input.isKeyDown(Input.KEY_DOWN)) {
+		if (input.isKeyDown(Input.KEY_S)) {
 			super.setyPos(super.getyPos() + 1);
 			if (checkEnvironmentAndUndo(container, Movement.DOWN)) {
 				// undo movement
 				super.setyPos(super.getyPos() - 1);
 			}
 		}
-		if (input.isKeyDown(Input.KEY_LEFT)) {
+		if (input.isKeyDown(Input.KEY_A)) {
 			super.setxPos(super.getxPos() - 1);
 			if (checkEnvironmentAndUndo(container, Movement.LEFT)) {
 				// undo movement
 				super.setxPos(super.getxPos() + 1);
 			}
 		}
-		if (input.isKeyDown(Input.KEY_RIGHT)) {
+		if (input.isKeyDown(Input.KEY_D)) {
 			super.setxPos(super.getxPos() + 1);
 			if (checkEnvironmentAndUndo(container, Movement.RIGHT)) {
 				// undo movement
 				super.setxPos(super.getxPos() - 1);
 			}
 		}
+		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+			setCurrentEnergy(-5);
+		}
+
+		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+			setCurrentEnergy(20);
+		}
+		if (input.isKeyPressed(Input.KEY_E)) {
+			setCurrentLife(-10);
+		}
+		if (input.isKeyPressed(Input.KEY_R)) {
+			setCurrentLife(25);
+		}
+		
 	};
-	
+
 	private boolean checkEnvironmentAndUndo(GameContainer container, Movement movement) {
 		
 		// check for collisions with environment
@@ -115,5 +131,30 @@ public class Player extends GraphicObject {
 		}
 		
 		return false;
+	}
+
+	public int getMaxLife() {
+		return stats.getMaxLife();
+	}
+	
+	public int getCurrentLife() {
+		return stats.getCurrentLife();
+	}
+
+	private void setCurrentLife(int lifeChange) {
+		stats.setCurrentLife(lifeChange);
+		
+	}
+
+	public int getMaxEnergy() {
+		return stats.getMaxEnergy();
+	}
+
+	public int getCurrentEnergy() {
+		return stats.getCurrentEnergy();
+	}
+	
+	private void setCurrentEnergy(int energyChange) {
+		stats.setCurrentEnergy(energyChange);		
 	}
 }
