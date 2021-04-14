@@ -30,13 +30,13 @@ public class Player extends GraphicObject {
 	public Player(Level environment, int xPos, int yPos, Shape hitbox, Image image) {
 		super(xPos, yPos, hitbox, image);
 		this.environment = environment;
+		
+		// player stats
 		stats = new PlayerStats();
-
 		
 		// set y-velocity and acceleration
 		this.yAcceleration = -2;
 		this.yVelocity = 0;
-		
 		
 		// initialize delta sums
 		this.imageDeltaSum = 0;
@@ -57,7 +57,6 @@ public class Player extends GraphicObject {
 
 		// sum delta sums
 		imageDeltaSum += delta;
-		
 		
 		// movement
 		switch (environment.levelType) {
