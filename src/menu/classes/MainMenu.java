@@ -128,12 +128,12 @@ public class MainMenu extends Menu {
 		// TODO: Verbesserbar?!? Unbedingt überarbeiten!!!
 		int xPos = 300;
 		int yPos = 300;
-		Shape hitbox = new Ellipse(xPos, yPos, 35, 35);
+		Shape hitbox = new Rectangle(xPos, yPos, 91, 210);
 		hitbox.setX(xPos);
 		hitbox.setY(yPos);
 		Image playerImage = null;
 		try {
-			playerImage = new Image("testdata/circle_orange_basis_t_75.png");
+			playerImage = new Image("res/images/Knight-right-stay.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
