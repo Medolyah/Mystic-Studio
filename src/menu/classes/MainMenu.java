@@ -122,7 +122,7 @@ public class MainMenu extends Menu {
 		game.setLevel(level);
 		
 		// set player
-		// TODO: Verbesserbar?!? Unbedingt �berarbeiten!!!
+		// TODO: Verbesserbar?!? Unbedingt ueberarbeiten!!!
 		int xPos = 1200;
 		int yPos = 300;
 		Shape hitbox = new Rectangle(xPos, yPos, 91, 210);
@@ -138,9 +138,9 @@ public class MainMenu extends Menu {
 		game.setPlayer(new Player(level, xPos, yPos, hitbox, playerImage));
 		
 		// set frame rate 
-		// configure frame rate
 		container.setMinimumLogicUpdateInterval(15);
         container.setMaximumLogicUpdateInterval(15);
+        
 		// unset main menu
 		game.setMainMenu(true);	
 	}
