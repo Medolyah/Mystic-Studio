@@ -8,7 +8,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Ellipse;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
@@ -125,7 +124,7 @@ public class MainMenu extends Menu {
 		// set player
 		// TODO: Verbesserbar?!? Unbedingt �berarbeiten!!!
 		int xPos = 1200;
-		int yPos = 600;
+		int yPos = 300;
 		Shape hitbox = new Rectangle(xPos, yPos, 91, 210);
 		
 		hitbox.setX(xPos);

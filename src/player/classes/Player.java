@@ -11,7 +11,12 @@ import level.classes.Level;
 
 public class Player extends GraphicObject {
 
-	int sumDelta = 0;
+	int imageDeltaSum;
+	
+	private Image moveLeftImg1;
+	private Image moveLeftImg2;
+	private Image moveRightImg1;
+	private Image moveRightImg2;	
 
 	private Level environment;
 	private int yVelocity;
@@ -25,15 +30,33 @@ public class Player extends GraphicObject {
 		super(xPos, yPos, hitbox, image);
 		this.environment = environment;
 
-		if (environment.levelType == Level.LevelType.PLATFORMER) {
-			this.yAcceleration = -2;
-			this.yVelocity = 0;
+		
+		// set y-velocity and acceleration
+		this.yAcceleration = -2;
+		this.yVelocity = 0;
+		
+		
+		// initialize delta sums
+		this.imageDeltaSum = 0;
+		
+		// load player images (movement animation)
+		try {
+			this.moveLeftImg1 = new Image("res/images/Knight-left-walk-1.png");
+			this.moveLeftImg2 = new Image("res/images/Knight-left-walk-2.png");
+			this.moveRightImg1 = new Image("res/images/Knight-right-walk-1.png");
+			this.moveRightImg2 = new Image("res/images/Knight-right-walk-2.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) {
 
+		// sum delta sums
+		imageDeltaSum += delta;
+		
+		
 		// movement
 		switch (environment.levelType) {
 		case BIRDS_EYE_VIEW:
@@ -128,9 +151,11 @@ public class Player extends GraphicObject {
 	}
 
 	private void moveLeft(GameContainer container, int steps) {
+		
+		moveLeftAnimation();
+		
 		for (int i = 0; i < steps; i++) {
 			super.setxPos(super.getxPos() - 1);
-			walkLeft(delta);
 			if (checkEnvironment(Movement.LEFT)) {
 				// undo movement
 				super.setxPos(super.getxPos() + 1);
@@ -145,9 +170,11 @@ public class Player extends GraphicObject {
 	}
 
 	private void moveRight(GameContainer container, int steps) {
+		
+		moveRightAnimation();
+
 		for (int i = 0; i < steps; i++) {
 			super.setxPos(super.getxPos() + 1);
-			walkRight(delta);
 			if (checkEnvironment(Movement.RIGHT)) {
 				// undo movement
 				super.setxPos(super.getxPos() - 1);
@@ -182,7 +209,7 @@ public class Player extends GraphicObject {
 		int screenHeight = (int) container.getScreenHeight();
 		int screenWidth = (int) container.getScreenWidth();
 		int minBorderDistanceVertical = 200;
-		int minBorderDistanceHorizontal = 300;
+		int minBorderDistanceHorizontal = 400;
 
 		if (movement == Movement.UP) {
 			if (super.getyPos() < minBorderDistanceVertical) {
@@ -195,7 +222,7 @@ public class Player extends GraphicObject {
 		}
 
 		if (movement == Movement.DOWN) {
-			if (super.getyPos() > (screenHeight - minBorderDistanceVertical)) {
+			if (super.getyPos() > (screenHeight - minBorderDistanceVertical - hitbox.getHeight())) {
 				// move screen down (all objects up)
 				for (GraphicObject object : environment.textures) {
 					object.setyPos(object.getyPos() - 1);
@@ -205,7 +232,7 @@ public class Player extends GraphicObject {
 		}
 
 		if (movement == Movement.RIGHT) {
-			if (super.getxPos() > (screenWidth - minBorderDistanceHorizontal)) {
+			if (super.getxPos() > (screenWidth - minBorderDistanceHorizontal - hitbox.getWidth())) {
 				// move screen right (all objects left)
 				for (GraphicObject object : environment.textures) {
 					object.setxPos(object.getxPos() - 1);
@@ -227,42 +254,29 @@ public class Player extends GraphicObject {
 		return false;
 	}
 	
-	private void walkLeft (int delta) {
-		try {
-			image = new Image("res/images/Knight-left-walk-1.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
+	private void moveLeftAnimation() {
+		
+		image = moveLeftImg1;
+		
+		if (imageDeltaSum > 300) {
+			image = moveLeftImg2;
 		}
-		sumDelta = sumDelta + delta;
-		if (sumDelta > 300) {
-			try {
-				image = new Image("res/images/Knight-left-walk-2.png");
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
-		}
-		if (sumDelta > 600) {
-			sumDelta = 0;
+		if (imageDeltaSum > 600) {
+			imageDeltaSum = 0;
 		}
 		
 	}
-	private void walkRight (int delta) {
-		try {
-			image = new Image("res/images/Knight-right-walk-1.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		sumDelta = sumDelta + delta;
-		if (sumDelta > 300) {
-			try {
-				image = new Image("res/images/Knight-right-walk-2.png");
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
-		}
-		if (sumDelta > 600) {
-			sumDelta = 0;
-		}
+	
+	private void moveRightAnimation() {
 		
+		image = moveRightImg1;
+		
+		if (imageDeltaSum > 300) {
+			image = moveRightImg2;
+			
+		}
+		if (imageDeltaSum > 600) {
+			imageDeltaSum = 0;
+		}
 	}
 }
