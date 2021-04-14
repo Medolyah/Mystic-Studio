@@ -103,7 +103,7 @@ public class MainMenu extends Menu {
 
 		if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			if (newButton.isClicked(container.getInput())) {
-				newGame();
+				newGame(container);
 			} else if (loadButton.isClicked(container.getInput())) {
 				loadGame();
 			} else if (optionsButton.isClicked(container.getInput())) {
@@ -116,17 +116,15 @@ public class MainMenu extends Menu {
 		}
 	}
 
-	private void newGame() {
-		System.out.println("New Game");
-		
+	private void newGame(GameContainer container) {		
 		// set level
 		Level level = new TestLevel1();
 		game.setLevel(level);
 		
 		// set player
 		// TODO: Verbesserbar?!? Unbedingt überarbeiten!!!
-		int xPos = 300;
-		int yPos = 300;
+		int xPos = 1200;
+		int yPos = 600;
 		Shape hitbox = new Ellipse(xPos, yPos, 35, 35);
 		hitbox.setX(xPos);
 		hitbox.setY(yPos);
@@ -138,6 +136,10 @@ public class MainMenu extends Menu {
 		}
 		game.setPlayer(new Player(level, xPos, yPos, hitbox, playerImage));
 		
+		// set frame rate 
+		// configure frame rate
+		container.setMinimumLogicUpdateInterval(15);
+        container.setMaximumLogicUpdateInterval(15);
 		// unset main menu
 		game.setMainMenu(true);	
 	}
