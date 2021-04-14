@@ -13,6 +13,8 @@ import level.classes.Level;
 import menu.classes.Intro;
 import menu.classes.MainMenu;
 import player.classes.Player;
+import player.classes.PlayerStats;
+import ui.classes.Overlay;
 
 public class MysticStudioGame {
 
@@ -24,6 +26,8 @@ public class MysticStudioGame {
 	private MainMenu mainMenu;
 	private Level level;
 	private Player player;
+	private PlayerStats playerStats;
+	private Overlay overlay;
 
 	public MysticStudioGame(GameContainer container) throws SlickException, FileNotFoundException {
 
@@ -55,11 +59,18 @@ public class MysticStudioGame {
 			player.update(container, delta);
 		}
 
+		// overlay (UI)
+		if (overlay != null) {
+			overlay.update(container, delta);
+		}
+		
 		// ESC: end game
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			if (level != null && player != null) {
 				level = null;
 				player = null;
+				overlay = null;
+				playerStats = null;
 				mainMenu = new MainMenu(this);
 			}
 		}
@@ -85,6 +96,11 @@ public class MysticStudioGame {
 		// player
 		if (player != null) {
 			player.render(container, g);
+		}
+		
+		// overlay (UI)
+		if (overlay != null) {
+			overlay.render(container, g);
 		}
 	}
 
@@ -138,4 +154,15 @@ public class MysticStudioGame {
 	public GameMusic getMusic() {
 		return this.bgMusic;
 	}
+
+	public void setOverlay(Overlay overlay) {
+		this.overlay = overlay;		
+	}
+
+	public void setOverlay(boolean unsetOverlay) {
+		if (unsetOverlay) {
+			this.overlay = null;		
+		}
+	}
+
 }

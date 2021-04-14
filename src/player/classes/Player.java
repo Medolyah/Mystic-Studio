@@ -21,6 +21,7 @@ public class Player extends GraphicObject {
 	private Level environment;
 	private int yVelocity;
 	private int yAcceleration;
+	private PlayerStats stats;
 	
 	enum Movement {
 		UP, RIGHT, LEFT, DOWN
@@ -29,6 +30,9 @@ public class Player extends GraphicObject {
 	public Player(Level environment, int xPos, int yPos, Shape hitbox, Image image) {
 		super(xPos, yPos, hitbox, image);
 		this.environment = environment;
+		
+		// player stats
+		stats = new PlayerStats();
 		
 		// set y-velocity and acceleration
 		this.yAcceleration = -2;
@@ -72,7 +76,7 @@ public class Player extends GraphicObject {
 
 		// jump, only if the player is standing on the ground
 		super.setyPos(super.getyPos() + 1);
-		if (input.isKeyDown(Input.KEY_UP) && checkEnvironment(Movement.DOWN)) {
+		if (input.isKeyDown(Input.KEY_W) && checkEnvironment(Movement.DOWN)) {
 			yVelocity = 30;
 		}
 		super.setyPos(super.getyPos() - 1);
@@ -87,11 +91,26 @@ public class Player extends GraphicObject {
 			moveUp(container, Math.abs(yVelocity));
 		}
 
-		if (input.isKeyDown(Input.KEY_LEFT)) {
+		if (input.isKeyDown(Input.KEY_A)) {
 			moveLeft(container, 5);
 		}
-		if (input.isKeyDown(Input.KEY_RIGHT)) {
+		if (input.isKeyDown(Input.KEY_D)) {
 			moveRight(container, 5);
+		}
+		
+		// life / energy tests
+		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+			setCurrentEnergy(-5);
+		}
+
+		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+			setCurrentEnergy(20);
+		}
+		if (input.isKeyPressed(Input.KEY_E)) {
+			setCurrentLife(-10);
+		}
+		if (input.isKeyPressed(Input.KEY_R)) {
+			setCurrentLife(25);
 		}
 	}
 
@@ -101,16 +120,16 @@ public class Player extends GraphicObject {
 
 		// check arrow keys and move user
 		// move user and check for collisions, undo the movement if necessary
-		if (input.isKeyDown(Input.KEY_UP)) {
+		if (input.isKeyDown(Input.KEY_W)) {
 			moveUp(container, 5);
 		}
-		if (input.isKeyDown(Input.KEY_DOWN)) {
+		if (input.isKeyDown(Input.KEY_S)) {
 			moveDown(container, 5);
 		}
-		if (input.isKeyDown(Input.KEY_LEFT)) {
+		if (input.isKeyDown(Input.KEY_A)) {
 			moveLeft(container, 5);
 		}
-		if (input.isKeyDown(Input.KEY_RIGHT)) {
+		if (input.isKeyDown(Input.KEY_D)) {
 			moveRight(container, 5);
 		}
 	}
@@ -276,4 +295,32 @@ public class Player extends GraphicObject {
 			imageDeltaSum = 0;
 		}
 	}
+
+
+	public int getMaxLife() {
+		return stats.getMaxLife();
+	}
+	
+	public int getCurrentLife() {
+		return stats.getCurrentLife();
+	}
+
+	private void setCurrentLife(int lifeChange) {
+		stats.setCurrentLife(lifeChange);
+		
+	}
+
+	public int getMaxEnergy() {
+		return stats.getMaxEnergy();
+	}
+
+	public int getCurrentEnergy() {
+		return stats.getCurrentEnergy();
+	}
+	
+	private void setCurrentEnergy(int energyChange) {
+		stats.setCurrentEnergy(energyChange);		
+	}
+
+	
 }

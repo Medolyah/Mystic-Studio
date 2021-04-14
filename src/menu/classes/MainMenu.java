@@ -16,6 +16,7 @@ import basic.classes.MysticStudioGame;
 import level.classes.Level;
 import level.classes.TestLevel1;
 import player.classes.Player;
+import ui.classes.Overlay;
 
 public class MainMenu extends Menu {
 
@@ -136,6 +137,8 @@ public class MainMenu extends Menu {
 			e.printStackTrace();
 		}
 		game.setPlayer(new Player(level, xPos, yPos, hitbox, playerImage));
+		Player player = game.getPlayer();
+		game.setOverlay(new Overlay(player));
 		
 		// set frame rate 
 		container.setMinimumLogicUpdateInterval(15);

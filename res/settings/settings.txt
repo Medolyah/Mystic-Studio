@@ -1,2 +1,2 @@
-musicVolume 23
+musicVolume 2
 soundVolume 30
