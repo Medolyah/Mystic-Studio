@@ -8,7 +8,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Ellipse;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
@@ -17,7 +16,6 @@ import basic.classes.MysticStudioGame;
 import level.classes.Level;
 import level.classes.TestLevel1;
 import player.classes.Player;
-import player.classes.PlayerStats;
 import ui.classes.Overlay;
 
 public class MainMenu extends Menu {
@@ -106,7 +104,7 @@ public class MainMenu extends Menu {
 
 		if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			if (newButton.isClicked(container.getInput())) {
-				newGame();
+				newGame(container);
 			} else if (loadButton.isClicked(container.getInput())) {
 				loadGame();
 			} else if (optionsButton.isClicked(container.getInput())) {
@@ -119,22 +117,22 @@ public class MainMenu extends Menu {
 		}
 	}
 
-	private void newGame() {
-		
+	private void newGame(GameContainer container) {		
 		// set level
 		Level level = new TestLevel1();
 		game.setLevel(level);
 		
 		// set player
-		// TODO: Verbesserbar?!? Unbedingt überarbeiten!!!
-		int xPos = 300;
+		// TODO: Verbesserbar?!? Unbedingt ï¿½berarbeiten!!!
+		int xPos = 1200;
 		int yPos = 300;
-		Shape hitbox = new Ellipse(xPos, yPos, 35, 35);
+		Shape hitbox = new Rectangle(xPos, yPos, 91, 210);
+		
 		hitbox.setX(xPos);
 		hitbox.setY(yPos);
 		Image playerImage = null;
 		try {
-			playerImage = new Image("testdata/circle_orange_basis_t_75.png");
+			playerImage = new Image("res/images/Knight-right-stay.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -142,6 +140,10 @@ public class MainMenu extends Menu {
 		Player player = game.getPlayer();
 		game.setOverlay(new Overlay(player));
 		
+		// set frame rate 
+		// configure frame rate
+		container.setMinimumLogicUpdateInterval(15);
+        container.setMaximumLogicUpdateInterval(15);
 		// unset main menu
 		game.setMainMenu(true);	
 	}
