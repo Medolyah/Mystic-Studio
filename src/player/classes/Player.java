@@ -99,7 +99,7 @@ public class Player extends GraphicObject {
 			moveRight(container, 5);
 		}
 		
-		// life / energy tests
+		// life / energy / xp tests
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			setCurrentEnergy(-5);
 		}
@@ -112,6 +112,9 @@ public class Player extends GraphicObject {
 		}
 		if (input.isKeyPressed(Input.KEY_R)) {
 			setCurrentLife(25);
+		}
+		if (input.isKeyPressed(Input.KEY_Q)) {
+			setCurrentXP(7);
 		}
 	}
 
