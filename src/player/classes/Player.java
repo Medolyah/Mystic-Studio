@@ -24,7 +24,7 @@ public class Player extends GraphicObject {
 	private int yAcceleration;
 	private PlayerStats stats;
 	
-	enum Movement {
+	public enum Movement {
 		UP, RIGHT, LEFT, DOWN
 	}
 
@@ -77,8 +77,8 @@ public class Player extends GraphicObject {
 
 		// jump, only if the player is standing on the ground
 		super.setyPos(super.getyPos() + 1);
-		if (input.isKeyDown(Input.KEY_SPACE) && checkEnvironment(Movement.DOWN)) {
-			yVelocity = 30;
+		if (input.isKeyPressed(Input.KEY_SPACE) && checkEnvironment(Movement.DOWN)) {
+			yVelocity = 38;
 		}
 		super.setyPos(super.getyPos() - 1);
 
@@ -234,12 +234,7 @@ public class Player extends GraphicObject {
 		if (movement == Movement.UP) {
 			if (super.getyPos() < minBorderDistanceVertical) {
 				// move screen up (all objects down)
-				for (GraphicObject object : environment.textures) {
-					object.setyPos(object.getyPos() + 1);
-				}
-				for (Npc npc : environment.npcs) {
-					npc.setyPos(npc.getyPos() + 1);
-				}
+				environment.moveObjects(Movement.DOWN);
 				return true;
 			}
 		}
@@ -247,12 +242,7 @@ public class Player extends GraphicObject {
 		if (movement == Movement.DOWN) {
 			if (super.getyPos() > (screenHeight - minBorderDistanceVertical - hitbox.getHeight())) {
 				// move screen down (all objects up)
-				for (GraphicObject object : environment.textures) {
-					object.setyPos(object.getyPos() - 1);
-				}
-				for (Npc npc : environment.npcs) {
-					npc.setyPos(npc.getyPos() - 1);
-				}
+				environment.moveObjects(Movement.UP);
 				return true;
 			}
 		}
@@ -260,14 +250,7 @@ public class Player extends GraphicObject {
 		if (movement == Movement.RIGHT) {
 			if (super.getxPos() > (screenWidth - minBorderDistanceHorizontal - hitbox.getWidth())) {
 				// move screen right (all objects left)
-				for (GraphicObject object : environment.textures) {
-					object.setxPos(object.getxPos() - 1);
-				}
-				for (Npc npc : environment.npcs) {
-					npc.setxPos(npc.getxPos() - 1);
-					npc.setxMinPos(npc.getxMinPos() - 1);
-					npc.setxMaxPos(npc.getxMaxPos() - 1);
-				}
+				environment.moveObjects(Movement.LEFT);
 				return true;
 			}
 		}
@@ -275,14 +258,7 @@ public class Player extends GraphicObject {
 		if (movement == Movement.LEFT) {
 			if (super.getxPos() < minBorderDistanceHorizontal) {
 				// move screen left (all objects right)
-				for (GraphicObject object : environment.textures) {
-					object.setxPos(object.getxPos() + 1);
-				}
-				for (Npc npc : environment.npcs) {
-					npc.setxPos(npc.getxPos() + 1);
-					npc.setxMinPos(npc.getxMinPos() + 1);
-					npc.setxMaxPos(npc.getxMaxPos() + 1);
-				}
+				environment.moveObjects(Movement.RIGHT);
 				return true;
 			}
 		}
