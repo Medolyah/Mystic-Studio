@@ -25,8 +25,8 @@ public class Npc extends GraphicObject {
 		if (xPos + xVelocity >= xMaxPos || xPos + xVelocity <= xMinPos) {
 			xVelocity *= -1;
 		}
-		
 		xPos += xVelocity;
+		hitbox.setX(hitbox.getX() + xVelocity);
 	}
 
 	public int getxMinPos() {

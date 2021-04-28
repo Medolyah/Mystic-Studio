@@ -18,6 +18,10 @@ public class GraphicObject {
 		this.yPos = yPos;
 		this.hitbox = hitbox;
 		this.image = image;
+		
+		// correct the hitbox position instantly
+		this.hitbox.setX(xPos);
+		this.hitbox.setY(yPos);
 	}
 	
 	public void update(GameContainer container, int delta) {
@@ -27,7 +31,7 @@ public class GraphicObject {
 	public void render(GameContainer container, Graphics g) {
 		g.drawImage(image, xPos, yPos);
 
-		Color transparent = new Color(0.5f, 0.2f, 0.2f, 0.0f);
+		Color transparent = new Color(0.2f, 0.5f, 0.5f, 0.0f);
 		g.setColor(transparent);
 		g.fill(hitbox);
 	}

@@ -127,7 +127,7 @@ public class MainMenu extends Menu {
 		// TODO: Verbesserbar?!? Unbedingt ueberarbeiten!!!
 		int xPos = 1200;
 		int yPos = 300;
-		Shape hitbox = new Rectangle(xPos, yPos, 91, 210);
+		Shape hitbox = new Rectangle(xPos, yPos, 75, 220);
 		
 		hitbox.setX(xPos);
 		hitbox.setY(yPos);
@@ -151,9 +151,9 @@ public class MainMenu extends Menu {
 		
 		// set player (start for TheBasement must be 200 / 600)
 		// TODO: Verbesserbar?!? Unbedingt ueberarbeiten!!!
-		int xPos = 3000;
-		int yPos = 200;
-		Shape hitbox = new Rectangle(xPos, yPos, 91, 210);
+		int xPos = 200;
+		int yPos = 760;
+		Shape hitbox = new Rectangle(xPos, yPos, 75, 220);
 		
 		hitbox.setX(xPos);
 		hitbox.setY(yPos);

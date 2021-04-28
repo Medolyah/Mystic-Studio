@@ -41,7 +41,17 @@ public class Credits extends Menu {
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException, FileNotFoundException {
+		
+		// set frame rate 
+		container.setMinimumLogicUpdateInterval(5);
+        container.setMaximumLogicUpdateInterval(5);
+        
 		if (container.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+
+			// reset frame rate 
+			container.setMinimumLogicUpdateInterval(15);
+	        container.setMaximumLogicUpdateInterval(15);
+	        
 			active = false;
 		}
 		if (deltaSpeed > 1) {
