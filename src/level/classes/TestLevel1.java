@@ -52,7 +52,7 @@ public class TestLevel1 extends Level {
 		
 		// background
 		try {
-			this.background = new Image("res/images/Basement_Background.png");
+			this.background = new Image("res/images/Level_Test_Background.jpg");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,8 +60,8 @@ public class TestLevel1 extends Level {
 	
 	@Override
 	public void update(GameContainer container, int delta) {
-		
-		for (Npc npc: npcs) {
+
+		for (Npc npc : npcs) {
 			npc.update(container, delta);
 		}
 	}

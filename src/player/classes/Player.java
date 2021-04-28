@@ -77,7 +77,7 @@ public class Player extends GraphicObject {
 
 		// jump, only if the player is standing on the ground
 		super.setyPos(super.getyPos() + 1);
-		if (input.isKeyDown(Input.KEY_SPACE) && checkEnvironment(Movement.DOWN)) {
+		if (input.isKeyPressed(Input.KEY_SPACE) && checkEnvironment(Movement.DOWN)) {
 			yVelocity = 30;
 		}
 		super.setyPos(super.getyPos() - 1);
@@ -229,7 +229,7 @@ public class Player extends GraphicObject {
 		int screenHeight = (int) container.getScreenHeight();
 		int screenWidth = (int) container.getScreenWidth();
 		int minBorderDistanceVertical = 200;
-		int minBorderDistanceHorizontal = 400;
+		int minBorderDistanceHorizontal = 750;
 
 		if (movement == Movement.UP) {
 			if (super.getyPos() < minBorderDistanceVertical) {

@@ -15,6 +15,7 @@ import basic.classes.MysticButton;
 import basic.classes.MysticStudioGame;
 import level.classes.Level;
 import level.classes.TestLevel1;
+import level.classes.TheBasementLevel;
 import player.classes.Player;
 import ui.classes.Overlay;
 
@@ -145,7 +146,29 @@ public class MainMenu extends Menu {
 	}
 
 	private void loadGame() {
-		System.out.println("Load Game");
+		Level level = new TheBasementLevel();
+		game.setLevel(level);
+		
+		// set player (start for TheBasement must be 200 / 600)
+		// TODO: Verbesserbar?!? Unbedingt ueberarbeiten!!!
+		int xPos = 3000;
+		int yPos = 200;
+		Shape hitbox = new Rectangle(xPos, yPos, 91, 210);
+		
+		hitbox.setX(xPos);
+		hitbox.setY(yPos);
+		Image playerImage = null;
+		try {
+			playerImage = new Image("res/images/Knight-right-stay.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		game.setPlayer(new Player(level, xPos, yPos, hitbox, playerImage));
+		Player player = game.getPlayer();
+		game.setOverlay(new Overlay(player));
+        
+		// unset main menu
+		game.setMainMenu(true);	
 	}
 
 	private void gameOptions() throws SlickException, IOException {
