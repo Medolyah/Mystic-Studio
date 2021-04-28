@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.Shape;
 
 import basic.classes.GraphicObject;
 import level.classes.Level;
+import level.classes.Npc;
 
 public class Player extends GraphicObject {
 
@@ -98,7 +99,7 @@ public class Player extends GraphicObject {
 			moveRight(container, 5);
 		}
 		
-		// life / energy / XP tests
+		// life / energy tests
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			setCurrentEnergy(-5);
 		}
@@ -111,9 +112,6 @@ public class Player extends GraphicObject {
 		}
 		if (input.isKeyPressed(Input.KEY_R)) {
 			setCurrentLife(25);
-		}
-		if (input.isKeyPressed(Input.KEY_Q)) {
-			setCurrentXP(7);
 		}
 	}
 
@@ -236,6 +234,9 @@ public class Player extends GraphicObject {
 				for (GraphicObject object : environment.textures) {
 					object.setyPos(object.getyPos() + 1);
 				}
+				for (Npc npc : environment.npcs) {
+					npc.setyPos(npc.getyPos() + 1);
+				}
 				return true;
 			}
 		}
@@ -245,6 +246,9 @@ public class Player extends GraphicObject {
 				// move screen down (all objects up)
 				for (GraphicObject object : environment.textures) {
 					object.setyPos(object.getyPos() - 1);
+				}
+				for (Npc npc : environment.npcs) {
+					npc.setyPos(npc.getyPos() - 1);
 				}
 				return true;
 			}
@@ -256,6 +260,11 @@ public class Player extends GraphicObject {
 				for (GraphicObject object : environment.textures) {
 					object.setxPos(object.getxPos() - 1);
 				}
+				for (Npc npc : environment.npcs) {
+					npc.setxPos(npc.getxPos() - 1);
+					npc.setxMinPos(npc.getxMinPos() - 1);
+					npc.setxMaxPos(npc.getxMaxPos() - 1);
+				}
 				return true;
 			}
 		}
@@ -265,6 +274,11 @@ public class Player extends GraphicObject {
 				// move screen left (all objects right)
 				for (GraphicObject object : environment.textures) {
 					object.setxPos(object.getxPos() + 1);
+				}
+				for (Npc npc : environment.npcs) {
+					npc.setxPos(npc.getxPos() + 1);
+					npc.setxMinPos(npc.getxMinPos() + 1);
+					npc.setxMaxPos(npc.getxMaxPos() + 1);
 				}
 				return true;
 			}
@@ -324,7 +338,6 @@ public class Player extends GraphicObject {
 	private void setCurrentEnergy(int energyChange) {
 		stats.setCurrentEnergy(energyChange);		
 	}
-
 	public float getRequiredXP() {
 		return stats.getRequiredXP();
 	}

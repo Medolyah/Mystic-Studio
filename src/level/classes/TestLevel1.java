@@ -42,6 +42,14 @@ public class TestLevel1 extends Level {
 			e.printStackTrace();
 		}
 		
+		// npcs
+		npcs = new ArrayList<Npc>();
+		try {
+			npcs.add(new Npc(1000, 600, new Rectangle(100, 100, 400, 61), new Image("res/images/New_Button.png"), 900, 1800, 3));				
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		
 		// background
 		try {
 			this.background = new Image("res/images/Basement_Background.png");
@@ -53,6 +61,9 @@ public class TestLevel1 extends Level {
 	@Override
 	public void update(GameContainer container, int delta) {
 		
+		for (Npc npc: npcs) {
+			npc.update(container, delta);
+		}
 	}
 
 	@Override
@@ -66,6 +77,11 @@ public class TestLevel1 extends Level {
 		// textures/object 
 		for (GraphicObject graphicObject : textures) {
 			graphicObject.render(container, g);
+		}
+		
+		// textures/object 
+		for (Npc npc: npcs) {
+			npc.render(container, g);
 		}
 	}
 }

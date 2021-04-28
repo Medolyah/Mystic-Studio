@@ -16,6 +16,7 @@ public abstract class Level {
 	}
 	
 	public ArrayList<GraphicObject> textures;
+	public ArrayList<Npc> npcs;
 	public LevelType levelType;
 	public Image background;
 	
