@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.Shape;
 
 import basic.classes.GraphicObject;
 import level.classes.Level;
+import level.classes.Npc;
 
 public class Player extends GraphicObject {
 
@@ -233,6 +234,9 @@ public class Player extends GraphicObject {
 				for (GraphicObject object : environment.textures) {
 					object.setyPos(object.getyPos() + 1);
 				}
+				for (Npc npc : environment.npcs) {
+					npc.setyPos(npc.getyPos() + 1);
+				}
 				return true;
 			}
 		}
@@ -242,6 +246,9 @@ public class Player extends GraphicObject {
 				// move screen down (all objects up)
 				for (GraphicObject object : environment.textures) {
 					object.setyPos(object.getyPos() - 1);
+				}
+				for (Npc npc : environment.npcs) {
+					npc.setyPos(npc.getyPos() - 1);
 				}
 				return true;
 			}
@@ -253,6 +260,11 @@ public class Player extends GraphicObject {
 				for (GraphicObject object : environment.textures) {
 					object.setxPos(object.getxPos() - 1);
 				}
+				for (Npc npc : environment.npcs) {
+					npc.setxPos(npc.getxPos() - 1);
+					npc.setxMinPos(npc.getxMinPos() - 1);
+					npc.setxMaxPos(npc.getxMaxPos() - 1);
+				}
 				return true;
 			}
 		}
@@ -262,6 +274,11 @@ public class Player extends GraphicObject {
 				// move screen left (all objects right)
 				for (GraphicObject object : environment.textures) {
 					object.setxPos(object.getxPos() + 1);
+				}
+				for (Npc npc : environment.npcs) {
+					npc.setxPos(npc.getxPos() + 1);
+					npc.setxMinPos(npc.getxMinPos() + 1);
+					npc.setxMaxPos(npc.getxMaxPos() + 1);
 				}
 				return true;
 			}
