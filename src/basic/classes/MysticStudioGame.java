@@ -34,6 +34,10 @@ public class MysticStudioGame {
 		intro = new Intro(this);
 		input = container.getInput();
 		bgMusic = new GameMusic("res/music/bgMusic.wav");
+
+		// set frame rate 
+		container.setMinimumLogicUpdateInterval(15);
+        container.setMaximumLogicUpdateInterval(15);
 		
 	}
 

@@ -25,10 +25,14 @@ public class PlayerStats {
 	public PlayerStats() {
 		maxLife = 100;
 		currentLife = 75;
+		
 		maxEnergy = 100;
 		currentEnergy = 22;
+		
+		requiredXP = 100;
+		currentXP = 50;
 	}
-	
+
 	public int getPlayerLevel() {
 		return playerLevel;
 	}
@@ -41,8 +45,12 @@ public class PlayerStats {
 		return currentXP;
 	}
 
-	public void setCurrentXP(int currentXP) {
-		this.currentXP = currentXP;
+	public void setCurrentXP(int xpChange) {
+		if (currentXP + xpChange >= requiredXP) {
+			currentXP = currentXP + xpChange - requiredXP; 
+		} else {
+			currentXP += xpChange;
+		}
 	}
 
 	public int getRequiredXP() {
@@ -73,7 +81,7 @@ public class PlayerStats {
 				currentLife = 0;
 			} else {
 				currentLife += lifeChange;
-			}	
+			}
 		}
 	}
 
@@ -95,7 +103,7 @@ public class PlayerStats {
 				currentEnergy = maxEnergy;
 			} else {
 				currentEnergy += energyChange;
-			}	
+			}
 		}
 	}
 

@@ -139,10 +139,6 @@ public class MainMenu extends Menu {
 		game.setPlayer(new Player(level, xPos, yPos, hitbox, playerImage));
 		Player player = game.getPlayer();
 		game.setOverlay(new Overlay(player));
-		
-		// set frame rate 
-		container.setMinimumLogicUpdateInterval(15);
-        container.setMaximumLogicUpdateInterval(15);
         
 		// unset main menu
 		game.setMainMenu(true);	

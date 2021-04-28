@@ -75,7 +75,7 @@ public class Intro {
 		 * Make the first intro image slide in from bottom to top
 		 */
 		if (introImagePosY > 0) {
-			introImagePosY -= 0.1;
+			introImagePosY -= 3;
 		} else {
 			/*
 			 * If intro has finished playing or was skipped set the bool to true

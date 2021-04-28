@@ -44,7 +44,7 @@ public class Credits extends Menu {
 		if (container.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
 			active = false;
 		}
-		if (deltaSpeed > 10) {
+		if (deltaSpeed > 1) {
 			scrollPosition--;
 			deltaSpeed = 0;
 		} else {
