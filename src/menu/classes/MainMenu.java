@@ -126,7 +126,7 @@ public class MainMenu extends Menu {
 		// TODO: Verbesserbar?!? Unbedingt ueberarbeiten!!!
 		int xPos = 1200;
 		int yPos = 300;
-		Shape hitbox = new Rectangle(xPos, yPos, 91, 210);
+		Shape hitbox = new Rectangle(xPos, yPos, 91, 220);
 		
 		hitbox.setX(xPos);
 		hitbox.setY(yPos);
