@@ -126,7 +126,7 @@ public class MainMenu extends Menu {
 		// TODO: Verbesserbar?!? Unbedingt ueberarbeiten!!!
 		int xPos = 1200;
 		int yPos = 300;
-		Shape hitbox = new Rectangle(xPos, yPos, 91, 220);
+		Shape hitbox = new Rectangle(xPos, yPos, 75, 220);
 		
 		hitbox.setX(xPos);
 		hitbox.setY(yPos);
@@ -139,10 +139,6 @@ public class MainMenu extends Menu {
 		game.setPlayer(new Player(level, xPos, yPos, hitbox, playerImage));
 		Player player = game.getPlayer();
 		game.setOverlay(new Overlay(player));
-		
-		// set frame rate 
-		container.setMinimumLogicUpdateInterval(15);
-        container.setMaximumLogicUpdateInterval(15);
         
 		// unset main menu
 		game.setMainMenu(true);	

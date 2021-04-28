@@ -17,6 +17,9 @@ public class Overlay {
 	private Rectangle maxEnergyBar;
 	private Rectangle currentEnergyBar;
 
+	private Rectangle reuqiredXPBar;
+	private Rectangle currentXPBar;
+
 	public Overlay(Player player) {
 		this.player = player;
 
@@ -29,6 +32,11 @@ public class Overlay {
 		float currentEnergyFloat = (float) player.getCurrentEnergy() / (float) player.getMaxEnergy() * 400;
 		int currentEnergy400 = (int) currentEnergyFloat;
 		currentEnergyBar = new Rectangle(700, 1000, currentEnergy400, 20);
+
+		reuqiredXPBar = new Rectangle(1200, 1000, 400, 20);
+		float currentXPFloat = (float) player.getCurrentXP() / (float) player.getRequiredXP() * 400;
+		int currentXP400 = (int) currentXPFloat;
+		currentXPBar = new Rectangle(1200, 1000, currentXP400, 20);
 	}
 
 	public void update(GameContainer container, int delta) {
@@ -39,6 +47,10 @@ public class Overlay {
 		float currentEnergyFloat = (float) player.getCurrentEnergy() / (float) player.getMaxEnergy() * 400;
 		int currentEnergy400 = (int) currentEnergyFloat;
 		currentEnergyBar = new Rectangle(700, 1000, currentEnergy400, 20);
+
+		float currentXPFloat = (float) player.getCurrentXP() / (float) player.getRequiredXP() * 400;
+		int currentXP400 = (int) currentXPFloat;
+		currentXPBar = new Rectangle(1200, 1000, currentXP400, 20);
 	}
 
 	public void render(GameContainer container, Graphics g) {
@@ -54,6 +66,12 @@ public class Overlay {
 
 		g.setColor(new Color(0.1f, 0.1f, 0.7f, 0.9f));
 		g.fill(currentEnergyBar);
+
+		g.setColor(new Color(0.4f, 0.4f, 0.1f, 0.6f));
+		g.fill(reuqiredXPBar);
+
+		g.setColor(new Color(0.7f, 0.7f, 0.1f, 0.9f));
+		g.fill(currentXPBar);
 	}
 
 }

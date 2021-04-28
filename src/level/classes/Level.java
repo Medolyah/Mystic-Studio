@@ -7,6 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import basic.classes.GraphicObject;
+import player.classes.Player.Movement;
 
 public abstract class Level {
 
@@ -22,5 +23,6 @@ public abstract class Level {
 	
 	public abstract void update(GameContainer container, int delta);
 	public abstract void render(GameContainer container, Graphics g);
+	public abstract void moveObjects(Movement movement);
 
 }
