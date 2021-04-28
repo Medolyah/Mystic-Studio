@@ -77,7 +77,7 @@ public class Player extends GraphicObject {
 
 		// jump, only if the player is standing on the ground
 		super.setyPos(super.getyPos() + 1);
-		if (input.isKeyDown(Input.KEY_W) && checkEnvironment(Movement.DOWN)) {
+		if (input.isKeyDown(Input.KEY_SPACE) && checkEnvironment(Movement.DOWN)) {
 			yVelocity = 30;
 		}
 		super.setyPos(super.getyPos() - 1);
