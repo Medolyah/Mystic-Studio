@@ -21,7 +21,7 @@ public class TestLevel1 extends Level {
 		textures = new ArrayList<GraphicObject>();
 		try {
 			textures.add(new GraphicObject(100, 100, new Rectangle(100, 100, 400, 61), new Image("res/images/New_Button.png")));
-			textures.add(new GraphicObject(400, 400, new Rectangle(400, 400, 400, 61), new Image("res/images/New_Button.png")));
+			textures.add(new GraphicObject(400, 900, new Rectangle(200, 400, 400, 61), new Image("res/images/Load_Button.png")));
 			textures.add(new GraphicObject(550, 550, new Rectangle(550, 550, 400, 61), new Image("res/images/New_Button.png")));
 			textures.add(new GraphicObject(700, 700, new Rectangle(700, 700, 400, 61), new Image("res/images/New_Button.png")));
 			textures.add(new GraphicObject(1100, 700, new Rectangle(1000, 700, 400, 61), new Image("res/images/New_Button.png")));
