@@ -8,7 +8,6 @@ import org.newdawn.slick.geom.Shape;
 
 import basic.classes.GraphicObject;
 import level.classes.Level;
-import level.classes.Npc;
 
 public class Player extends GraphicObject {
 
@@ -229,7 +228,7 @@ public class Player extends GraphicObject {
 		int screenHeight = (int) container.getScreenHeight();
 		int screenWidth = (int) container.getScreenWidth();
 		int minBorderDistanceVertical = 200;
-		int minBorderDistanceHorizontal = 400;
+		int minBorderDistanceHorizontal = 750;
 
 		if (movement == Movement.UP) {
 			if (super.getyPos() < minBorderDistanceVertical) {

@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import basic.classes.GraphicObject;
-import player.classes.Player.Movement;
+//import player.classes.Player.Movement;
 
 public class TestLevel1 extends Level {
 	
@@ -45,16 +45,16 @@ public class TestLevel1 extends Level {
 		}
 		
 		// npcs
-		npcs = new ArrayList<Npc>();
+		objectsAndNpcs = new ArrayList<Npc>();
 		try {
-			npcs.add(new Npc(1000, 600, new Rectangle(100, 100, 400, 61), new Image("res/images/New_Button.png"), 900, 1800, 3));				
+			objectsAndNpcs.add(new Npc(1000, 600, new Rectangle(100, 100, 400, 61), new Image("res/images/New_Button.png"), 900, 1800, 3));				
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
 		
 		// background
 		try {
-			this.background = new Image("res/images/Basement_Background.png");
+			this.background = new Image("res/images/Level_Test_Background.jpg");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -62,8 +62,8 @@ public class TestLevel1 extends Level {
 	
 	@Override
 	public void update(GameContainer container, int delta) {
-		
-		for (Npc npc: npcs) {
+
+		for (Npc npc : objectsAndNpcs) {
 			npc.update(container, delta);
 		}
 	}
@@ -82,53 +82,8 @@ public class TestLevel1 extends Level {
 		}
 		
 		// textures/object 
-		for (Npc npc: npcs) {
+		for (Npc npc: objectsAndNpcs) {
 			npc.render(container, g);
-		}
-	}
-
-	@Override
-	public void moveObjects(Movement movement) {
-		
-		switch (movement) {
-		case UP:
-			for (GraphicObject object : textures) {
-				object.setyPos(object.getyPos() - 1);
-			}
-			for (Npc npc : npcs) {
-				npc.setyPos(npc.getyPos() - 1);
-			}
-			break;
-		case DOWN:
-			for (GraphicObject object : textures) {
-				object.setyPos(object.getyPos() + 1);
-			}
-			for (Npc npc : npcs) {
-				npc.setyPos(npc.getyPos() + 1);
-			}
-			break;
-		case RIGHT:
-			for (GraphicObject object : textures) {
-				object.setxPos(object.getxPos() + 1);
-			}
-			for (Npc npc : npcs) {
-				npc.setxPos(npc.getxPos() + 1);
-				npc.setxMinPos(npc.getxMinPos() + 1);
-				npc.setxMaxPos(npc.getxMaxPos() + 1);
-			}
-			break;
-		case LEFT:
-			for (GraphicObject object : textures) {
-				object.setxPos(object.getxPos() - 1);
-			}
-			for (Npc npc : npcs) {
-				npc.setxPos(npc.getxPos() - 1);
-				npc.setxMinPos(npc.getxMinPos() - 1);
-				npc.setxMaxPos(npc.getxMaxPos() - 1);
-			}
-			break;
-		default:
-			break;
 		}
 	}
 }
