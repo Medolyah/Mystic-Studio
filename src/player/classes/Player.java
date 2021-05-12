@@ -7,6 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
 import basic.classes.GraphicObject;
+import level.classes.InteractionObject;
 import level.classes.Level;
 import level.classes.Npc;
 
@@ -56,6 +57,8 @@ public class Player extends GraphicObject {
 	@Override
 	public void update(GameContainer container, int delta) {
 
+		Input input = container.getInput();
+		
 		// sum delta sums
 		imageDeltaSum += delta;
 		
@@ -68,6 +71,15 @@ public class Player extends GraphicObject {
 			platformerMovement(container, delta);
 		default:
 			break;
+		}
+		
+		// interaction
+		if (input.isKeyPressed(Input.KEY_E)) {
+			for (InteractionObject object: environment.interactionObjects) {
+				if (super.checkContact(object)) {
+					object.interaction();
+				}
+			}
 		}
 	};
 
@@ -103,12 +115,8 @@ public class Player extends GraphicObject {
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			setCurrentEnergy(-5);
 		}
-
 		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
 			setCurrentEnergy(20);
-		}
-		if (input.isKeyPressed(Input.KEY_E)) {
-			setCurrentLife(-10);
 		}
 		if (input.isKeyPressed(Input.KEY_R)) {
 			setCurrentLife(25);
@@ -327,6 +335,10 @@ public class Player extends GraphicObject {
 	
 	private void setCurrentXP(int changeXP) {
 		stats.setCurrentXP(changeXP);
+	}
+
+	public void setEnvironment(Level environment) {
+		this.environment = environment;
 	}
 	
 }

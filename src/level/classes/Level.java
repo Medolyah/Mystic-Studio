@@ -7,6 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import basic.classes.GraphicObject;
+import basic.classes.MysticStudioGame;
 import player.classes.Player.Movement;
 
 public abstract class Level {
@@ -18,11 +19,17 @@ public abstract class Level {
 	
 	public ArrayList<GraphicObject> textures;
 	public ArrayList<Npc> npcs;
+	public ArrayList<InteractionObject> interactionObjects;
 	public LevelType levelType;
 	public Image background;
+	
+	private MysticStudioGame game;
+	
+	public Level(MysticStudioGame game) {
+		this.game = game;
+	}
 	
 	public abstract void update(GameContainer container, int delta);
 	public abstract void render(GameContainer container, Graphics g);
 	public abstract void moveObjects(Movement movement);
-
 }

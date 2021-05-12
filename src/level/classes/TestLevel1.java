@@ -9,11 +9,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import basic.classes.GraphicObject;
+import basic.classes.MysticStudioGame;
 import player.classes.Player.Movement;
 
 public class TestLevel1 extends Level {
 	
-	public TestLevel1() {
+	public TestLevel1(MysticStudioGame game) {
+		super(game);
 		
 		// level type
 		levelType = Level.LevelType.PLATFORMER;
@@ -44,10 +46,18 @@ public class TestLevel1 extends Level {
 			e.printStackTrace();
 		}
 		
-		// npcs
+		// NPCs
 		npcs = new ArrayList<Npc>();
 		try {
 			npcs.add(new Npc(1000, 600, new Rectangle(100, 100, 400, 61), new Image("res/images/New_Button.png"), 900, 1800, 3));				
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		
+		// interaction objects
+		interactionObjects = new ArrayList<InteractionObject>();
+		try {
+			interactionObjects.add(new InteractionObject(3000, 600, new Rectangle(100, 100, 400, 61), new Image("res/images/New_Button.png"), game));				
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -82,6 +92,11 @@ public class TestLevel1 extends Level {
 		}
 		
 		// textures/object 
+		for (InteractionObject interactionObject: interactionObjects) {
+			interactionObject.render(container, g);
+		}
+		
+		// textures/object 
 		for (Npc npc: npcs) {
 			npc.render(container, g);
 		}
@@ -95,12 +110,18 @@ public class TestLevel1 extends Level {
 			for (GraphicObject object : textures) {
 				object.setyPos(object.getyPos() - 1);
 			}
+			for (InteractionObject object : interactionObjects) {
+				object.setyPos(object.getyPos() - 1);
+			}
 			for (Npc npc : npcs) {
 				npc.setyPos(npc.getyPos() - 1);
 			}
 			break;
 		case DOWN:
 			for (GraphicObject object : textures) {
+				object.setyPos(object.getyPos() + 1);
+			}
+			for (InteractionObject object : interactionObjects) {
 				object.setyPos(object.getyPos() + 1);
 			}
 			for (Npc npc : npcs) {
@@ -111,6 +132,9 @@ public class TestLevel1 extends Level {
 			for (GraphicObject object : textures) {
 				object.setxPos(object.getxPos() + 1);
 			}
+			for (InteractionObject object : interactionObjects) {
+				object.setxPos(object.getxPos() + 1);
+			}
 			for (Npc npc : npcs) {
 				npc.setxPos(npc.getxPos() + 1);
 				npc.setxMinPos(npc.getxMinPos() + 1);
@@ -119,6 +143,9 @@ public class TestLevel1 extends Level {
 			break;
 		case LEFT:
 			for (GraphicObject object : textures) {
+				object.setxPos(object.getxPos() - 1);
+			}
+			for (InteractionObject object : interactionObjects) {
 				object.setxPos(object.getxPos() - 1);
 			}
 			for (Npc npc : npcs) {
