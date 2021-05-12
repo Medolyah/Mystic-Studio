@@ -21,7 +21,7 @@ import ui.classes.Overlay;
 public class PickLevel extends Menu {
 
 	private MysticButton continueButton;
-	private MysticButton optionsButton;
+	private MysticButton levelOneButton;
 	private MysticButton exitButton;
 
 	private Options options;
@@ -59,7 +59,7 @@ public class PickLevel extends Menu {
 		} else {
 			g.drawImage(backgroundImage, backgroundImagePosX, backgroundImagePosY);
 			continueButton.render(container, g);
-			optionsButton.render(container, g);
+			levelOneButton.render(container, g);
 			exitButton.render(container, g);
 		}
 	}
@@ -70,9 +70,9 @@ public class PickLevel extends Menu {
 		Shape continueButtonShape = new Rectangle(760, 500, 400, 61);
 		continueButton = new MysticButton(760, 500, continueButtonShape, continueButtonImage);
 
-		Image optionButtonImage = new Image("res/images/Level1.png");
-		Shape optionButtonShape = new Rectangle(760, 600, 400, 61);
-		optionsButton = new MysticButton(760, 600, optionButtonShape, optionButtonImage);
+		Image levelOneButtonImage = new Image("res/images/Level1.png");
+		Shape levelOneButtonShape = new Rectangle(760, 600, 400, 61);
+		levelOneButton = new MysticButton(760, 600, levelOneButtonShape, levelOneButtonImage);
 
 		Image exitButtonImage = new Image("res/images/Exit_Button.png");
 		Shape exitButtonShape = new Rectangle(760, 700, 400, 61);
@@ -85,8 +85,8 @@ public class PickLevel extends Menu {
 		if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			if (continueButton.isClicked(container.getInput())) {
 				continueGame(container);
-			} else if (optionsButton.isClicked(container.getInput())) {
-				gameOptions();
+			} else if (levelOneButton.isClicked(container.getInput())) {
+				levelOne();
 			} else if (exitButton.isClicked(container.getInput())) {
 				exitGame();
 			}
@@ -97,7 +97,7 @@ public class PickLevel extends Menu {
 		game.setPickLevel(true);
 	}
 
-	private void gameOptions() throws SlickException, IOException {
+	private void levelOne() throws SlickException, IOException {
 
 		// set level
 		Level level = new TheBasementLevel(game);
