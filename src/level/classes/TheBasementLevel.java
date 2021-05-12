@@ -154,37 +154,15 @@ public class TheBasementLevel extends Level {
 		}
 	}
 
-	/**
-	@Override
-	public void update(GameContainer container, int delta) {
-
-		for (Npc npc : npcs) {
-			npc.update(container, delta);
-		}
-
-	}
 
 	@Override
 	public void render(GameContainer container, Graphics g) {
 
-		// background
-		if (background != null) {
-			g.drawImage(background, 0, 0);
-		}
-
-		// textures/object
-		for (GraphicObject graphicObject : textures) {
-			graphicObject.render(container, g);
-		}
-
-		// textures/object
-		for (Npc npc : npcs) {
-			npc.render(container, g);
-		}
+		super.render(container, g);
 
 		// Level infos
 		ttTextFont.drawString(container.getWidth() / 2 - 100, 20, levelName, fontColor);
 		ttTextFont.drawString(container.getWidth() / 2 - 100, 50, "Enemy level: 1 - 3", fontColor);
 
-	}**/
+	}
 }

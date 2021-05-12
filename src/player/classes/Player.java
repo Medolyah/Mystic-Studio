@@ -75,10 +75,12 @@ public class Player extends GraphicObject {
 		
 		// interaction
 		if (input.isKeyPressed(Input.KEY_E)) {
-			for (InteractionObject object: environment.interactionObjects) {
-				if (super.checkContact(object)) {
-					object.interaction();
-				}
+			if (environment.interactionObjects != null) {
+				for (InteractionObject object: environment.interactionObjects) {
+					if (super.checkContact(object)) {
+						object.interaction();
+					}
+				}				
 			}
 		}
 	};
@@ -237,7 +239,7 @@ public class Player extends GraphicObject {
 		int screenHeight = (int) container.getScreenHeight();
 		int screenWidth = (int) container.getScreenWidth();
 		int minBorderDistanceVertical = 200;
-		int minBorderDistanceHorizontal = 400;
+		int minBorderDistanceHorizontal = 750;
 
 		if (movement == Movement.UP) {
 			if (super.getyPos() < minBorderDistanceVertical) {
