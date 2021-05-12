@@ -33,6 +33,9 @@ public class MainMenu extends Menu {
 	private Credits credits;
 	private boolean creditsMenu = false;
 	
+	private SaveGameSelection saveGameSelection;
+	private boolean saveGameSelectionMenu = false;
+	
 	private MysticStudioGame game;
 
 	public MainMenu(MysticStudioGame game) throws SlickException, FileNotFoundException {
@@ -42,17 +45,23 @@ public class MainMenu extends Menu {
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException, IOException {
+		if (saveGameSelection != null) {
+			saveGameSelectionMenu = saveGameSelection.getActive();
+		}
 		if (options != null) {
 			optionsMenu = options.getActive();
 		}
 		if (credits != null) {
 			creditsMenu = credits.getActive();
 		}
-		if (optionsMenu) {
+		if (saveGameSelectionMenu) {
+			saveGameSelection.update(container, delta);
+		} else if (optionsMenu) {
 			options.update(container, delta);
 		} else if (creditsMenu) {			
 			credits.update(container, delta);
 		} else {
+			saveGameSelection = null;
 			options = null;
 			credits = null;
 			System.gc();
@@ -64,12 +73,14 @@ public class MainMenu extends Menu {
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		g.drawImage(backgroundImage, backgroundImagePosX, backgroundImagePosY);
 
-		if (!optionsMenu && !creditsMenu) {
+		if (!optionsMenu && !creditsMenu && !saveGameSelectionMenu) {
 			newButton.render(container, g);
 			loadButton.render(container, g);
 			optionsButton.render(container, g);
 			creditsButton.render(container, g);
 			exitButton.render(container, g);
+		} else if (saveGameSelectionMenu){
+			saveGameSelection.render(container, g);
 		} else if (optionsMenu){
 			options.render(container, g);
 		} else if (creditsMenu) {
@@ -118,57 +129,14 @@ public class MainMenu extends Menu {
 		}
 	}
 
-	private void newGame(GameContainer container) {		
-		// set level
-		Level level = new TestLevel1();
-		game.setLevel(level);
-		
-		// set player
-		// TODO: Verbesserbar?!? Unbedingt ueberarbeiten!!!
-		int xPos = 1200;
-		int yPos = 300;
-		Shape hitbox = new Rectangle(xPos, yPos, 75, 220);
-		
-		hitbox.setX(xPos);
-		hitbox.setY(yPos);
-		Image playerImage = null;
-		try {
-			playerImage = new Image("res/images/Knight-right-stay.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		game.setPlayer(new Player(level, xPos, yPos, hitbox, playerImage));
-		Player player = game.getPlayer();
-		game.setOverlay(new Overlay(player));
-        
-		// unset main menu
-		game.setMainMenu(true);	
+	private void newGame(GameContainer container) throws FileNotFoundException, SlickException {		
+		saveGameSelectionMenu = true;
+		saveGameSelection = new SaveGameSelection(game, false);
 	}
 
-	private void loadGame() {
-		Level level = new TheBasementLevel();
-		game.setLevel(level);
-		
-		// set player (start for TheBasement must be 200 / 600)
-		// TODO: Verbesserbar?!? Unbedingt ueberarbeiten!!!
-		int xPos = 200;
-		int yPos = 760;
-		Shape hitbox = new Rectangle(xPos, yPos, 75, 220);
-		
-		hitbox.setX(xPos);
-		hitbox.setY(yPos);
-		Image playerImage = null;
-		try {
-			playerImage = new Image("res/images/Knight-right-stay.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		game.setPlayer(new Player(level, xPos, yPos, hitbox, playerImage));
-		Player player = game.getPlayer();
-		game.setOverlay(new Overlay(player));
-        
-		// unset main menu
-		game.setMainMenu(true);	
+	private void loadGame() throws FileNotFoundException, SlickException {
+		saveGameSelectionMenu = true;
+		saveGameSelection = new SaveGameSelection(game, true);
 	}
 
 	private void gameOptions() throws SlickException, IOException {
@@ -179,5 +147,56 @@ public class MainMenu extends Menu {
 	private void gameCredits() throws SlickException, IOException {
 		creditsMenu = true;
 		credits = new Credits();
+	}
+	
+	public void runGame(int levelNumber) {
+		Level level;
+		int xPos = 0;
+		int yPos = 0;
+		// set level
+		switch (levelNumber) {
+		case 0:
+			level = new TestLevel1();
+			game.setLevel(level);
+			// set player
+			// TODO: Verbesserbar?!? Unbedingt ueberarbeiten!!!
+			xPos = 1200;
+			yPos = 300;
+			break;
+
+		case 1:
+			level = new TheBasementLevel();
+			game.setLevel(level);
+			// set player
+			// TODO: Verbesserbar?!? Unbedingt ueberarbeiten!!!
+			xPos = 200;
+			yPos = 760;
+			break;
+		default:
+			level = new TestLevel1();
+			game.setLevel(level);
+			// set player
+			// TODO: Verbesserbar?!? Unbedingt ueberarbeiten!!!
+			xPos = 1200;
+			yPos = 300;
+			break;
+		}
+		Shape hitbox = new Rectangle(xPos, yPos, 75, 220);
+		
+		hitbox.setX(xPos);
+		hitbox.setY(yPos);
+		Image playerImage = null;
+		try {
+			playerImage = new Image("res/images/Knight-right-stay.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		game.setPlayer(new Player(level, xPos, yPos, hitbox, playerImage));
+		Player player = game.getPlayer();
+		game.setOverlay(new Overlay(player));
+        
+		// unset main menu
+		game.setMainMenu(true);	
+		
 	}
 }

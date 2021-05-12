@@ -31,7 +31,7 @@ public class GraphicObject {
 	public void render(GameContainer container, Graphics g) {
 		g.drawImage(image, xPos, yPos);
 
-		Color transparent = new Color(0.2f, 0.5f, 0.5f, 0.0f);
+		Color transparent = new Color(0.2f, 0.5f, 0.5f, 0.4f);
 		g.setColor(transparent);
 		g.fill(hitbox);
 	}
