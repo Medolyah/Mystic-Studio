@@ -12,6 +12,7 @@ import audio.classes.GameMusic;
 import level.classes.Level;
 import menu.classes.Intro;
 import menu.classes.MainMenu;
+import menu.classes.PickLevel;
 import menu.classes.WindowMenu;
 import player.classes.Player;
 import player.classes.PlayerStats;
@@ -30,6 +31,7 @@ public class MysticStudioGame {
 	private PlayerStats playerStats;
 	private Overlay overlay;
 	private WindowMenu windowMenu;
+	private PickLevel pickLevel;
 
 	public MysticStudioGame(GameContainer container) throws SlickException, FileNotFoundException {
 
@@ -59,6 +61,10 @@ public class MysticStudioGame {
 		if (windowMenu != null) {
 			windowMenu.update(container, delta);
 		}
+		
+		if (pickLevel != null) {
+			pickLevel.update(container, delta);
+		}
 
 		// level
 		if (level != null) {
@@ -79,6 +85,11 @@ public class MysticStudioGame {
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			if (level != null && player != null) {
 				windowMenu = new WindowMenu(this);
+			}
+		}
+		if (input.isKeyPressed(Input.KEY_J)) {
+			if (level != null && player != null) {
+				pickLevel = new PickLevel(this);
 			}
 		}
 	}
@@ -113,6 +124,9 @@ public class MysticStudioGame {
 		// window menu
 		if (windowMenu != null) {
 			windowMenu.render(container, g);
+		}
+		if (pickLevel != null) {
+			pickLevel.render(container, g);
 		}
 	}
 
@@ -209,6 +223,19 @@ public class MysticStudioGame {
 				mainMenu = new MainMenu(this);
 			}
 			this.windowMenu = null;
+		}
+	}
+	
+	public void setPickLevel(PickLevel pickLevel) {
+		this.pickLevel = pickLevel;
+	}
+	
+	public void setPickLevel(boolean unsetPickLevel) throws FileNotFoundException, SlickException {
+		if (unsetPickLevel) {
+			if (pickLevel.getExit()) {
+				mainMenu = new MainMenu(this);
+			}
+			this.pickLevel = null;
 		}
 	}
 
