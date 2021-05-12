@@ -9,11 +9,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import basic.classes.GraphicObject;
-//import player.classes.Player.Movement;
+import basic.classes.MysticStudioGame;
 
 public class TestLevel1 extends Level {
 	
-	public TestLevel1() {
+	public TestLevel1(MysticStudioGame game) {
+		super(game);
 		
 		// level type
 		levelType = Level.LevelType.PLATFORMER;
@@ -45,9 +46,17 @@ public class TestLevel1 extends Level {
 		}
 		
 		// npcs
-		objectsAndNpcs = new ArrayList<Npc>();
+		npcs = new ArrayList<Npc>();
 		try {
-			objectsAndNpcs.add(new Npc(1000, 600, new Rectangle(100, 100, 400, 61), new Image("res/images/New_Button.png"), 900, 1800, 3));				
+			npcs.add(new Npc(1000, 600, new Rectangle(100, 100, 400, 61), new Image("res/images/New_Button.png"), 900, 1800, 3));				
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		
+		// interaction objects
+		interactionObjects = new ArrayList<InteractionObject>();
+		try {
+			interactionObjects.add(new InteractionObject(3000, 600, new Rectangle(100, 100, 400, 61), new Image("res/images/New_Button.png"), game));				
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -57,33 +66,6 @@ public class TestLevel1 extends Level {
 			this.background = new Image("res/images/Level_Test_Background.jpg");
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-	
-	@Override
-	public void update(GameContainer container, int delta) {
-
-		for (Npc npc : objectsAndNpcs) {
-			npc.update(container, delta);
-		}
-	}
-
-	@Override
-	public void render(GameContainer container, Graphics g) {
-		
-		// background
-		if (background != null) {
-			g.drawImage(background, 0, 0);			
-		}
-		
-		// textures/object 
-		for (GraphicObject graphicObject : textures) {
-			graphicObject.render(container, g);
-		}
-		
-		// textures/object 
-		for (Npc npc: objectsAndNpcs) {
-			npc.render(container, g);
 		}
 	}
 }

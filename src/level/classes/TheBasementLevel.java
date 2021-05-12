@@ -13,11 +13,13 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 
 import basic.classes.GraphicObject;
+import basic.classes.MysticStudioGame;
 
 @SuppressWarnings("deprecation")
 public class TheBasementLevel extends Level {
 
-	public TheBasementLevel() {
+	public TheBasementLevel(MysticStudioGame game) {
+		super(game);
 		levelName = "Level 1: The Basement";
 		textFont = new Font("Distant Galaxy", Font.PLAIN, 25);
 		ttTextFont = new TrueTypeFont(textFont, true);
@@ -117,28 +119,28 @@ public class TheBasementLevel extends Level {
 		}
 
 		// objects and NPCs
-		objectsAndNpcs = new ArrayList<Npc>();
+		npcs = new ArrayList<Npc>();
 		try {
 			// enemies
-			objectsAndNpcs.add(new Npc(1650, 500, new Circle(1650, 500, 50), new Image("testdata/circle_orange_basis_t_100.png"), 1650, 1900, 2));
-			objectsAndNpcs.add(new Npc(1650, 550, new Circle(1650, 550, 25), new Image("testdata/circle_orange_basis_t_50.png"), 1650, 1900, 3));
-			objectsAndNpcs.add(new Npc(1900, 550, new Circle(1900, 550, 25), new Image("testdata/circle_orange_basis_t_50.png"), 1650, 1900, 2));
+			npcs.add(new Npc(1650, 500, new Circle(1650, 500, 50), new Image("testdata/circle_orange_basis_t_100.png"), 1650, 1900, 2));
+			npcs.add(new Npc(1650, 550, new Circle(1650, 550, 25), new Image("testdata/circle_orange_basis_t_50.png"), 1650, 1900, 3));
+			npcs.add(new Npc(1900, 550, new Circle(1900, 550, 25), new Image("testdata/circle_orange_basis_t_50.png"), 1650, 1900, 2));
 
-			objectsAndNpcs.add(new Npc(2000, 950, new Circle(1900, 950, 25), new Image("testdata/circle_orange_basis_t_50.png"), 2000, 3500, 2));
-			objectsAndNpcs.add(new Npc(2500, 925, new Circle(1900, 925, 37.5f), new Image("testdata/circle_orange_basis_t_75.png"), 2000, 3500, 2));
-			objectsAndNpcs.add(new Npc(3000, 950, new Circle(1900, 950, 25), new Image("testdata/circle_orange_basis_t_50.png"), 2000, 3500, 4));
-			objectsAndNpcs.add(new Npc(3500, 925, new Circle(1900, 925, 37.5f), new Image("testdata/circle_orange_basis_t_75.png"), 2000, 3500, 2));
-			objectsAndNpcs.add(new Npc(2500, 900, new Circle(1900, 900, 50), new Image("testdata/circle_orange_basis_t_100.png"), 2000, 3500, 1));
-			objectsAndNpcs.add(new Npc(2000, 925, new Circle(1900, 925, 37.5f), new Image("testdata/circle_orange_basis_t_75.png"), 2000, 3500, 3));
+			npcs.add(new Npc(2000, 950, new Circle(1900, 950, 25), new Image("testdata/circle_orange_basis_t_50.png"), 2000, 3500, 2));
+			npcs.add(new Npc(2500, 925, new Circle(1900, 925, 37.5f), new Image("testdata/circle_orange_basis_t_75.png"), 2000, 3500, 2));
+			npcs.add(new Npc(3000, 950, new Circle(1900, 950, 25), new Image("testdata/circle_orange_basis_t_50.png"), 2000, 3500, 4));
+			npcs.add(new Npc(3500, 925, new Circle(1900, 925, 37.5f), new Image("testdata/circle_orange_basis_t_75.png"), 2000, 3500, 2));
+			npcs.add(new Npc(2500, 900, new Circle(1900, 900, 50), new Image("testdata/circle_orange_basis_t_100.png"), 2000, 3500, 1));
+			npcs.add(new Npc(2000, 925, new Circle(1900, 925, 37.5f), new Image("testdata/circle_orange_basis_t_75.png"), 2000, 3500, 3));
 
-			objectsAndNpcs.add(new Npc(4750, 950, new Circle(4750, 950, 25), new Image("testdata/circle_orange_basis_t_50.png"), 4750, 4750, 0));
+			npcs.add(new Npc(4750, 950, new Circle(4750, 950, 25), new Image("testdata/circle_orange_basis_t_50.png"), 4750, 4750, 0));
 			
 			// boss
-			objectsAndNpcs.add(new Npc(3000, -1412, new Rectangle(3000, -1412, 512, 512), new Image("testdata/wallpaper/paper1.png"), 3000, 5400, 2));
+			npcs.add(new Npc(3000, -1412, new Rectangle(3000, -1412, 512, 512), new Image("testdata/wallpaper/paper1.png"), 3000, 5400, 2));
 			
 			// objects:
 			// door
-			objectsAndNpcs.add(new Npc(180, 750, new Rectangle(180, 750, 150, 250), new Image("res/images/Basement_Door.png"), 200, 200, 0));
+			npcs.add(new Npc(180, 750, new Rectangle(180, 750, 150, 250), new Image("res/images/Basement_Door.png"), 200, 200, 0));
 			
 		} catch (SlickException e) {
 			e.printStackTrace();
@@ -152,37 +154,15 @@ public class TheBasementLevel extends Level {
 		}
 	}
 
-	@Override
-	public void update(GameContainer container, int delta) {
-
-		for (Npc npc : objectsAndNpcs) {
-			npc.update(container, delta);
-		}
-
-	}
 
 	@Override
 	public void render(GameContainer container, Graphics g) {
 
-		// background
-		if (background != null) {
-			g.drawImage(background, 0, 0);
-		}
-
-		// textures/object
-		for (GraphicObject graphicObject : textures) {
-			graphicObject.render(container, g);
-		}
-
-		// textures/object
-		for (Npc npc : objectsAndNpcs) {
-			npc.render(container, g);
-		}
+		super.render(container, g);
 
 		// Level infos
 		ttTextFont.drawString(container.getWidth() / 2 - 100, 20, levelName, fontColor);
 		ttTextFont.drawString(container.getWidth() / 2 - 100, 50, "Enemy level: 1 - 3", fontColor);
 
 	}
-
 }
