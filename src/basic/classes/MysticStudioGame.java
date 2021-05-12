@@ -15,6 +15,7 @@ import audio.classes.GameMusic;
 import level.classes.Level;
 import menu.classes.Intro;
 import menu.classes.MainMenu;
+import menu.classes.WindowMenu;
 import player.classes.Player;
 import player.classes.PlayerStats;
 import ui.classes.Overlay;
@@ -32,6 +33,7 @@ public class MysticStudioGame {
 	private Player player;
 	private PlayerStats playerStats;
 	private Overlay overlay;
+	private WindowMenu windowMenu;
 
 	public MysticStudioGame(GameContainer container) throws SlickException, FileNotFoundException {
 
@@ -67,6 +69,11 @@ public class MysticStudioGame {
 		if (mainMenu != null) {
 			mainMenu.update(container, delta);
 		}
+		
+		// window (main) menu
+		if (windowMenu != null) {
+			windowMenu.update(container, delta);
+		}
 
 		// level
 		if (level != null) {
@@ -86,11 +93,7 @@ public class MysticStudioGame {
 		// ESC: end game
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			if (level != null && player != null) {
-				level = null;
-				player = null;
-				overlay = null;
-				playerStats = null;
-				mainMenu = new MainMenu(this);
+				windowMenu = new WindowMenu(this);
 			}
 		}
 	}
@@ -121,6 +124,11 @@ public class MysticStudioGame {
 		if (overlay != null) {
 			overlay.render(container, g);
 		}
+		
+		// window menu
+		if (windowMenu != null) {
+			windowMenu.render(container, g);
+		}
 	}
 
 	/*
@@ -138,12 +146,24 @@ public class MysticStudioGame {
 		this.player.setEnvironment(level);
 	}
 
+	public void setLevel(boolean unsetLevel) {
+		if (unsetLevel) {
+			this.level = null;
+		}
+	}
+
 	public Player getPlayer() {
 		return player;
 	}
 
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+
+	public void setPlayer(boolean unsetPlayer) {
+		if (unsetPlayer) {
+			this.player = null;
+		}
 	}
 
 	public MainMenu getMainMenu() {
@@ -185,6 +205,29 @@ public class MysticStudioGame {
 	public void setOverlay(boolean unsetOverlay) {
 		if (unsetOverlay) {
 			this.overlay = null;		
+		}
+	}
+
+	public void setPlayerStats(PlayerStats playerStats) {
+		this.playerStats = playerStats;		
+	}
+
+	public void setPlayerStats(boolean unsetPlayerStats) {
+		if (unsetPlayerStats) {
+			this.playerStats = null;		
+		}
+	}
+	
+	public void setWindowMenu(WindowMenu windowMenu) {
+		this.windowMenu = windowMenu;
+	}
+	
+	public void setWindowMenu(boolean unsetWindowMenu) throws FileNotFoundException, SlickException {
+		if (unsetWindowMenu) {
+			if (windowMenu.getExit()) {
+				mainMenu = new MainMenu(this);
+			}
+			this.windowMenu = null;
 		}
 	}
 }

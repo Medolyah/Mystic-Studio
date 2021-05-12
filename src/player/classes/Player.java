@@ -340,5 +340,4 @@ public class Player extends GraphicObject {
 	public void setEnvironment(Level environment) {
 		this.environment = environment;
 	}
-	
 }

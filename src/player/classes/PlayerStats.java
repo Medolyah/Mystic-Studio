@@ -1,6 +1,8 @@
 package player.classes;
 
 public class PlayerStats {
+	
+	private int gameProgress;
 
 	private int playerLevel;
 	private int currentXP;
@@ -31,6 +33,14 @@ public class PlayerStats {
 		
 		requiredXP = 100;
 		currentXP = 50;
+	}
+
+	public int getGameProgress() {
+		return gameProgress;
+	}
+
+	public void setGameProgress(int gameProgress) {
+		this.gameProgress = gameProgress;
 	}
 
 	public int getPlayerLevel() {

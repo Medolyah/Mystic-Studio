@@ -10,7 +10,6 @@ import org.newdawn.slick.geom.Rectangle;
 
 import basic.classes.GraphicObject;
 import basic.classes.MysticStudioGame;
-import player.classes.Player.Movement;
 
 public class TestLevel1 extends Level {
 	
@@ -46,7 +45,7 @@ public class TestLevel1 extends Level {
 			e.printStackTrace();
 		}
 		
-		// NPCs
+		// npcs
 		npcs = new ArrayList<Npc>();
 		try {
 			npcs.add(new Npc(1000, 600, new Rectangle(100, 100, 400, 61), new Image("res/images/New_Button.png"), 900, 1800, 3));				
@@ -64,98 +63,9 @@ public class TestLevel1 extends Level {
 		
 		// background
 		try {
-			this.background = new Image("res/images/Basement_Background.png");
+			this.background = new Image("res/images/Level_Test_Background.jpg");
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-	
-	@Override
-	public void update(GameContainer container, int delta) {
-		
-		for (Npc npc: npcs) {
-			npc.update(container, delta);
-		}
-	}
-
-	@Override
-	public void render(GameContainer container, Graphics g) {
-		
-		// background
-		if (background != null) {
-			g.drawImage(background, 0, 0);			
-		}
-		
-		// textures/object 
-		for (GraphicObject graphicObject : textures) {
-			graphicObject.render(container, g);
-		}
-		
-		// textures/object 
-		for (InteractionObject interactionObject: interactionObjects) {
-			interactionObject.render(container, g);
-		}
-		
-		// textures/object 
-		for (Npc npc: npcs) {
-			npc.render(container, g);
-		}
-	}
-
-	@Override
-	public void moveObjects(Movement movement) {
-		
-		switch (movement) {
-		case UP:
-			for (GraphicObject object : textures) {
-				object.setyPos(object.getyPos() - 1);
-			}
-			for (InteractionObject object : interactionObjects) {
-				object.setyPos(object.getyPos() - 1);
-			}
-			for (Npc npc : npcs) {
-				npc.setyPos(npc.getyPos() - 1);
-			}
-			break;
-		case DOWN:
-			for (GraphicObject object : textures) {
-				object.setyPos(object.getyPos() + 1);
-			}
-			for (InteractionObject object : interactionObjects) {
-				object.setyPos(object.getyPos() + 1);
-			}
-			for (Npc npc : npcs) {
-				npc.setyPos(npc.getyPos() + 1);
-			}
-			break;
-		case RIGHT:
-			for (GraphicObject object : textures) {
-				object.setxPos(object.getxPos() + 1);
-			}
-			for (InteractionObject object : interactionObjects) {
-				object.setxPos(object.getxPos() + 1);
-			}
-			for (Npc npc : npcs) {
-				npc.setxPos(npc.getxPos() + 1);
-				npc.setxMinPos(npc.getxMinPos() + 1);
-				npc.setxMaxPos(npc.getxMaxPos() + 1);
-			}
-			break;
-		case LEFT:
-			for (GraphicObject object : textures) {
-				object.setxPos(object.getxPos() - 1);
-			}
-			for (InteractionObject object : interactionObjects) {
-				object.setxPos(object.getxPos() - 1);
-			}
-			for (Npc npc : npcs) {
-				npc.setxPos(npc.getxPos() - 1);
-				npc.setxMinPos(npc.getxMinPos() - 1);
-				npc.setxMaxPos(npc.getxMaxPos() - 1);
-			}
-			break;
-		default:
-			break;
 		}
 	}
 }

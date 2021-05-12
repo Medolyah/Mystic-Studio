@@ -15,6 +15,7 @@ import basic.classes.MysticButton;
 import basic.classes.MysticStudioGame;
 import level.classes.Level;
 import level.classes.TestLevel1;
+import level.classes.TheBasementLevel;
 import player.classes.Player;
 import ui.classes.Overlay;
 
@@ -130,7 +131,15 @@ public class MainMenu extends Menu {
 	}
 
 	private void loadGame() {
-		System.out.println("Load Game");
+		// set level
+		Level level = new TheBasementLevel(game);
+		game.setLevel(level, 200, 760);
+		
+		Player player = game.getPlayer();
+		game.setOverlay(new Overlay(player));
+        
+		// unset main menu
+		game.setMainMenu(true);	
 	}
 
 	private void gameOptions() throws SlickException, IOException {
