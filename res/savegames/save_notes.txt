@@ -1,0 +1,144 @@
+------------------------
+ Ln | description
+------------------------
+Stats and progress
+------------------------
+  1 | game progress (last finished level)
+  2 | level
+  3 | current XP
+  4 | required XP for next level
+  5 | maximum life
+	(current life will not be saved, after reloading the player always starts with full live in the village)
+  6 | maximum energy
+	(current energy will not be saved, after reloading the player always starts with full energy in the village)
+  7 | strengh
+  8 | intelligence
+  9 | dexterity
+ 10 | physical armour
+ 11 | magical armour
+ 12 | physical attack damage
+ 13 | magical attack damage
+ 14 | attack speed
+ 15 | reserve line
+ 16 | reserve line
+ 17 | reserve line
+ 18 | reserve line
+ 19 | reserve line
+------------------------
+Equipment
+------------------------
+ 20 | helmet name
+ 21 | helmet stat name 1
+ 22 | helmet stat value 1
+ 23 | helmet stat name 2
+ 24 | helmet stat value 2
+ 25 | helmet stat name 3
+ 26 | helmet stat value 3
+ 27 | body armour name
+ 28 | body armour stat name 1
+ 29 | body armour stat value 1
+ 30 | body armour stat name 2
+ 31 | body armour stat value 2
+ 32 | body armour stat name 3
+ 33 | body armour stat value 3
+ 34 | boots name
+ 35 | boots stat name 1
+ 36 | boots stat value 1
+ 37 | boots stat name 2
+ 38 | boots stat value 2
+ 39 | boots stat name 3
+ 40 | boots stat value 3
+ 41 | gloves name
+ 42 | gloves stat name 1
+ 43 | gloves stat value 1
+ 44 | gloves stat name 2
+ 45 | gloves stat value 2
+ 46 | gloves stat name 3
+ 47 | gloves stat value 3
+ 48 | pants name
+ 49 | pants stat name 1
+ 50 | pants stat value 1
+ 51 | pants stat name 2
+ 52 | pants stat value 2
+ 53 | pants stat name 3
+ 54 | pants stat value 3
+ 55 | left ring name
+ 56 | left ring stat name 1
+ 57 | left ring stat value 1
+ 58 | left ring stat name 2
+ 59 | left ring stat value 2
+ 60 | left ring stat name 3
+ 61 | left ring stat value 3
+ 62 | right ring name
+ 63 | right ring stat name 1
+ 64 | right ring stat value 1
+ 65 | right ring stat name 2
+ 66 | right ring stat value 2
+ 67 | right ring stat name 3
+ 68 | right ring stat value 3
+ 69 | amulet name
+ 70 | amulet stat name 1
+ 71 | amulet stat value 1
+ 72 | amulet stat name 2
+ 73 | amulet stat value 2
+ 74 | amulet stat name 3
+ 75 | amulet stat value 3
+------------------------
+Inventory
+------------------------
+ 76 | helmet name
+ 77 | helmet stat name 1
+ 78 | helmet stat value 1
+ 79 | helmet stat name 2
+ 80 | helmet stat value 2
+ 81 | helmet stat name 3
+ 82 | helmet stat value 3
+ 83 | body armour name
+ 84 | body armour stat name 1
+ 85 | body armour stat value 1
+ 86 | body armour stat name 2
+ 87 | body armour stat value 2
+ 88 | body armour stat name 3
+ 89 | body armour stat value 3
+ 90 | boots name
+ 91 | boots stat name 1
+ 92 | boots stat value 1
+ 93 | boots stat name 2
+ 94 | boots stat value 2
+ 95 | boots stat name 3
+ 96 | boots stat value 3
+ 97 | gloves name
+ 98 | gloves stat name 1
+ 99 | gloves stat value 1
+100 | gloves stat name 2
+101 | gloves stat value 2
+102 | gloves stat name 3
+103 | gloves stat value 3
+104 | pants name
+105 | pants stat name 1
+106 | pants stat value 1
+107 | pants stat name 2
+108 | pants stat value 2
+109 | pants stat name 3
+110 | pants stat value 3
+111 | left ring name
+112 | left ring stat name 1
+113 | left ring stat value 1
+114 | left ring stat name 2
+115 | left ring stat value 2
+116 | left ring stat name 3
+117 | left ring stat value 3
+118 | right ring name
+119 | right ring stat name 1
+120 | right ring stat value 1
+121 | right ring stat name 2
+122 | right ring stat value 2
+123 | right ring stat name 3
+124 | right ring stat value 3
+125 | amulet name
+126 | amulet stat name 1
+127 | amulet stat value 1
+128 | amulet stat name 2
+129 | amulet stat value 2
+120 | amulet stat name 3
+121 | amulet stat value 3
