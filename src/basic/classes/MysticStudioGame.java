@@ -5,8 +5,11 @@ import java.io.IOException;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 
 import audio.classes.GameMusic;
 import level.classes.Level;
@@ -22,6 +25,7 @@ public class MysticStudioGame {
 
 	private Input input;
 	private GameMusic bgMusic;
+	private Player playerInstance;
 
 	// components
 	private Intro intro;
@@ -42,7 +46,18 @@ public class MysticStudioGame {
 		// set frame rate 
 		container.setMinimumLogicUpdateInterval(15);
         container.setMaximumLogicUpdateInterval(15);
-		
+        
+        // create player instance
+ 		int xPos = 0;
+ 		int yPos = 0;
+ 		Shape hitbox = new Rectangle(xPos, yPos, 75, 220); 		
+ 		Image playerImage = null;
+ 		try {
+ 			playerImage = new Image("res/images/Knight-right-stay.png");
+ 		} catch (SlickException e) {
+ 			e.printStackTrace();
+ 		}
+ 		playerInstance = new Player(null, xPos, yPos, hitbox, playerImage);
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException, IOException {
@@ -137,8 +152,12 @@ public class MysticStudioGame {
 		return level;
 	}
 
-	public void setLevel(Level level) {
+	public void setLevel(Level level, int playerPosX, int playerPosY) {
 		this.level = level;
+		this.player = playerInstance;
+		this.player.setxPos(playerPosX);
+		this.player.setyPos(playerPosY);
+		this.player.setEnvironment(level);
 	}
 
 	public void setLevel(boolean unsetLevel) {

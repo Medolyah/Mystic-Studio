@@ -120,24 +120,9 @@ public class MainMenu extends Menu {
 
 	private void newGame(GameContainer container) {		
 		// set level
-		Level level = new TestLevel1();
-		game.setLevel(level);
-		
-		// set player
-		// TODO: Verbesserbar?!? Unbedingt ueberarbeiten!!!
-		int xPos = 1200;
-		int yPos = 300;
-		Shape hitbox = new Rectangle(xPos, yPos, 75, 220);
-		
-		hitbox.setX(xPos);
-		hitbox.setY(yPos);
-		Image playerImage = null;
-		try {
-			playerImage = new Image("res/images/Knight-right-stay.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		game.setPlayer(new Player(level, xPos, yPos, hitbox, playerImage));
+		Level level = new TestLevel1(game);
+		game.setLevel(level, 1200, 300);
+
 		Player player = game.getPlayer();
 		game.setOverlay(new Overlay(player));
         
@@ -146,24 +131,10 @@ public class MainMenu extends Menu {
 	}
 
 	private void loadGame() {
-		Level level = new TheBasementLevel();
-		game.setLevel(level);
+		// set level
+		Level level = new TheBasementLevel(game);
+		game.setLevel(level, 200, 760);
 		
-		// set player (start for TheBasement must be 200 / 600)
-		// TODO: Verbesserbar?!? Unbedingt ueberarbeiten!!!
-		int xPos = 200;
-		int yPos = 760;
-		Shape hitbox = new Rectangle(xPos, yPos, 75, 220);
-		
-		hitbox.setX(xPos);
-		hitbox.setY(yPos);
-		Image playerImage = null;
-		try {
-			playerImage = new Image("res/images/Knight-right-stay.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		game.setPlayer(new Player(level, xPos, yPos, hitbox, playerImage));
 		Player player = game.getPlayer();
 		game.setOverlay(new Overlay(player));
         
