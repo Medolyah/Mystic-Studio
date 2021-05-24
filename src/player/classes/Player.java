@@ -1,19 +1,27 @@
 package player.classes;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
+import audio.classes.GameSound;
 import basic.classes.GraphicObject;
 import level.classes.InteractionObject;
 import level.classes.Level;
-import level.classes.Npc;
 
 public class Player extends GraphicObject {
 
-	int imageDeltaSum;
+	private int imageDeltaSum;
+	private int deltaWalkSound;
+	
+	private int healCooldown;
+	private int manaCooldown;
 	
 	private Image moveLeftImg1;
 	private Image moveLeftImg2;
@@ -33,15 +41,15 @@ public class Player extends GraphicObject {
 		super(xPos, yPos, hitbox, image);
 		this.environment = environment;
 		
-		// player stats
-		stats = new PlayerStats();
-		
 		// set y-velocity and acceleration
 		this.yAcceleration = -2;
 		this.yVelocity = 0;
 		
 		// initialize delta sums
 		this.imageDeltaSum = 0;
+		this.healCooldown = 0;
+		this.manaCooldown = 0;
+		this.deltaWalkSound = 0;
 		
 		// load player images (movement animation)
 		try {
@@ -55,12 +63,13 @@ public class Player extends GraphicObject {
 	}
 
 	@Override
-	public void update(GameContainer container, int delta) {
+	public void update(GameContainer container, int delta) throws FileNotFoundException, SlickException {
 
 		Input input = container.getInput();
 		
 		// sum delta sums
 		imageDeltaSum += delta;
+		deltaWalkSound += delta;
 		
 		// movement
 		switch (environment.levelType) {
@@ -85,7 +94,7 @@ public class Player extends GraphicObject {
 		}
 	};
 
-	private void platformerMovement(GameContainer container, int delta) {
+	private void platformerMovement(GameContainer container, int delta) throws FileNotFoundException, SlickException {
 
 		Input input = container.getInput();
 
@@ -106,25 +115,67 @@ public class Player extends GraphicObject {
 			moveUp(container, Math.abs(yVelocity));
 		}
 
+		// TODO move speed with shift for debugging / level building
+		// remove in final version
 		if (input.isKeyDown(Input.KEY_A)) {
-			moveLeft(container, 5);
+			if (deltaWalkSound > 500) {
+				deltaWalkSound = 0;
+				GameSound cooldownSound = new GameSound("res/sounds/stepSound.wav");
+				cooldownSound.playSound();	
+			}
+			if (input.isKeyDown(Input.KEY_LSHIFT)) {
+				moveLeft(container, 100);
+			} else {
+				moveLeft(container, 5);				
+			}
 		}
 		if (input.isKeyDown(Input.KEY_D)) {
-			moveRight(container, 5);
+			if (deltaWalkSound > 500) {
+				deltaWalkSound = 0;
+				GameSound cooldownSound = new GameSound("res/sounds/stepSound.wav");
+				cooldownSound.playSound();	
+			}
+			if (input.isKeyDown(Input.KEY_LSHIFT)) {
+				moveRight(container, 100);
+			} else {
+				moveRight(container, 5);				
+			}
 		}
 		
 		// life / energy / xp tests
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			setCurrentEnergy(-5);
+			setCurrentLife(-5);
 		}
 		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
-			setCurrentEnergy(20);
+			setCurrentEnergy(-20);
 		}
-		if (input.isKeyPressed(Input.KEY_R)) {
-			setCurrentLife(25);
+		
+		// life heal
+		if (healCooldown >= 0) {
+			healCooldown -= delta;
 		}
 		if (input.isKeyPressed(Input.KEY_Q)) {
-			setCurrentXP(7);
+			if (healCooldown <= 0) {
+				setCurrentLife(25);
+				healCooldown = 5000;
+			} else {
+				GameSound cooldownSound = new GameSound("res/sounds/cooldownSound.wav");
+				cooldownSound.playSound();
+			}
+		}
+		
+		// mana heal
+		if (manaCooldown >= 0) {
+			manaCooldown -= delta;
+		}
+		if (input.isKeyPressed(Input.KEY_W)) {
+			if (manaCooldown <= 0) {
+				setCurrentEnergy(25);
+				manaCooldown = 5000;
+			} else {
+				GameSound cooldownSound = new GameSound("res/sounds/cooldownSound.wav");
+				cooldownSound.playSound();
+			}
 		}
 	}
 
@@ -238,7 +289,7 @@ public class Player extends GraphicObject {
 		// moved
 		int screenHeight = (int) container.getScreenHeight();
 		int screenWidth = (int) container.getScreenWidth();
-		int minBorderDistanceVertical = 200;
+		int minBorderDistanceVertical = 250;
 		int minBorderDistanceHorizontal = 750;
 
 		if (movement == Movement.UP) {
@@ -302,7 +353,13 @@ public class Player extends GraphicObject {
 		}
 	}
 
-
+	public void setPlayerStats(Player player, File saveFile) throws FileNotFoundException {
+		stats = new PlayerStats(player, saveFile);
+	}
+	
+	public int getPlayerLevel() {
+		return stats.getPlayerLevel();
+	}
 	public int getMaxLife() {
 		return stats.getMaxLife();
 	}
@@ -327,16 +384,48 @@ public class Player extends GraphicObject {
 	private void setCurrentEnergy(int energyChange) {
 		stats.setCurrentEnergy(energyChange);		
 	}
-	public float getRequiredXP() {
+	public int getRequiredXP() {
 		return stats.getRequiredXP();
 	}
 
-	public float getCurrentXP() {
+	public int getCurrentXP() {
 		return stats.getCurrentXP();
 	}
 	
 	private void setCurrentXP(int changeXP) {
 		stats.setCurrentXP(changeXP);
+	}
+
+	public int getStrengh() {
+		return stats.getStrengh();
+	}
+
+	public int getIntellegence() {
+		return stats.getIntelligence();
+	}
+
+	public int getDexterity() {
+		return stats.getDexterity();
+	}
+
+	public int getPhysArmpur() {
+		return stats.getPhysicalArmour();
+	}
+
+	public int getMagicArmour() {
+		return stats.getMagicalArmour();
+	}
+
+	public int getPhysDamage() {
+		return stats.getPhysicalAttackDmg();
+	}
+
+	public int getMagicDamage() {
+		return stats.getMagicalAttackDmg();
+	}
+
+	public int getAttackSpeed() {
+		return stats.getAttackSpeed();
 	}
 
 	public void setEnvironment(Level environment) {

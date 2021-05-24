@@ -1,5 +1,6 @@
 package menu.classes;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -13,6 +14,7 @@ import org.newdawn.slick.geom.Shape;
 
 import basic.classes.MysticButton;
 import basic.classes.MysticStudioGame;
+import level.classes.CaveLevel;
 import level.classes.Level;
 import level.classes.TestLevel1;
 import level.classes.TheBasementLevel;
@@ -39,7 +41,7 @@ public class MainMenu extends Menu {
 	private MysticStudioGame game;
 
 	public MainMenu(MysticStudioGame game) throws SlickException, FileNotFoundException {
-		backgroundImage = new Image("res/images/Titelbild_ohne_Menu_FS.png");
+		backgroundImage = new Image("res/images/Main_Menu.png");
 		menuButtons();
 		this.game = game;
 	}
@@ -149,7 +151,7 @@ public class MainMenu extends Menu {
 		credits = new Credits();
 	}
 
-	public void runGame(int levelNumber) {
+	public void runGame(int levelNumber, File saveFile) throws FileNotFoundException, SlickException {
 		// set level
 		Level level;
 		switch (levelNumber) {
@@ -162,14 +164,25 @@ public class MainMenu extends Menu {
 			level = new TheBasementLevel(game);
 			game.setLevel(level, 200, 760);
 			break;
+			
+		case 2:
+			level = new CaveLevel(game);
+			game.setLevel(level, 400, 660);
+			break;
+			
 		default:
 			level = new TestLevel1(game);
 			game.setLevel(level, 1200, 300);
 			break;
 		}
-
-		//set overlay
+		
+		// set player
 		Player player = game.getPlayer();
+		
+		// set player stats for the current player
+		game.getPlayer().setPlayerStats(game.getPlayer(), saveFile);
+
+		// set overlay
 		game.setOverlay(new Overlay(player));
 
 		// unset main menu

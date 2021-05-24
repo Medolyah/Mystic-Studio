@@ -19,7 +19,7 @@ Stats and progress
  12 | physical attack damage
  13 | magical attack damage
  14 | attack speed
- 15 | reserve line
+ 15 | chracter class (warrior, mage, ranger)
  16 | reserve line
  17 | reserve line
  18 | reserve line

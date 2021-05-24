@@ -6,6 +6,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 
 import basic.classes.GraphicObject;
@@ -48,7 +49,7 @@ public class TestLevel1 extends Level {
 		// npcs
 		npcs = new ArrayList<Npc>();
 		try {
-			npcs.add(new Npc(1000, 600, new Rectangle(100, 100, 400, 61), new Image("res/images/New_Button.png"), 900, 1800, 3));				
+			npcs.add(new Npc(1000, 600, new Circle(100, 100, 50), new Image("res/images/Spider2.png"), 900, 1800, 3));				
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

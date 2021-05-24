@@ -1,6 +1,14 @@
 package player.classes;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class PlayerStats {
+	
+	private Player player;
+	private File saveFile;
+	private Scanner scanner;
 	
 	private int gameProgress;
 
@@ -21,20 +29,70 @@ public class PlayerStats {
 	private int magicalArmour;
 
 	private int physicalAttackDmg;
-	private int magicakAttackDmg;
+	private int magicalAttackDmg;
 	private int attackSpeed;
+	
+	private String characterClass;
+	
+	private String reserve1;
+	private String reserve2;
+	private String reserve3;
+	private String reserve4;
+	private String reserve5;
 
-	public PlayerStats() {
-		maxLife = 100;
-		currentLife = 75;
-		
-		maxEnergy = 100;
-		currentEnergy = 22;
-		
-		requiredXP = 100;
-		currentXP = 50;
+	// player stats for loading a character
+	public PlayerStats(Player player, File saveFile) throws FileNotFoundException {
+		this.player = player;
+		this.saveFile = saveFile;
+		readSaveFile(saveFile);
+//		player.setPlayerStats(this);
 	}
 
+	// playe stats for a new character
+	public PlayerStats() {
+		maxLife = 100;
+		currentLife = 100;
+		
+		maxEnergy = 100;
+		currentEnergy = 100;
+		
+		requiredXP = 100;
+		currentXP = 0;
+	}
+
+	private void readSaveFile(File saveFile) throws FileNotFoundException {
+
+		scanner = new Scanner(saveFile);
+		
+		// save file lines 1 - 5
+		gameProgress = scanner.nextInt();
+		playerLevel = scanner.nextInt();
+		currentXP = scanner.nextInt();
+		requiredXP = scanner.nextInt();
+		maxLife = scanner.nextInt();
+		currentLife = maxLife;
+		// lines 6 - 10
+		maxEnergy = scanner.nextInt();
+		currentEnergy = maxEnergy;
+		strengh = scanner.nextInt();
+		intelligence = scanner.nextInt();
+		dexterity = scanner.nextInt();
+		physicalArmour = scanner.nextInt();
+		// lines 11 - 15
+		magicalArmour = scanner.nextInt();
+		physicalAttackDmg = scanner.nextInt();
+		magicalAttackDmg = scanner.nextInt();
+		attackSpeed = scanner.nextInt();
+		characterClass = scanner.next();
+		// lines 16 - 19 are empty for reserve
+		reserve1 = scanner.next();
+		reserve2 = scanner.next();
+		reserve3 = scanner.next();
+		reserve4 = scanner.next();
+		reserve5 = scanner.next();
+		
+	}
+	
 	public int getGameProgress() {
 		return gameProgress;
 	}
@@ -165,12 +223,12 @@ public class PlayerStats {
 		this.physicalAttackDmg = physicalAttackDmg;
 	}
 
-	public int getMagicakAttackDmg() {
-		return magicakAttackDmg;
+	public int getMagicalAttackDmg() {
+		return magicalAttackDmg;
 	}
 
-	public void setMagicakAttackDmg(int magicakAttackDmg) {
-		this.magicakAttackDmg = magicakAttackDmg;
+	public void setMagicalAttackDmg(int magicakAttackDmg) {
+		this.magicalAttackDmg = magicakAttackDmg;
 	}
 
 	public int getAttackSpeed() {
