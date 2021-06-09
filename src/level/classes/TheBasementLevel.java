@@ -122,21 +122,21 @@ public class TheBasementLevel extends Level {
 		npcs = new ArrayList<Npc>();
 		try {
 			// enemies
-			npcs.add(new Npc(1650, 500, new Circle(1650, 500, 50), new Image("testdata/circle_orange_basis_t_100.png"), 1650, 1900, 2));
-			npcs.add(new Npc(1650, 550, new Circle(1650, 550, 25), new Image("testdata/circle_orange_basis_t_50.png"), 1650, 1900, 3));
-			npcs.add(new Npc(1900, 550, new Circle(1900, 550, 25), new Image("testdata/circle_orange_basis_t_50.png"), 1650, 1900, 2));
+			npcs.add(new Npc(1650, 500, new Circle(1650, 500, 50), new Image("res/images/Spider2.png"), 1650, 1900, 2));
+			npcs.add(new Npc(1650, 550, new Circle(1650, 550, 25), new Image("res/images/Spider2.png"), 1650, 1900, 3));
+			npcs.add(new Npc(1900, 550, new Circle(1900, 550, 25), new Image("res/images/Spider2.png"), 1650, 1900, 2));
 
-			npcs.add(new Npc(2000, 950, new Circle(1900, 950, 25), new Image("testdata/circle_orange_basis_t_50.png"), 2000, 3500, 2));
-			npcs.add(new Npc(2500, 925, new Circle(1900, 925, 37.5f), new Image("testdata/circle_orange_basis_t_75.png"), 2000, 3500, 2));
-			npcs.add(new Npc(3000, 950, new Circle(1900, 950, 25), new Image("testdata/circle_orange_basis_t_50.png"), 2000, 3500, 4));
-			npcs.add(new Npc(3500, 925, new Circle(1900, 925, 37.5f), new Image("testdata/circle_orange_basis_t_75.png"), 2000, 3500, 2));
-			npcs.add(new Npc(2500, 900, new Circle(1900, 900, 50), new Image("testdata/circle_orange_basis_t_100.png"), 2000, 3500, 1));
-			npcs.add(new Npc(2000, 925, new Circle(1900, 925, 37.5f), new Image("testdata/circle_orange_basis_t_75.png"), 2000, 3500, 3));
+			npcs.add(new Npc(2000, 950, new Circle(1900, 950, 25), new Image("res/images/Spider2.png"), 2000, 3500, 2));
+			npcs.add(new Npc(2500, 925, new Circle(1900, 925, 37.5f), new Image("res/images/Spider2.png"), 2000, 3500, 2));
+			npcs.add(new Npc(3000, 950, new Circle(1900, 950, 25), new Image("res/images/Spider2.png"), 2000, 3500, 4));
+			npcs.add(new Npc(3500, 925, new Circle(1900, 925, 37.5f), new Image("res/images/Spider2.png"), 2000, 3500, 2));
+			npcs.add(new Npc(2500, 900, new Circle(1900, 900, 50), new Image("res/images/Spider2.png"), 2000, 3500, 1));
+			npcs.add(new Npc(2000, 925, new Circle(1900, 925, 37.5f), new Image("res/images/Spider2.png"), 2000, 3500, 3));
 
-			npcs.add(new Npc(4750, 950, new Circle(4750, 950, 25), new Image("testdata/circle_orange_basis_t_50.png"), 4750, 4750, 0));
+			npcs.add(new Npc(4750, 950, new Circle(4750, 950, 25), new Image("res/images/Spider2.png"), 4750, 4750, 0));
 			
 			// boss
-			npcs.add(new Npc(3000, -1412, new Rectangle(3000, -1412, 512, 512), new Image("testdata/wallpaper/paper1.png"), 3000, 5400, 2));
+			npcs.add(new Npc(3000, -1412, new Rectangle(3000, -1412, 512, 512), new Image("res/images/Spider.png"), 3000, 5400, 2));
 			
 			// objects:
 			// door
