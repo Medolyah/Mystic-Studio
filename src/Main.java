@@ -25,7 +25,7 @@ public class Main extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		cursorImage = new Image("res/images/Spider2.png");
+		cursorImage = new Image("testdata/cursor.png");
 		container.setMouseCursor(cursorImage, 0, 0);
 		try {
 			this.game = new MysticStudioGame(container);

@@ -116,7 +116,6 @@ public class PickLevel extends Menu {
 		game.setLevel(true);
 		game.setPlayer(true);
 		game.setOverlay(true);
-		game.setPlayerStats(true);
 		game.setPickLevel(true);
 	}
 

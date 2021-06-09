@@ -1,6 +1,7 @@
 package menu.classes;
 
 import java.awt.Font;
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import org.newdawn.slick.Color;
@@ -15,49 +16,53 @@ import org.newdawn.slick.geom.Shape;
 
 import basic.classes.MysticButton;
 import basic.classes.MysticStudioGame;
+import player.classes.PlayerStats;
 
 @SuppressWarnings("deprecation")
 public class CharacterSelection extends Menu {
-	
+
 	private MysticStudioGame game;
 	private boolean active = false;
+	private File saveFile;
 
 	private Font titleFont;
 	private TrueTypeFont ttTitleFont;
 	private Font textFont;
 	private TrueTypeFont ttTextFont;
 
-	private MysticButton warriorButton;
+	private MysticButton knightButton;
 	private MysticButton mageButton;
 	private MysticButton rangerButton;
 	
+//	private PlayerStats playerStats;
+
 	public CharacterSelection(MysticStudioGame game) throws SlickException, FileNotFoundException {
 		this.game = game;
 		this.active = true;
-		backgroundImage = new Image("res/images/Titelbild_ohne_Menu_FS.png");
+		backgroundImage = new Image("res/images/Main_Menu.png");
 
 		titleFont = new Font("Distant Galaxy", Font.PLAIN, 50);
 		ttTitleFont = new TrueTypeFont(titleFont, true);
 		textFont = new Font("Distant Galaxy", Font.PLAIN, 25);
 		ttTextFont = new TrueTypeFont(textFont, true);
 
-		Image warriorImage = new Image("res/images/Confirm_Button.png");
-		Shape warriorShape = new Rectangle(790, 700, 400, 61);
-		warriorButton = new MysticButton(790, 700, warriorShape, warriorImage);
+		Image knightImage = new Image("res/images/Knight_Profile.png");
+		Shape knightShape = new Rectangle(700, 700, 150, 250);
+		knightButton = new MysticButton(700, 700, knightShape, knightImage);
 
-		Image mageImage = new Image("res/images/Confirm_Button.png");
-		Shape mageShape = new Rectangle(790, 800, 400, 61);
-		mageButton = new MysticButton(790, 800, mageShape, mageImage);
+		Image mageImage = new Image("res/images/Knight_Profile.png");
+		Shape mageShape = new Rectangle(900, 700, 150, 250);
+		mageButton = new MysticButton(900, 700, mageShape, mageImage);
 
-		Image rangerImage = new Image("res/images/Confirm_Button.png");
-		Shape rangerShape = new Rectangle(790, 900, 400, 61);
-		rangerButton = new MysticButton(790, 900, rangerShape, rangerImage);
+		Image rangerImage = new Image("res/images/Knight_Profile.png");
+		Shape rangerShape = new Rectangle(1100, 700, 150, 250);
+		rangerButton = new MysticButton(1100, 700, rangerShape, rangerImage);
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException, FileNotFoundException {
 		if (container.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
 			active = false;
-		} else {	
+		} else {
 			checkClicked(container);
 		}
 	}
@@ -67,9 +72,9 @@ public class CharacterSelection extends Menu {
 			g.drawImage(backgroundImage, backgroundImagePosX, backgroundImagePosY);
 
 			Color textColor = new Color(0.1f, 0.1f, 0.1f);
-			ttTitleFont.drawString(720, 600, "SELECT CHARACTER", textColor);
+			ttTitleFont.drawString(690, 600, "SELECT A CHARACTER", textColor);
 
-			warriorButton.render(container, g);
+			knightButton.render(container, g);
 			mageButton.render(container, g);
 			rangerButton.render(container, g);
 
@@ -80,14 +85,16 @@ public class CharacterSelection extends Menu {
 
 	private void checkClicked(GameContainer container) throws FileNotFoundException, SlickException {
 		if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			if (warriorButton.isClicked(container.getInput())) {
-				
+			if (knightButton.isClicked(container.getInput())) {
+				saveFile = new File("res/savegames/save1.txt");
+				game.getMainMenu().runGame(0, saveFile);
 			} else if (mageButton.isClicked(container.getInput())) {
-
+				saveFile = new File("res/savegames/save2.txt");
+				game.getMainMenu().runGame(0, saveFile);
 			} else if (rangerButton.isClicked(container.getInput())) {
-
+				saveFile = new File("res/savegames/save3.txt");
+				game.getMainMenu().runGame(0, saveFile);
 			}
-			game.getMainMenu().runGame(0);
 		}
 	}
 

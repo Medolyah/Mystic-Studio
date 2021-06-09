@@ -50,7 +50,7 @@ public class Options extends Menu {
 
 	public Options(MysticStudioGame game) throws SlickException, IOException {
 		this.game = game;
-		backgroundImage = new Image("res/images/Titelbild_ohne_Menu_FS.png");
+		backgroundImage = new Image("res/images/Main_Menu.png");
 		active = true;
 		readsettings();
 
