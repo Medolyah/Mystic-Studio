@@ -13,6 +13,7 @@ import org.newdawn.slick.geom.Shape;
 
 import audio.classes.GameMusic;
 import level.classes.Level;
+import menu.classes.GameOver;
 import menu.classes.Intro;
 import menu.classes.InventoryAndStats;
 import menu.classes.MainMenu;
@@ -36,6 +37,7 @@ public class MysticStudioGame {
 	private WindowMenu windowMenu;
 	private PickLevel pickLevel;
 	private InventoryAndStats inventory;
+	private GameOver gameOver;
 
 	public MysticStudioGame(GameContainer container) throws SlickException, FileNotFoundException {
 
@@ -57,7 +59,7 @@ public class MysticStudioGame {
  		} catch (SlickException e) {
  			e.printStackTrace();
  		}
- 		playerInstance = new Player(null, xPos, yPos, hitbox, playerImage);
+ 		playerInstance = new Player(null, xPos, yPos, hitbox, playerImage, this);
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException, IOException {
@@ -65,6 +67,14 @@ public class MysticStudioGame {
 		// intro
 		if (intro != null) {
 			intro.update(container, delta);
+		}
+		
+		// game over
+		if (gameOver != null) {
+			gameOver.update(container, delta);
+			if (gameOver.getExit()) {
+				gameOver = null;
+			}
 		}
 
 		// main menu
@@ -89,6 +99,18 @@ public class MysticStudioGame {
 		// player
 		if (player != null) {
 			player.update(container, delta);
+			if (player.getCurrentLife() <= 0) {
+				player = null;
+				level = null;
+				overlay = null;
+				inventory = null;
+				pickLevel = null;
+				windowMenu = null;
+				mainMenu = new MainMenu(this);
+				if (gameOver == null) {
+					gameOver = new GameOver(this);
+				}
+			}
 		}
 
 		// overlay (UI)
@@ -114,15 +136,15 @@ public class MysticStudioGame {
 		
 		// level picker
 		// TODO pick level
-		if (input.isKeyPressed(Input.KEY_J)) {
-			if (level != null && player != null) {
-				if (pickLevel == null) {
-					pickLevel = new PickLevel(this);
-				} else {
-					pickLevel = null;
-				}
-			}
-		}
+//		if (input.isKeyPressed(Input.KEY_J)) {
+//			if (level != null && player != null) {
+//				if (pickLevel == null) {
+//					pickLevel = new PickLevel(this);
+//				} else {
+//					pickLevel = null;
+//				}
+//			}
+//		}
 		
 		// inventory and stats
 		if (input.isKeyPressed(Input.KEY_I) || input.isKeyPressed(Input.KEY_C)) {
@@ -178,6 +200,11 @@ public class MysticStudioGame {
 		// inventory and stats
 		if (inventory != null && level != null && player != null) {
 			inventory.render(container, g);
+		}
+		
+		// game over
+		if (gameOver != null) {
+			gameOver.render(container, g);
 		}
 	}
 
@@ -289,6 +316,10 @@ public class MysticStudioGame {
 			inventory = null;
 		}
 		
+	}
+
+	public PickLevel getPickLevel() {
+		return this.pickLevel;
 	}
 
 }

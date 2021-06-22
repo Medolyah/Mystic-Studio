@@ -207,24 +207,24 @@ public class CaveLevel extends Level {
 			
 			// enemies
 			// first floor
-			npcs.add(new Npc(1000, 910, new Circle(1000, 910, 60), spider2, 1000, 2000, 2));
-			npcs.add(new Npc(1500, 910, new Circle(1500, 910, 60), spider2, 1000, 2000, 3));
-			npcs.add(new Npc(2000, 910, new Circle(2000, 910, 60), spider2, 1500, 2200, 1));
-			npcs.add(new Npc(1300, 910, new Circle(3000, 910, 60), spider2, 1200, 1900, 2));
-			npcs.add(new Npc(1400, 910, new Circle(1400, 910, 60), spider2, 1100, 1750, 2));
+			npcs.add(new Npc(game, 000, 910, new Circle(1000, 910, 60), spider2, 1000, 2000, 2, 100, 200, 1));
+			npcs.add(new Npc(game, 1500, 910, new Circle(1500, 910, 60), spider2, 1000, 2000, 3, 100, 200, 1));
+			npcs.add(new Npc(game, 2000, 910, new Circle(2000, 910, 60), spider2, 1500, 2200, 1, 100, 200, 1));
+			npcs.add(new Npc(game, 1300, 910, new Circle(3000, 910, 60), spider2, 1200, 1900, 2, 100, 200, 1));
+			npcs.add(new Npc(game, 1400, 910, new Circle(1400, 910, 60), spider2, 1100, 1750, 2, 100, 200, 1));
 			//stairs + stala*
-			npcs.add(new Npc(3140, 1000, new Rectangle(3140, 1000, 300, 145), devilEye1, 3100, 4000, 2));			
-			npcs.add(new Npc(4900, 1000, new Rectangle(4900, 1000, 300, 145), devilEye1, 4500, 5400, 2));			
-			npcs.add(new Npc(4500, 1250, new Circle(4500, 1250, 50), magicMushroom, 4500, 4500, 0));			
-			npcs.add(new Npc(5000, 1250, new Circle(5000, 1250, 50), magicMushroom, 5000, 5000, 0));
+			npcs.add(new Npc(game, 3140, 1000, new Rectangle(3140, 1000, 300, 145), devilEye1, 3100, 4000, 2, 100, 200, 1));			
+			npcs.add(new Npc(game, 4900, 1000, new Rectangle(4900, 1000, 300, 145), devilEye1, 4500, 5400, 2, 100, 200, 1));			
+			npcs.add(new Npc(game, 4500, 1250, new Circle(4500, 1250, 50), magicMushroom, 4500, 4500, 0, 100, 200, 1));			
+			npcs.add(new Npc(game, 5000, 1250, new Circle(5000, 1250, 50), magicMushroom, 5000, 5000, 0, 100, 200, 1));
 			// hole 1
-			npcs.add(new Npc(6150, 2000, new Circle(6210, 2000, 50), magicMushroom, 6150, 6150, 0));			
-			npcs.add(new Npc(6210, 2000, new Circle(6210, 2000, 50), magicMushroom, 6210, 6210, 0));			
-			npcs.add(new Npc(6410, 2000, new Circle(6410, 2000, 50), magicMushroom, 6410, 6410, 0));
-			npcs.add(new Npc(6150, 2000, new Circle(6150, 2000, 60), spider2, 6150, 6390, 1));		
-			npcs.add(new Npc(6800, 1550, new Circle(6800, 1550, 50), magicMushroom, 6800, 6800, 0));
+			npcs.add(new Npc(game, 6150, 2000, new Circle(6210, 2000, 50), magicMushroom, 6150, 6150, 0, 100, 200, 1));			
+			npcs.add(new Npc(game, 6210, 2000, new Circle(6210, 2000, 50), magicMushroom, 6210, 6210, 0, 100, 200, 1));			
+			npcs.add(new Npc(game, 6410, 2000, new Circle(6410, 2000, 50), magicMushroom, 6410, 6410, 0, 100, 200, 1));
+			npcs.add(new Npc(game, 6150, 2000, new Circle(6150, 2000, 60), spider2, 6150, 6390, 1, 100, 200, 1));		
+			npcs.add(new Npc(game, 6800, 1550, new Circle(6800, 1550, 50), magicMushroom, 6800, 6800, 0, 100, 200, 1));
 			// hole 1-2
-			npcs.add(new Npc(6900, 1100, new Rectangle(6900, 1100, 300, 145), devilEye1, 6900, 8100, 2));
+			npcs.add(new Npc(game, 6900, 1100, new Rectangle(6900, 1100, 300, 145), devilEye1, 6900, 8100, 2, 100, 200, 1));
 			
 			
 		} catch (SlickException e) {
@@ -235,6 +235,15 @@ public class CaveLevel extends Level {
 		try {
 			this.background = new Image("res/images/Cave_Background.png");
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// interaction objects
+		interactionObjects = new ArrayList<InteractionObject>();
+		try {
+			interactionObjects.add(new InteractionObject(10150, 2895, new Rectangle(10150, 2895, 150, 250),
+					new Image("res/images/Basement_Door.png"), game, "CaveLevel"));
+		} catch (SlickException e) {
 			e.printStackTrace();
 		}
 	}

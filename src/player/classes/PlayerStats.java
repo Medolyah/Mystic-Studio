@@ -33,6 +33,7 @@ public class PlayerStats {
 	private int attackSpeed;
 	
 	private String characterClass;
+	private int currentGold;
 	
 	private String reserve1;
 	private String reserve2;
@@ -84,12 +85,12 @@ public class PlayerStats {
 		magicalAttackDmg = scanner.nextInt();
 		attackSpeed = scanner.nextInt();
 		characterClass = scanner.next();
-		// lines 16 - 19 are empty for reserve
+		// lines 16 - 17
+		currentGold = scanner.nextInt();
+		// lines 17 - 19 are empty for reserve
 		reserve1 = scanner.next();
 		reserve2 = scanner.next();
 		reserve3 = scanner.next();
-		reserve4 = scanner.next();
-		reserve5 = scanner.next();
 		
 	}
 	
@@ -239,4 +240,19 @@ public class PlayerStats {
 		this.attackSpeed = attackSpeed;
 	}
 
+	public String getPlayerClass() {
+		return characterClass;
+	}
+	
+	public void setCharacterClass(String characterClass) {
+		this.characterClass = characterClass;
+	}
+	
+	public int getCurrentGold() {
+		return currentGold;
+	}
+	
+	public void setCurrentGold(int gold) {
+		this.currentGold = gold;
+	}
 }

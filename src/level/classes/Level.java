@@ -2,12 +2,14 @@ package level.classes;
 
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.geom.Shape;
 
 import basic.classes.GraphicObject;
 import basic.classes.MysticStudioGame;
@@ -148,6 +150,25 @@ public abstract class Level {
 			break;
 		default:
 			break;
+		}
+	}
+	
+	public ArrayList<Npc> getEnemyList() {
+		return this.npcs;
+	}
+	
+	public void hitEnemy(Shape playerHitbox, int damage) {
+		Iterator<Npc> iterator = npcs.iterator();
+		boolean kill = false;
+		while (iterator.hasNext()) {
+			Npc npc = iterator.next();
+			if (playerHitbox.intersects(npc.hitbox)) {
+				kill = npc.setCurrentHP(damage);
+				if (kill) {
+					iterator.remove();
+					break;
+				}
+			}
 		}
 	}
 }

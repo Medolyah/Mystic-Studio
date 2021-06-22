@@ -13,6 +13,7 @@ import org.newdawn.slick.geom.Shape;
 
 import basic.classes.MysticButton;
 import basic.classes.MysticStudioGame;
+import level.classes.CaveLevel;
 import level.classes.Level;
 import level.classes.TheBasementLevel;
 import player.classes.Player;
@@ -22,10 +23,7 @@ public class PickLevel extends Menu {
 
 	private MysticButton continueButton;
 	private MysticButton levelOneButton;
-	private MysticButton exitButton;
-
-	private Options options;
-	private boolean optionsMenu = false;
+	private MysticButton levelTwoButton;
 
 	private boolean exit = false;
 
@@ -35,32 +33,29 @@ public class PickLevel extends Menu {
 		backgroundImage = new Image("res/images/Window-Menu.png");
 		backgroundImagePosX = 710;
 		backgroundImagePosY = 240;
-		menuButtons();
 		this.game = game;
+		menuButtons();
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException, IOException {
-		if (options != null) {
-			optionsMenu = options.getActive();
-		}
-		if (optionsMenu) {
-			options.update(container, delta);
-		} else {
-			options = null;
-			System.gc();
-			checkClick(container);
-		}
 
+		if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+			if (continueButton.isClicked(container.getInput())) {
+				continueGame(container);
+			} else if (levelOneButton.isClicked(container.getInput())) {
+				levelOne();
+			} else if (levelTwoButton.isClicked(container.getInput()) && game.getPlayer().getGameProgress() >= 2) {
+				levelTwo();
+			}
+		}
 	}
 
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		if (options != null) {
-			options.render(container, g);
-		} else {
-			g.drawImage(backgroundImage, backgroundImagePosX, backgroundImagePosY);
-			continueButton.render(container, g);
-			levelOneButton.render(container, g);
-			exitButton.render(container, g);
+		g.drawImage(backgroundImage, backgroundImagePosX, backgroundImagePosY);
+		continueButton.render(container, g);
+		levelOneButton.render(container, g);
+		if (game.getPlayer().getGameProgress() >= 2) {
+			levelTwoButton.render(container, g);
 		}
 	}
 
@@ -74,23 +69,12 @@ public class PickLevel extends Menu {
 		Shape levelOneButtonShape = new Rectangle(760, 600, 400, 61);
 		levelOneButton = new MysticButton(760, 600, levelOneButtonShape, levelOneButtonImage);
 
-		Image exitButtonImage = new Image("res/images/Exit_Button.png");
-		Shape exitButtonShape = new Rectangle(760, 700, 400, 61);
-		exitButton = new MysticButton(760, 700, exitButtonShape, exitButtonImage);
-
-	}
-
-	private void checkClick(GameContainer container) throws SlickException, IOException {
-
-		if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			if (continueButton.isClicked(container.getInput())) {
-				continueGame(container);
-			} else if (levelOneButton.isClicked(container.getInput())) {
-				levelOne();
-			} else if (exitButton.isClicked(container.getInput())) {
-				exitGame();
-			}
+		if (game.getPlayer().getGameProgress() >= 2) {
+			Image levelTwoButtonImage = new Image("res/images/Level1.png");
+			Shape levelTwoButtonShape = new Rectangle(760, 700, 400, 61);
+			levelTwoButton = new MysticButton(760, 700, levelTwoButtonShape, levelTwoButtonImage);
 		}
+
 	}
 
 	private void continueGame(GameContainer container) throws FileNotFoundException, SlickException {
@@ -99,6 +83,11 @@ public class PickLevel extends Menu {
 
 	private void levelOne() throws SlickException, IOException {
 
+		game.setLevel(true);
+		game.setPlayer(true);
+		game.setOverlay(true);
+		game.setPickLevel(true);
+
 		// set level
 		Level level = new TheBasementLevel(game);
 		game.setLevel(level, 200, 760);
@@ -106,17 +95,22 @@ public class PickLevel extends Menu {
 		Player player = game.getPlayer();
 		game.setOverlay(new Overlay(player));
 
-		// unset main menu
-		game.setMainMenu(true);
-
 	}
 
-	private void exitGame() throws FileNotFoundException, SlickException {
-		exit = true;
+	private void levelTwo() throws SlickException, IOException {
+
 		game.setLevel(true);
 		game.setPlayer(true);
 		game.setOverlay(true);
 		game.setPickLevel(true);
+
+		// set level
+		Level level = new CaveLevel(game);
+		game.setLevel(level, 400, 660);
+
+		Player player = game.getPlayer();
+		game.setOverlay(new Overlay(player));
+
 	}
 
 	public boolean getExit() {

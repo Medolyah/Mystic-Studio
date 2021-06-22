@@ -4,7 +4,7 @@
 Stats and progress
 ------------------------
   1 | game progress (last finished level)
-  2 | level
+  2 | player level
   3 | current XP
   4 | required XP for next level
   5 | maximum life
@@ -20,7 +20,7 @@ Stats and progress
  13 | magical attack damage
  14 | attack speed
  15 | chracter class (warrior, mage, ranger)
- 16 | reserve line
+ 16 | gold
  17 | reserve line
  18 | reserve line
  19 | reserve line

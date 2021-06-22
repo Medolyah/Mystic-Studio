@@ -18,6 +18,7 @@ import level.classes.CaveLevel;
 import level.classes.Level;
 import level.classes.TestLevel1;
 import level.classes.TheBasementLevel;
+import level.classes.Village;
 import player.classes.Player;
 import ui.classes.Overlay;
 
@@ -154,27 +155,27 @@ public class MainMenu extends Menu {
 	public void runGame(int levelNumber, File saveFile) throws FileNotFoundException, SlickException {
 		// set level
 		Level level;
-		switch (levelNumber) {
-		case 0:
-			level = new TestLevel1(game);
-			game.setLevel(level, 1200, 300);
-			break;
-
-		case 1:
-			level = new TheBasementLevel(game);
-			game.setLevel(level, 200, 760);
-			break;
-			
-		case 2:
-			level = new CaveLevel(game);
-			game.setLevel(level, 400, 660);
-			break;
-			
-		default:
-			level = new TestLevel1(game);
-			game.setLevel(level, 1200, 300);
-			break;
-		}
+//		switch (levelNumber) {
+//		case 0:
+			level = new Village(game);
+			game.setLevel(level, 1500, 600);
+//			break;
+//
+//		case 1:
+//			level = new TheBasementLevel(game);
+//			game.setLevel(level, 200, 760);
+//			break;
+//			
+//		case 2:
+//			level = new CaveLevel(game);
+//			game.setLevel(level, 400, 660);
+//			break;
+//			
+//		default:
+//			level = new TestLevel1(game);
+//			game.setLevel(level, 1200, 300);
+//			break;
+//		}
 		
 		// set player
 		Player player = game.getPlayer();

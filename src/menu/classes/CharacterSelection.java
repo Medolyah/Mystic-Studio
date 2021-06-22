@@ -16,7 +16,6 @@ import org.newdawn.slick.geom.Shape;
 
 import basic.classes.MysticButton;
 import basic.classes.MysticStudioGame;
-import player.classes.PlayerStats;
 
 @SuppressWarnings("deprecation")
 public class CharacterSelection extends Menu {
@@ -50,7 +49,7 @@ public class CharacterSelection extends Menu {
 		Shape knightShape = new Rectangle(700, 700, 150, 250);
 		knightButton = new MysticButton(700, 700, knightShape, knightImage);
 
-		Image mageImage = new Image("res/images/Knight_Profile.png");
+		Image mageImage = new Image("res/images/Mage_Profile.png");
 		Shape mageShape = new Rectangle(900, 700, 150, 250);
 		mageButton = new MysticButton(900, 700, mageShape, mageImage);
 
@@ -93,7 +92,7 @@ public class CharacterSelection extends Menu {
 				game.getMainMenu().runGame(0, saveFile);
 			} else if (rangerButton.isClicked(container.getInput())) {
 				saveFile = new File("res/savegames/save3.txt");
-				game.getMainMenu().runGame(0, saveFile);
+				game.getMainMenu().runGame(99, saveFile);
 			}
 		}
 	}
