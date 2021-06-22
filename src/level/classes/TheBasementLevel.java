@@ -214,11 +214,6 @@ public class TheBasementLevel extends Level {
 			npcs.add(new Npc(game, 3000, -1212, new Rectangle(3000, -1212, 300, 145), devilEye1, 3000, 5400, 2, 2000,
 					200, 2));
 
-			// objects:
-			// door
-//			npcs.add(new Npc(game, 180, 750, new Rectangle(180, 750, 150, 250),
-//					new Image("res/images/Basement_Door.png"), 200, 200, 0, 100, 200, 0));
-
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

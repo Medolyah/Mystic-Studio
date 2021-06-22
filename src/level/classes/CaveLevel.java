@@ -226,7 +226,6 @@ public class CaveLevel extends Level {
 			// hole 1-2
 			npcs.add(new Npc(game, 6900, 1100, new Rectangle(6900, 1100, 300, 145), devilEye1, 6900, 8100, 2, 100, 200, 1));
 			
-			
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
