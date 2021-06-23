@@ -51,6 +51,5 @@ public class Main extends BasicGame {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-
 	}
 }

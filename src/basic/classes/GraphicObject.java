@@ -19,7 +19,7 @@ public class GraphicObject {
 		this.hitbox = hitbox;
 		this.image = image;
 		
-		// correct the hitbox position instantly
+		// set hitbox position
 		this.hitbox.setX(xPos);
 		this.hitbox.setY(yPos);
 	}
@@ -31,6 +31,7 @@ public class GraphicObject {
 	public void render(GameContainer container, Graphics g) {
 		g.drawImage(image, xPos, yPos);
 
+		// debug: set visibility of hitbox
 		Color transparent = new Color(0.2f, 0.5f, 0.5f, 0.4f);
 		g.setColor(transparent);
 		g.fill(hitbox);
