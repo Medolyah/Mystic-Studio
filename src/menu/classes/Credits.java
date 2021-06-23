@@ -85,6 +85,9 @@ public class Credits extends Menu {
 		ttTextFont.drawString(875, 1750 + scrollPosition, "Eclipse by Eclipse Foundation", textColor);
 		ttTextFont.drawString(875, 1780 + scrollPosition, "Slick2D by Ninjacave", textColor);
 		ttTextFont.drawString(875, 1810 + scrollPosition, "Git / Github by Junio Hamano", textColor);
+
+		ttTitleFont.drawString(875, 1900 + scrollPosition, "* Special Thanks *", textColor);
+		ttTextFont.drawString(875, 1950 + scrollPosition, "Fabi", textColor);
 		
 		ttTextFont.drawString(1500, 1000, "Press ESC to skip", new Color(0.1f,0.1f,0.1f,0.5f));
 

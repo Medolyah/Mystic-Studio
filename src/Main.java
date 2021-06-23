@@ -10,6 +10,8 @@ public class Main extends BasicGame {
 	private static String gameName = "Mysitc Heroes of Melodies";
 
 	private MysticStudioGame game;
+	private Image cursorImage;
+	
 
 	public Main() {
 		super(gameName);
@@ -23,6 +25,8 @@ public class Main extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		cursorImage = new Image("testdata/cursor.png");
+		container.setMouseCursor(cursorImage, 0, 0);
 		try {
 			this.game = new MysticStudioGame(container);
 		} catch (FileNotFoundException e) {

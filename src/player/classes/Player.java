@@ -1,67 +1,89 @@
 package player.classes;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
+import audio.classes.GameSound;
 import basic.classes.GraphicObject;
+import basic.classes.MysticStudioGame;
 import level.classes.InteractionObject;
 import level.classes.Level;
-import level.classes.Npc;
 
 public class Player extends GraphicObject {
 
-	int imageDeltaSum;
+	MysticStudioGame game;
 	
+	private int imageDeltaSum;
+	private int deltaWalkSound;
+	private int deltaAttack;
+	boolean deltaSwordImage = false;
+	boolean rotated = false;
+	int deltaAttackDelay = 0;
+
+	private int healCooldown;
+	private int manaCooldown;
+
 	private Image moveLeftImg1;
 	private Image moveLeftImg2;
 	private Image moveRightImg1;
-	private Image moveRightImg2;	
+	private Image moveRightImg2;
+	
+	private Image swordImage;
 
 	private Level environment;
 	private int yVelocity;
 	private int yAcceleration;
 	private PlayerStats stats;
-	
+
 	public enum Movement {
 		UP, RIGHT, LEFT, DOWN
 	}
 
-	public Player(Level environment, int xPos, int yPos, Shape hitbox, Image image) {
+	public Player(Level environment, int xPos, int yPos, Shape hitbox, Image image, MysticStudioGame game) {
 		super(xPos, yPos, hitbox, image);
 		this.environment = environment;
-		
-		// player stats
-		stats = new PlayerStats();
-		
+
 		// set y-velocity and acceleration
 		this.yAcceleration = -2;
 		this.yVelocity = 0;
-		
+
 		// initialize delta sums
 		this.imageDeltaSum = 0;
-		
+		this.healCooldown = 0;
+		this.manaCooldown = 0;
+		this.deltaWalkSound = 0;
+
 		// load player images (movement animation)
 		try {
 			this.moveLeftImg1 = new Image("res/images/Knight-left-walk-1.png");
 			this.moveLeftImg2 = new Image("res/images/Knight-left-walk-2.png");
 			this.moveRightImg1 = new Image("res/images/Knight-right-walk-1.png");
 			this.moveRightImg2 = new Image("res/images/Knight-right-walk-2.png");
+			this.swordImage = new Image("res/images/Wood-Sword.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
+		this.game = game;
 	}
 
 	@Override
-	public void update(GameContainer container, int delta) {
+	public void update(GameContainer container, int delta) throws FileNotFoundException, SlickException {
 
 		Input input = container.getInput();
-		
+
 		// sum delta sums
 		imageDeltaSum += delta;
-		
+		deltaWalkSound += delta;
+		deltaAttack += delta;
+
 		// movement
 		switch (environment.levelType) {
 		case BIRDS_EYE_VIEW:
@@ -72,20 +94,38 @@ public class Player extends GraphicObject {
 		default:
 			break;
 		}
-		
+
 		// interaction
 		if (input.isKeyPressed(Input.KEY_E)) {
 			if (environment.interactionObjects != null) {
-				for (InteractionObject object: environment.interactionObjects) {
+				for (InteractionObject object : environment.interactionObjects) {
 					if (super.checkContact(object)) {
-						object.interaction();
+						object.executeInteraction();
 					}
-				}				
+				}
 			}
 		}
-	};
+	}
+	
+	@Override
+	public void render(GameContainer container, Graphics g) {
+		g.drawImage(image, xPos, yPos);
+		Color transparent;
+		// color for debugging / hitbox visualization during development
+		if (container.getInput().isKeyDown(Input.KEY_NUMPAD5)) {
+			transparent = new Color(0.2f, 0.5f, 0.5f, 0.4f);
+		} else {
+			transparent = new Color(0.2f, 0.5f, 0.5f, 0.0f);	
+		}
+		g.setColor(transparent);
+		
+		g.fill(hitbox);
+		if (deltaAttackDelay > 0 && deltaAttackDelay < 500) {
+			g.drawImage(swordImage, xPos, yPos + 75);
+		}
+	}
 
-	private void platformerMovement(GameContainer container, int delta) {
+	private void platformerMovement(GameContainer container, int delta) throws FileNotFoundException, SlickException {
 
 		Input input = container.getInput();
 
@@ -101,30 +141,91 @@ public class Player extends GraphicObject {
 
 		// perform movement
 		if (yVelocity < 0) {
-			moveDown(container, Math.abs(yVelocity));			
+			moveDown(container, Math.abs(yVelocity));
 		} else {
 			moveUp(container, Math.abs(yVelocity));
 		}
 
+		// TODO move speed with shift for debugging / level building
+		// remove in final version
 		if (input.isKeyDown(Input.KEY_A)) {
-			moveLeft(container, 5);
+			if (deltaWalkSound > 500) {
+				deltaWalkSound = 0;
+				GameSound cooldownSound = new GameSound("res/sounds/stepSound.wav");
+				cooldownSound.playSound();
+			}
+			if (input.isKeyDown(Input.KEY_LSHIFT)) {
+				moveLeft(container, 100);
+			} else {
+				moveLeft(container, 5);
+			}
 		}
 		if (input.isKeyDown(Input.KEY_D)) {
-			moveRight(container, 5);
+			if (deltaWalkSound > 500) {
+				deltaWalkSound = 0;
+				GameSound cooldownSound = new GameSound("res/sounds/stepSound.wav");
+				cooldownSound.playSound();
+			}
+			if (input.isKeyDown(Input.KEY_LSHIFT)) {
+				moveRight(container, 100);
+			} else {
+				moveRight(container, 5);
+			}
 		}
-		
-		// life / energy / xp tests
+
+		// attack
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			setCurrentEnergy(-5);
+			deltaSwordImage = true;
 		}
-		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
-			setCurrentEnergy(20);
+		if (deltaSwordImage && deltaAttack > getAttackSpeed() * 750) {
+			if (deltaAttackDelay == 0) {
+				game.getLevel().hitEnemy(hitbox, this.getPhysDamage());
+			}
+			if (deltaAttackDelay < 250) {
+				deltaAttackDelay += delta;
+			} else if (deltaAttackDelay < 500) {
+				deltaAttackDelay += delta;
+				if (!rotated) {
+					swordImage.rotate(35);
+					rotated = true;
+				}
+			} else {
+				if (rotated) {
+					swordImage.rotate(-35);
+					rotated = false;
+				}
+				deltaAttackDelay = 0;
+				deltaSwordImage = false;
+				deltaAttack = 0;
+			}
 		}
-		if (input.isKeyPressed(Input.KEY_R)) {
-			setCurrentLife(25);
+
+		// life heal
+		if (healCooldown >= 0) {
+			healCooldown -= delta;
 		}
 		if (input.isKeyPressed(Input.KEY_Q)) {
-			setCurrentXP(7);
+			if (healCooldown <= 0) {
+				setCurrentLife(25);
+				healCooldown = 5000;
+			} else {
+				GameSound cooldownSound = new GameSound("res/sounds/cooldownSound.wav");
+				cooldownSound.playSound();
+			}
+		}
+
+		// mana heal
+		if (manaCooldown >= 0) {
+			manaCooldown -= delta;
+		}
+		if (input.isKeyPressed(Input.KEY_W)) {
+			if (manaCooldown <= 0) {
+				setCurrentEnergy(25);
+				manaCooldown = 5000;
+			} else {
+				GameSound cooldownSound = new GameSound("res/sounds/cooldownSound.wav");
+				cooldownSound.playSound();
+			}
 		}
 	}
 
@@ -155,7 +256,7 @@ public class Player extends GraphicObject {
 				// undo movement
 				super.setyPos(super.getyPos() + 1);
 				break;
-			} else {				
+			} else {
 				if (checkBorderDistance(container, Movement.UP)) {
 					// undo movement
 					super.setyPos(super.getyPos() + 1);
@@ -175,22 +276,22 @@ public class Player extends GraphicObject {
 				if (checkBorderDistance(container, Movement.DOWN)) {
 					// undo movement
 					super.setyPos(super.getyPos() - 1);
-				}				
+				}
 			}
 		}
 	}
 
 	private void moveLeft(GameContainer container, int steps) {
-		
+
 		moveLeftAnimation();
-		
+
 		for (int i = 0; i < steps; i++) {
 			super.setxPos(super.getxPos() - 1);
 			if (checkEnvironment(Movement.LEFT)) {
 				// undo movement
 				super.setxPos(super.getxPos() + 1);
 				break;
-			} else {				
+			} else {
 				if (checkBorderDistance(container, Movement.LEFT)) {
 					// undo movement
 					super.setxPos(super.getxPos() + 1);
@@ -200,7 +301,7 @@ public class Player extends GraphicObject {
 	}
 
 	private void moveRight(GameContainer container, int steps) {
-		
+
 		moveRightAnimation();
 
 		for (int i = 0; i < steps; i++) {
@@ -209,7 +310,7 @@ public class Player extends GraphicObject {
 				// undo movement
 				super.setxPos(super.getxPos() - 1);
 				break;
-			} else {				
+			} else {
 				if (checkBorderDistance(container, Movement.RIGHT)) {
 					// undo movement
 					super.setxPos(super.getxPos() - 1);
@@ -231,14 +332,14 @@ public class Player extends GraphicObject {
 		}
 		return false;
 	}
-	
+
 	private boolean checkBorderDistance(GameContainer container, Movement movement) {
 
 		// check if the player is to close to the screen border so the screen has to be
 		// moved
 		int screenHeight = (int) container.getScreenHeight();
 		int screenWidth = (int) container.getScreenWidth();
-		int minBorderDistanceVertical = 200;
+		int minBorderDistanceVertical = 250;
 		int minBorderDistanceHorizontal = 750;
 
 		if (movement == Movement.UP) {
@@ -275,45 +376,60 @@ public class Player extends GraphicObject {
 
 		return false;
 	}
-	
+
 	private void moveLeftAnimation() {
-		
+
 		image = moveLeftImg1;
-		
+
 		if (imageDeltaSum > 300) {
 			image = moveLeftImg2;
 		}
 		if (imageDeltaSum > 600) {
 			imageDeltaSum = 0;
 		}
-		
+
 	}
-	
+
 	private void moveRightAnimation() {
-		
+
 		image = moveRightImg1;
-		
+
 		if (imageDeltaSum > 300) {
 			image = moveRightImg2;
-			
+
 		}
 		if (imageDeltaSum > 600) {
 			imageDeltaSum = 0;
 		}
 	}
 
+	public void setPlayerStats(Player player, File saveFile) throws FileNotFoundException {
+		stats = new PlayerStats(player, saveFile);
+	}
+	
+	public int getGameProgress() {
+		return stats.getGameProgress();
+	}
+	
+	public void setGameProgress(int progress) {
+		stats.setGameProgress(progress);
+	}
+
+	public int getPlayerLevel() {
+		return stats.getPlayerLevel();
+	}
 
 	public int getMaxLife() {
 		return stats.getMaxLife();
 	}
-	
+
 	public int getCurrentLife() {
 		return stats.getCurrentLife();
 	}
 
-	private void setCurrentLife(int lifeChange) {
+	public void setCurrentLife(int lifeChange) {
 		stats.setCurrentLife(lifeChange);
-		
+
 	}
 
 	public int getMaxEnergy() {
@@ -323,20 +439,53 @@ public class Player extends GraphicObject {
 	public int getCurrentEnergy() {
 		return stats.getCurrentEnergy();
 	}
-	
+
 	private void setCurrentEnergy(int energyChange) {
-		stats.setCurrentEnergy(energyChange);		
+		stats.setCurrentEnergy(energyChange);
 	}
-	public float getRequiredXP() {
+
+	public int getRequiredXP() {
 		return stats.getRequiredXP();
 	}
 
-	public float getCurrentXP() {
+	public int getCurrentXP() {
 		return stats.getCurrentXP();
 	}
-	
+
 	private void setCurrentXP(int changeXP) {
 		stats.setCurrentXP(changeXP);
+	}
+
+	public int getStrengh() {
+		return stats.getStrengh();
+	}
+
+	public int getIntellegence() {
+		return stats.getIntelligence();
+	}
+
+	public int getDexterity() {
+		return stats.getDexterity();
+	}
+
+	public int getPhysArmpur() {
+		return stats.getPhysicalArmour();
+	}
+
+	public int getMagicArmour() {
+		return stats.getMagicalArmour();
+	}
+
+	public int getPhysDamage() {
+		return stats.getPhysicalAttackDmg();
+	}
+
+	public int getMagicDamage() {
+		return stats.getMagicalAttackDmg();
+	}
+
+	public int getAttackSpeed() {
+		return stats.getAttackSpeed();
 	}
 
 	public void setEnvironment(Level environment) {

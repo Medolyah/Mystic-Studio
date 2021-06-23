@@ -1,9 +1,13 @@
 package basic.classes;
 
+import java.io.FileNotFoundException;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
 public class GraphicObject {
@@ -12,6 +16,9 @@ public class GraphicObject {
 	public int yPos;
 	public Shape hitbox;
 	public Image image;
+	
+	// color for debugging / hitbox visualization during development
+	private Color transparent;
 
 	public GraphicObject(int xPos, int yPos, Shape hitbox, Image image) {
 		this.xPos = xPos;
@@ -24,16 +31,21 @@ public class GraphicObject {
 		this.hitbox.setY(yPos);
 	}
 	
-	public void update(GameContainer container, int delta) {
+	public void update(GameContainer container, int delta) throws FileNotFoundException, SlickException {
 		
 	}
 	
 	public void render(GameContainer container, Graphics g) {
 		g.drawImage(image, xPos, yPos);
 
-		// debug: set visibility of hitbox
-		Color transparent = new Color(0.2f, 0.5f, 0.5f, 0.4f);
+		// color for debugging / hitbox visualization during development
+		if (container.getInput().isKeyDown(Input.KEY_NUMPAD5)) {
+			transparent = new Color(0.2f, 0.5f, 0.5f, 0.4f);
+		} else {
+			transparent = new Color(0.2f, 0.5f, 0.5f, 0.0f);	
+		}
 		g.setColor(transparent);
+		
 		g.fill(hitbox);
 	}
 	

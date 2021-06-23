@@ -17,6 +17,7 @@ import org.newdawn.slick.geom.Shape;
 
 import basic.classes.MysticButton;
 import basic.classes.MysticStudioGame;
+import player.classes.PlayerStats;
 
 @SuppressWarnings("deprecation")
 public class SaveGameSelection extends Menu {
@@ -39,12 +40,14 @@ public class SaveGameSelection extends Menu {
 
 	private CharacterSelection characterSelection;
 	private boolean characterSelectionMenu = false;
+	
+	private PlayerStats playerStats;
 
 	public SaveGameSelection(MysticStudioGame game, boolean loadGame) throws SlickException, FileNotFoundException {
 		this.game = game;
 		this.loadGame = loadGame;
 		active = true;
-		backgroundImage = new Image("res/images/Titelbild_ohne_Menu_FS.png");
+		backgroundImage = new Image("res/images/Main_Menu.png");
 
 		titleFont = new Font("Distant Galaxy", Font.PLAIN, 50);
 		ttTitleFont = new TrueTypeFont(titleFont, true);
@@ -128,26 +131,26 @@ public class SaveGameSelection extends Menu {
 		}
 	}
 
-	private void loadGame(int saveGameSlot) throws FileNotFoundException {
+	private void loadGame(int saveGameSlot) throws FileNotFoundException, SlickException {
 		switch (saveGameSlot) {
 		case 1:
 			saveFile = new File("res/savegames/save1.txt");
+			playerStats = new PlayerStats(game.getPlayer(), saveFile);
 			break;
-
 		case 2:
 			saveFile = new File("res/savegames/save2.txt");
+			playerStats = new PlayerStats(game.getPlayer(), saveFile);
 			break;
-
 		case 3:
 			saveFile = new File("res/savegames/save3.txt");
+			playerStats = new PlayerStats(game.getPlayer(), saveFile);
 			break;
-
 		default:
 			break;
 		}
 		scanner = new Scanner(saveFile);
 		int gameProgress = scanner.nextInt();
-		game.getMainMenu().runGame(gameProgress);
+		game.getMainMenu().runGame(gameProgress, saveFile);
 	}
 
 	private void newGame(int saveGameSlot) throws SlickException, FileNotFoundException {

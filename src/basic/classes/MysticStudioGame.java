@@ -13,11 +13,13 @@ import org.newdawn.slick.geom.Shape;
 
 import audio.classes.GameMusic;
 import level.classes.Level;
+import menu.classes.GameOver;
 import menu.classes.Intro;
+import menu.classes.InventoryAndStats;
 import menu.classes.MainMenu;
+import menu.classes.PickLevel;
 import menu.classes.WindowMenu;
 import player.classes.Player;
-import player.classes.PlayerStats;
 import ui.classes.Overlay;
 
 public class MysticStudioGame {
@@ -31,9 +33,11 @@ public class MysticStudioGame {
 	private MainMenu mainMenu;
 	private Level level;
 	private Player player;
-	private PlayerStats playerStats;
 	private Overlay overlay;
 	private WindowMenu windowMenu;
+	private PickLevel pickLevel;
+	private InventoryAndStats inventory;
+	private GameOver gameOver;
 
 	public MysticStudioGame(GameContainer container) throws SlickException, FileNotFoundException {
 
@@ -55,7 +59,7 @@ public class MysticStudioGame {
  		} catch (SlickException e) {
  			e.printStackTrace();
  		}
- 		playerInstance = new Player(null, xPos, yPos, hitbox, playerImage);
+ 		playerInstance = new Player(null, xPos, yPos, hitbox, playerImage, this);
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException, IOException {
@@ -63,6 +67,14 @@ public class MysticStudioGame {
 		// intro
 		if (intro != null) {
 			intro.update(container, delta);
+		}
+		
+		// game over
+		if (gameOver != null) {
+			gameOver.update(container, delta);
+			if (gameOver.getExit()) {
+				gameOver = null;
+			}
 		}
 
 		// main menu
@@ -74,6 +86,10 @@ public class MysticStudioGame {
 		if (windowMenu != null) {
 			windowMenu.update(container, delta);
 		}
+		
+		if (pickLevel != null) {
+			pickLevel.update(container, delta);
+		}
 
 		// level
 		if (level != null) {
@@ -83,6 +99,18 @@ public class MysticStudioGame {
 		// player
 		if (player != null) {
 			player.update(container, delta);
+			if (player.getCurrentLife() <= 0) {
+				player = null;
+				level = null;
+				overlay = null;
+				inventory = null;
+				pickLevel = null;
+				windowMenu = null;
+				mainMenu = new MainMenu(this);
+				if (gameOver == null) {
+					gameOver = new GameOver(this);
+				}
+			}
 		}
 
 		// overlay (UI)
@@ -90,12 +118,45 @@ public class MysticStudioGame {
 			overlay.update(container, delta);
 		}
 		
+		// inventory and stats
+		if (inventory != null) {
+			inventory.update(container, delta);
+		}
+		
 		// ESC: end game
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			if (level != null && player != null) {
-				windowMenu = new WindowMenu(this);
+				if (windowMenu == null) {
+					windowMenu = new WindowMenu(this);					
+				} else {
+					windowMenu = null;
+				}
 			}
 		}
+		
+		// level picker
+		// TODO pick level
+//		if (input.isKeyPressed(Input.KEY_J)) {
+//			if (level != null && player != null) {
+//				if (pickLevel == null) {
+//					pickLevel = new PickLevel(this);
+//				} else {
+//					pickLevel = null;
+//				}
+//			}
+//		}
+		
+		// inventory and stats
+		if (input.isKeyPressed(Input.KEY_I) || input.isKeyPressed(Input.KEY_C)) {
+			if (level != null && player != null) {
+				if (inventory == null) {
+					inventory = new InventoryAndStats(this);
+				} else {
+					inventory = null;
+				}
+			}
+		}
+		
 	}
 
 	public void render(GameContainer container, Graphics g) throws SlickException, FileNotFoundException {
@@ -128,6 +189,22 @@ public class MysticStudioGame {
 		// window menu
 		if (windowMenu != null) {
 			windowMenu.render(container, g);
+		}
+		
+		// level picker
+		// TODO
+		if (pickLevel != null) {
+			pickLevel.render(container, g);
+		}
+		
+		// inventory and stats
+		if (inventory != null && level != null && player != null) {
+			inventory.render(container, g);
+		}
+		
+		// game over
+		if (gameOver != null) {
+			gameOver.render(container, g);
 		}
 	}
 
@@ -207,16 +284,6 @@ public class MysticStudioGame {
 			this.overlay = null;		
 		}
 	}
-
-	public void setPlayerStats(PlayerStats playerStats) {
-		this.playerStats = playerStats;		
-	}
-
-	public void setPlayerStats(boolean unsetPlayerStats) {
-		if (unsetPlayerStats) {
-			this.playerStats = null;		
-		}
-	}
 	
 	public void setWindowMenu(WindowMenu windowMenu) {
 		this.windowMenu = windowMenu;
@@ -230,4 +297,29 @@ public class MysticStudioGame {
 			this.windowMenu = null;
 		}
 	}
+	
+	public void setPickLevel(PickLevel pickLevel) {
+		this.pickLevel = pickLevel;
+	}
+	
+	public void setPickLevel(boolean unsetPickLevel) throws FileNotFoundException, SlickException {
+		if (unsetPickLevel) {
+			if (pickLevel.getExit()) {
+				mainMenu = new MainMenu(this);
+			}
+			this.pickLevel = null;
+		}
+	}
+
+	public void setInventory(boolean unsetInventory) {
+		if (unsetInventory) {
+			inventory = null;
+		}
+		
+	}
+
+	public PickLevel getPickLevel() {
+		return this.pickLevel;
+	}
+
 }

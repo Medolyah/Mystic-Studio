@@ -103,8 +103,10 @@ public class WindowMenu extends Menu {
 		game.setLevel(true);
 		game.setPlayer(true);
 		game.setOverlay(true);
-		game.setPlayerStats(true);
 		game.setWindowMenu(true);
+		if (game.getPickLevel() != null) {
+			game.setPickLevel(true);
+		}
 	}
 
 	public boolean getExit() {
