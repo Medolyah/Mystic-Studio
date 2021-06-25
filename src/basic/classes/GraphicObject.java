@@ -26,7 +26,7 @@ public class GraphicObject {
 		this.hitbox = hitbox;
 		this.image = image;
 		
-		// correct the hitbox position instantly
+		// set hitbox position
 		this.hitbox.setX(xPos);
 		this.hitbox.setY(yPos);
 	}
