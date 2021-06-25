@@ -1,7 +1,10 @@
 package level.classes;
 
+import java.io.FileNotFoundException;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
@@ -38,7 +41,7 @@ public class Npc extends GraphicObject {
 	}
 
 	@Override
-	public void update(GameContainer container, int delta) {
+	public void update(GameContainer container, int delta) throws FileNotFoundException, SlickException {
 
 		// TODO
 		// if enemy is in aggro range it will run to the player

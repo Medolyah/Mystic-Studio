@@ -123,6 +123,10 @@ public class Overlay {
 		g.drawRect(800, 1038, 37, 37);
 		// slot 3
 		g.drawRect(850, 1038, 37, 37);
+		// attack left mouse button
+		g.drawRect(950, 1038, 37, 37);
+		// attack right mouse button
+		g.drawRect(1000, 1038, 37, 37);
 		
 		g.drawImage(testItem1, 600, 1038);
 		g.drawImage(testItem2, 650, 1038);
@@ -133,6 +137,9 @@ public class Overlay {
 		ttTextFont.drawString(772, 1062, "1", fontColor);
 		ttTextFont.drawString(822, 1062, "2", fontColor);
 		ttTextFont.drawString(872, 1062, "3", fontColor);
+		
+		ttTextFont.drawString(955, 1062, "LMB", fontColor);
+		ttTextFont.drawString(1005, 1062, "RMB", fontColor);
 	}
 
 }

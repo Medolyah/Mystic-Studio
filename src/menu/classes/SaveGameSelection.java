@@ -17,7 +17,6 @@ import org.newdawn.slick.geom.Shape;
 
 import basic.classes.MysticButton;
 import basic.classes.MysticStudioGame;
-import player.classes.PlayerStats;
 
 @SuppressWarnings("deprecation")
 public class SaveGameSelection extends Menu {
@@ -40,8 +39,6 @@ public class SaveGameSelection extends Menu {
 
 	private CharacterSelection characterSelection;
 	private boolean characterSelectionMenu = false;
-	
-	private PlayerStats playerStats;
 
 	public SaveGameSelection(MysticStudioGame game, boolean loadGame) throws SlickException, FileNotFoundException {
 		this.game = game;
@@ -135,15 +132,12 @@ public class SaveGameSelection extends Menu {
 		switch (saveGameSlot) {
 		case 1:
 			saveFile = new File("res/savegames/save1.txt");
-			playerStats = new PlayerStats(game.getPlayer(), saveFile);
 			break;
 		case 2:
 			saveFile = new File("res/savegames/save2.txt");
-			playerStats = new PlayerStats(game.getPlayer(), saveFile);
 			break;
 		case 3:
 			saveFile = new File("res/savegames/save3.txt");
-			playerStats = new PlayerStats(game.getPlayer(), saveFile);
 			break;
 		default:
 			break;
