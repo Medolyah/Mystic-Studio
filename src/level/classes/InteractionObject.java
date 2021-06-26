@@ -6,6 +6,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 
+import audio.classes.GameSound;
 import basic.classes.GraphicObject;
 import basic.classes.MysticStudioGame;
 import menu.classes.PickLevel;
@@ -51,7 +52,18 @@ public class InteractionObject extends GraphicObject {
 			PickLevel pickLevel = new PickLevel(game);	
 			game.setPickLevel(pickLevel);
 			break;
-
+		case "villager":
+			GameSound villagerSound = new GameSound("res/voice-files/goodDay.wav");
+			villagerSound.playSound();
+			break;
+		case "merchant":
+			GameSound merchantSound = new GameSound("res/voice-files/merchant.wav");
+			merchantSound.playSound();
+			break;
+		case "Quest01":
+			GameSound quest01Sound = new GameSound("res/voice-files/quest01.wav");
+			quest01Sound.playSound();
+			break;
 		default:
 			break;
 		}

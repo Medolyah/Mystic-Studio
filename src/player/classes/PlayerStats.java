@@ -5,9 +5,9 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class PlayerStats {
-	
-	private Player player;
-	private File saveFile;
+//	
+//	private Player player;
+//	private File saveFile;
 	private Scanner scanner;
 	
 	private int gameProgress;
@@ -35,16 +35,16 @@ public class PlayerStats {
 	private String characterClass;
 	private int currentGold;
 	
-	private String reserve1;
-	private String reserve2;
-	private String reserve3;
-	private String reserve4;
-	private String reserve5;
+//	private String reserve1;
+//	private String reserve2;
+//	private String reserve3;
+//	private String reserve4;
+//	private String reserve5;
 
 	// player stats for loading a character
 	public PlayerStats(Player player, File saveFile) throws FileNotFoundException {
-		this.player = player;
-		this.saveFile = saveFile;
+//		this.player = player;
+//		this.saveFile = saveFile;
 		readSaveFile(saveFile);
 //		player.setPlayerStats(this);
 	}
@@ -88,9 +88,9 @@ public class PlayerStats {
 		// lines 16 - 17
 		currentGold = scanner.nextInt();
 		// lines 17 - 19 are empty for reserve
-		reserve1 = scanner.next();
-		reserve2 = scanner.next();
-		reserve3 = scanner.next();
+//		reserve1 = scanner.next();
+//		reserve2 = scanner.next();
+//		reserve3 = scanner.next();
 		
 	}
 	

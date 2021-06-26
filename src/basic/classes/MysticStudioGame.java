@@ -107,6 +107,7 @@ public class MysticStudioGame {
 				pickLevel = null;
 				windowMenu = null;
 				mainMenu = new MainMenu(this);
+				bgMusic = new GameMusic("res/music/bgMusic.wav");
 				if (gameOver == null) {
 					gameOver = new GameOver(this);
 				}
@@ -293,6 +294,7 @@ public class MysticStudioGame {
 		if (unsetWindowMenu) {
 			if (windowMenu.getExit()) {
 				mainMenu = new MainMenu(this);
+				bgMusic = new GameMusic("res/music/bgMusic.wav");
 			}
 			this.windowMenu = null;
 		}
@@ -306,6 +308,7 @@ public class MysticStudioGame {
 		if (unsetPickLevel) {
 			if (pickLevel.getExit()) {
 				mainMenu = new MainMenu(this);
+				bgMusic = new GameMusic("res/music/bgMusic.wav");
 			}
 			this.pickLevel = null;
 		}

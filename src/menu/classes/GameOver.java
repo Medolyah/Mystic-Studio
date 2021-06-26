@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+import audio.classes.GameSound;
 import basic.classes.MysticButton;
 import basic.classes.MysticStudioGame;
 
@@ -24,6 +25,8 @@ public class GameOver extends Menu {
 		backgroundImage = new Image("res/images/Game-Over.png");
 		backgroundImagePosX = 710;
 		backgroundImagePosY = 240;
+		GameSound attackSound = new GameSound("res/sounds/gameOver.wav");
+		attackSound.playSound();
 		menuButtons();
 	}
 

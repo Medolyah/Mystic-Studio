@@ -22,7 +22,7 @@ public class Player extends GraphicObject {
 	MysticStudioGame game;
 	
 	private int imageDeltaSum;
-	private int deltaWalkSound;
+//	private int deltaWalkSound;
 	private int deltaAttack;
 	boolean deltaSwordImage = false;
 	boolean rotated = false;
@@ -59,7 +59,7 @@ public class Player extends GraphicObject {
 		this.imageDeltaSum = 0;
 		this.healCooldown = 0;
 		this.manaCooldown = 0;
-		this.deltaWalkSound = 0;
+//		this.deltaWalkSound = 0;
 
 		// load player images (movement animation)
 		try {
@@ -81,11 +81,11 @@ public class Player extends GraphicObject {
 
 		// sum delta sums
 		imageDeltaSum += delta;
-		deltaWalkSound += delta;
+//		deltaWalkSound += delta;
 		deltaAttack += delta;
 
 		// movement
-		switch (environment.levelType) {
+		switch (environment.getLevelType()) {
 		case BIRDS_EYE_VIEW:
 			birdsEyeViewMovement(container);
 			break;
@@ -97,8 +97,8 @@ public class Player extends GraphicObject {
 
 		// interaction
 		if (input.isKeyPressed(Input.KEY_E)) {
-			if (environment.interactionObjects != null) {
-				for (InteractionObject object : environment.interactionObjects) {
+			if (environment.getInteractionObjects() != null) {
+				for (InteractionObject object : environment.getInteractionObjects()) {
 					if (super.checkContact(object)) {
 						object.executeInteraction();
 					}
@@ -149,11 +149,11 @@ public class Player extends GraphicObject {
 		// TODO move speed with shift for debugging / level building
 		// remove in final version
 		if (input.isKeyDown(Input.KEY_A)) {
-			if (deltaWalkSound > 500) {
-				deltaWalkSound = 0;
-				GameSound cooldownSound = new GameSound("res/sounds/stepSound.wav");
-				cooldownSound.playSound();
-			}
+//			if (deltaWalkSound > 500) {
+//				deltaWalkSound = 0;
+//				GameSound stepSound = new GameSound("res/sounds/stepSound.wav");
+//				stepSound.playSound();
+//			}
 			if (input.isKeyDown(Input.KEY_LSHIFT)) {
 				moveLeft(container, 100);
 			} else {
@@ -161,11 +161,11 @@ public class Player extends GraphicObject {
 			}
 		}
 		if (input.isKeyDown(Input.KEY_D)) {
-			if (deltaWalkSound > 500) {
-				deltaWalkSound = 0;
-				GameSound cooldownSound = new GameSound("res/sounds/stepSound.wav");
-				cooldownSound.playSound();
-			}
+//			if (deltaWalkSound > 500) {
+//				deltaWalkSound = 0;
+//				GameSound stepSound = new GameSound("res/sounds/stepSound.wav");
+//				stepSound.playSound();
+//			}
 			if (input.isKeyDown(Input.KEY_LSHIFT)) {
 				moveRight(container, 100);
 			} else {
@@ -173,13 +173,15 @@ public class Player extends GraphicObject {
 			}
 		}
 
-		// attack
+		// attack (animation + hit check)
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			deltaSwordImage = true;
 		}
 		if (deltaSwordImage && deltaAttack > getAttackSpeed() * 750) {
 			if (deltaAttackDelay == 0) {
 				game.getLevel().hitEnemy(hitbox, this.getPhysDamage());
+				GameSound attackSound = new GameSound("res/sounds/attack.wav");
+				attackSound.playSound();
 			}
 			if (deltaAttackDelay < 250) {
 				deltaAttackDelay += delta;
@@ -208,6 +210,8 @@ public class Player extends GraphicObject {
 			if (healCooldown <= 0) {
 				setCurrentLife(25);
 				healCooldown = 5000;
+				GameSound potionSound = new GameSound("res/sounds/potion.wav");
+				potionSound.playSound();
 			} else {
 				GameSound cooldownSound = new GameSound("res/sounds/cooldownSound.wav");
 				cooldownSound.playSound();
@@ -222,6 +226,8 @@ public class Player extends GraphicObject {
 			if (manaCooldown <= 0) {
 				setCurrentEnergy(25);
 				manaCooldown = 5000;
+				GameSound potionSound = new GameSound("res/sounds/potion.wav");
+				potionSound.playSound();
 			} else {
 				GameSound cooldownSound = new GameSound("res/sounds/cooldownSound.wav");
 				cooldownSound.playSound();
@@ -322,7 +328,7 @@ public class Player extends GraphicObject {
 	private boolean checkEnvironment(Movement movement) {
 
 		// check for collisions with environment
-		for (GraphicObject object : environment.textures) {
+		for (GraphicObject object : environment.getTextures()) {
 			if (super.checkContact(object)) {
 				if (movement == Movement.DOWN || movement == Movement.UP) {
 					yVelocity = 0;
@@ -427,8 +433,12 @@ public class Player extends GraphicObject {
 		return stats.getCurrentLife();
 	}
 
-	public void setCurrentLife(int lifeChange) {
+	public void setCurrentLife(int lifeChange) throws FileNotFoundException, SlickException {
 		stats.setCurrentLife(lifeChange);
+		if (lifeChange < 0) {
+			GameSound attackSound = new GameSound("res/sounds/playerDamage.wav");
+			attackSound.playSound();
+		}
 
 	}
 
@@ -452,7 +462,7 @@ public class Player extends GraphicObject {
 		return stats.getCurrentXP();
 	}
 
-	private void setCurrentXP(int changeXP) {
+	public void setCurrentXP(int changeXP) {
 		stats.setCurrentXP(changeXP);
 	}
 
