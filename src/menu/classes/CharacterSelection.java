@@ -1,8 +1,11 @@
 package menu.classes;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -40,10 +43,23 @@ public class CharacterSelection extends Menu {
 		this.active = true;
 		backgroundImage = new Image("res/images/Main_Menu.png");
 
-		titleFont = new Font("Distant Galaxy", Font.PLAIN, 50);
-		ttTitleFont = new TrueTypeFont(titleFont, true);
-		textFont = new Font("Distant Galaxy", Font.PLAIN, 25);
+		try {
+			textFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/distantGalaxy.ttf")).deriveFont(25f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(textFont);
+		} catch (IOException | FontFormatException e) {
+			e.printStackTrace();
+		}
 		ttTextFont = new TrueTypeFont(textFont, true);
+
+		try {
+			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/distantGalaxy.ttf")).deriveFont(50f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(titleFont);
+		} catch (IOException | FontFormatException e) {
+			e.printStackTrace();
+		}
+		ttTitleFont = new TrueTypeFont(titleFont, true);
 
 		Image knightImage = new Image("res/images/Knight_Profile.png");
 		Shape knightShape = new Rectangle(700, 700, 150, 250);

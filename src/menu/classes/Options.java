@@ -1,6 +1,8 @@
 package menu.classes;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -54,10 +56,23 @@ public class Options extends Menu {
 		active = true;
 		readsettings();
 
-		textFont = new Font("Distant Galaxy", Font.PLAIN, 25);
+
+		try {
+			textFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/distantGalaxy.ttf")).deriveFont(22f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(textFont);
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		}
 		ttTextFont = new TrueTypeFont(textFont, true);
 
-		titleFont = new Font("Distant Galaxy", Font.PLAIN, 50);
+		try {
+			titleFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/distantGalaxy.ttf")).deriveFont(50f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(titleFont);
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		}
 		ttTitleFont = new TrueTypeFont(titleFont, true);
 
 		musicBar = new Rectangle(800, 750, 400, 25);

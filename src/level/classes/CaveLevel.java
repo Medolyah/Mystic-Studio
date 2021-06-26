@@ -1,7 +1,11 @@
 package level.classes;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
@@ -23,7 +27,14 @@ public class CaveLevel extends Level {
 	public CaveLevel(MysticStudioGame game) {
 		super(game);
 		levelName = "Level 2: Cave";
-		textFont = new Font("Distant Galaxy", Font.PLAIN, 25);
+
+		try {
+			textFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/distantGalaxy.ttf")).deriveFont(25f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(textFont);
+		} catch (IOException | FontFormatException e) {
+			e.printStackTrace();
+		}
 		ttTextFont = new TrueTypeFont(textFont, true);
 		fontColor =  new Color(0.9f, 0.9f, 0.9f, 0.9f);
 

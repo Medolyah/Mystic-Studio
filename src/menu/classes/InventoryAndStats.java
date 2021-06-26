@@ -1,6 +1,9 @@
 package menu.classes;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -27,8 +30,15 @@ public class InventoryAndStats extends Menu {
 		backgroundImage = new Image("res/images/Inventory.png");
 		backgroundImagePosX = 1420;
 		backgroundImagePosY = 0;
-		
-		textFont = new Font("AcmeFont", Font.PLAIN, 20);
+
+
+		try {
+			textFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/distantGalaxy.ttf")).deriveFont(18f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(textFont);
+		} catch (IOException | FontFormatException e) {
+			e.printStackTrace();
+		}
 		ttTextFont = new TrueTypeFont(textFont, true);
 		fontColor =  new Color(0.75f, 0.75f, 0.75f);
 		valueColor =  new Color(0.75f, 0.25f, 0.25f);

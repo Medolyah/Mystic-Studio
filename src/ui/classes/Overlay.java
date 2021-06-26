@@ -1,6 +1,10 @@
 package ui.classes;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.IOException;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -37,7 +41,14 @@ public class Overlay {
 	public Overlay(Player player) throws SlickException {
 		this.player = player;
 		background = new Image("res/images/Overlay-bar.png");
-		textFont = new Font("AcmeFont", Font.PLAIN, 15);
+
+		try {
+			textFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/distantGalaxy.ttf")).deriveFont(15f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(textFont);
+		} catch (IOException | FontFormatException e) {
+			e.printStackTrace();
+		}
 		ttTextFont = new TrueTypeFont(textFont, true);
 		fontColor =  new Color(0.75f, 0.75f, 0.75f);
 
