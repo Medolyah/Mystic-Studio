@@ -36,8 +36,7 @@ public abstract class Level {
 	protected String levelName;
 	protected GameMusic levelMusic;
 	
-	
-	private MysticStudioGame game;
+	protected MysticStudioGame game;
 	
 	protected Font textFont;
 	protected TrueTypeFont ttTextFont;
