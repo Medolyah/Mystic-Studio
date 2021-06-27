@@ -240,7 +240,7 @@ public class PlayerStats {
 		this.attackSpeed = attackSpeed;
 	}
 
-	public String getPlayerClass() {
+	public String getCharacterClass() {
 		return characterClass;
 	}
 	

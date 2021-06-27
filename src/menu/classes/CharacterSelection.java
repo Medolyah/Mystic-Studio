@@ -6,6 +6,7 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Formatter;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -35,7 +36,7 @@ public class CharacterSelection extends Menu {
 	private MysticButton knightButton;
 	private MysticButton mageButton;
 	private MysticButton rangerButton;
-	
+
 //	private PlayerStats playerStats;
 
 	public CharacterSelection(MysticStudioGame game) throws SlickException, FileNotFoundException {
@@ -102,15 +103,51 @@ public class CharacterSelection extends Menu {
 		if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			if (knightButton.isClicked(container.getInput())) {
 				saveFile = new File("res/savegames/save1.txt");
+				initializeSaveFile(saveFile, "warrior");
 				game.getMainMenu().runGame(0, saveFile);
 			} else if (mageButton.isClicked(container.getInput())) {
 				saveFile = new File("res/savegames/save2.txt");
+				initializeSaveFile(saveFile, "mage");
 				game.getMainMenu().runGame(0, saveFile);
 			} else if (rangerButton.isClicked(container.getInput())) {
 				saveFile = new File("res/savegames/save3.txt");
+				initializeSaveFile(saveFile, "ranger");
 				game.getMainMenu().runGame(99, saveFile);
 			}
 		}
+	}
+
+	private File initializeSaveFile(File saveFile, String charackterClass) throws FileNotFoundException {
+
+//		Formatter formatter = new Formatter(saveFile);
+//		switch (charackterClass) {
+//		case "warrior":
+//			formatter.format(
+//					// lines 1-10
+//					"%d%d%d%d%d%d%d%d%d%d"
+//					// lines 10 - 20
+//					+ "%d%d%d%d%s%d"
+//					//+ "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
+//					// lines 1 - 10
+//					,0 , 1, 0, 100, 100, 50, 20, 10, 10, 10,
+//					// lines 11 -20
+//					10, 20, 0, 1, "warrior", 0);
+//			break;
+//			
+//		case "mage":
+//			
+//			break;
+//			
+//		case "ranger":
+//			
+//			break;
+//
+//		default:
+//			break;
+//		}
+//		formatter.close();
+
+		return saveFile;
 	}
 
 	public boolean getActive() {

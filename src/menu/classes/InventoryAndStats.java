@@ -27,7 +27,19 @@ public class InventoryAndStats extends Menu {
 	private Color valueColor;
 
 	public InventoryAndStats(MysticStudioGame game) throws SlickException, FileNotFoundException {
-		backgroundImage = new Image("res/images/Inventory.png");
+		switch (game.getPlayer().getCharacterClass()) {
+		case "warrior":
+			backgroundImage = new Image("res/images/Inventory-Warrior.png");
+			break;
+		case "mage":
+			backgroundImage = new Image("res/images/Inventory-Mage.png");
+			break;
+		case "ranger":
+			backgroundImage = new Image("res/images/Inventory-Ranger.png");
+			break;
+		default:
+			break;
+		}
 		backgroundImagePosX = 1420;
 		backgroundImagePosY = 0;
 
