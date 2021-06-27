@@ -1,11 +1,12 @@
 package level.classes;
 
 import java.io.FileNotFoundException;
-
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
 import basic.classes.GraphicObject;
@@ -20,7 +21,7 @@ public class Npc extends GraphicObject {
 
 	private int currentHP;
 	private int maxHP;
-	private Circle aggroBox;
+	private Shape aggroBox;
 	
 	// type 0 = object, type 1 = normal enemy, type 2 = boss
 	private int type;
@@ -28,7 +29,7 @@ public class Npc extends GraphicObject {
 	private int deltaEnemyHit;
 
 	public Npc(MysticStudioGame game, int xPos, int yPos, Shape hitbox, Image image, int xMinPos, int xMaxPos,
-			int xVelocity, int maxHP, int aggroRange, int type) {
+			int xVelocity, int maxHP, Shape aggroBox, int type) {
 		super(xPos, yPos, hitbox, image);
 		this.game = game;
 		this.xMinPos = xMinPos;
@@ -36,50 +37,105 @@ public class Npc extends GraphicObject {
 		this.xVelocity = xVelocity;
 		this.maxHP = maxHP;
 		this.currentHP = this.maxHP;
-		aggroBox = new Circle(xPos, yPos, aggroRange);
+		this.aggroBox = aggroBox;
 		this.type = type;
+		
+		this.setxPos(xPos);
+		this.setyPos(yPos);
 	}
 
 	@Override
-	public void update(GameContainer container, int delta) throws FileNotFoundException, SlickException {
+	public void update(GameContainer container, int delta) {
 
-		// TODO
-		// if enemy is in aggro range it will run to the player
-		if (aggroBox.intersects(game.getPlayer().hitbox)) {
-			if (aggroBox.getCenterX() >= game.getPlayer().hitbox.getCenterX()) {
-				if (xPos - 3 >= xMinPos) {
-					xPos -= 2;
-					this.hitbox.setX(this.hitbox.getX() - 2);
-					aggroBox.setX(aggroBox.getX() - 2);
-				}
-			} else {
-				if (xPos + 3 <= xMaxPos) {
-					xPos += 2;
-					this.hitbox.setX(this.hitbox.getX() + 2);
-					aggroBox.setX(aggroBox.getX() + 2);
-				}
-			}
-			// otherwise the enemy will just move around
-		} else {
-			if (xPos + xVelocity >= xMaxPos || xPos + xVelocity <= xMinPos) {
-				xVelocity *= -1;
-			}
-			xPos += xVelocity;
-			this.hitbox.setX(this.hitbox.getX() + xVelocity);
-			aggroBox.setX(aggroBox.getX() + xVelocity);
+		// npc movement
+		performMovement(delta);
+		
+		// perform hit/attack (for enemies)
+		if (type != 0) {
+			attackPlayer(delta);
 		}
-
-		// Can the enemy hit the player?
-		if (this.hitbox.intersects(game.getPlayer().hitbox)) {
+	}
+	
+	@Override
+	public void render(GameContainer container, Graphics g) {
+		super.render(container, g);
+		
+		Color transparent;
+		
+		// color for debugging / hitbox visualization during development
+		if (container.getInput().isKeyDown(Input.KEY_NUMPAD5)) {
+			transparent = new Color(0.5f, 0.2f, 0.5f, 0.4f);
+		} else {
+			transparent = new Color(0.5f, 0.2f, 0.5f, 0.0f);	
+		}
+		g.setColor(transparent);
+		
+		g.fill(aggroBox);
+	}
+	
+	@Override
+	public void setxPos(int xPos) {
+		super.setxPos(xPos);
+		aggroBox.setCenterX(this.hitbox.getCenterX());
+	}
+	
+	@Override
+	public void setyPos(int yPos) {
+		super.setyPos(yPos);
+		aggroBox.setCenterY(this.hitbox.getCenterY());
+	}
+	
+	private void performMovement(int delta) {
+		
+		// perform aggro movement (only for enemies)
+		if (type != 0) {
+			// if enemy is in aggro range it will run to the player
+			if (aggroBox.intersects(game.getPlayer().hitbox)) {
+				if (aggroBox.getCenterX() >= game.getPlayer().hitbox.getCenterX()) {
+					if (xPos - 3 >= xMinPos) {
+						xPos -= 2;
+						setxPos(xPos);
+					}
+				} else {
+					if (xPos + 3 <= xMaxPos) {
+						xPos += 2;
+						setxPos(xPos);
+					}
+				}
+				return;
+			}
+		}
+		
+		// perform general movement
+		if (xPos + xVelocity >= xMaxPos || xPos + xVelocity <= xMinPos) {
+				xVelocity *= -1;
+		}
+		xPos += xVelocity;
+		setxPos(xPos);
+	}
+	
+	
+	private void attackPlayer(int delta) {
+		
+		// Contact with the player? -> damage the player
+		if (checkContact(game.getPlayer())) {
 			deltaEnemyHit += delta;
 			if (deltaEnemyHit > 1500) {
 				switch (type) {
 				case 1:
-					game.getPlayer().setCurrentLife(-5);
+					try {
+						game.getPlayer().setCurrentLife(-5);
+					} catch (FileNotFoundException | SlickException e) {
+						e.printStackTrace();
+					}
 					deltaEnemyHit = 0;
 					break;
 				case 2:
-					game.getPlayer().setCurrentLife(-10);
+					try {
+						game.getPlayer().setCurrentLife(-10);
+					} catch (FileNotFoundException | SlickException e) {
+						e.printStackTrace();
+					}
 					deltaEnemyHit = 0;
 					break;
 				default:
@@ -115,7 +171,7 @@ public class Npc extends GraphicObject {
 		}
 	}
 
-	public Circle getAggroR() {
+	public Shape getAggroBox() {
 		return this.aggroBox;
 	}
 

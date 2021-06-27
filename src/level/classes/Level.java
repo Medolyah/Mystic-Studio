@@ -37,14 +37,14 @@ public abstract class Level {
 	protected GameMusic levelMusic;
 	
 	
-//	private MysticStudioGame game;
+	private MysticStudioGame game;
 	
 	protected Font textFont;
 	protected TrueTypeFont ttTextFont;
 	protected Color fontColor;
 	
 	public Level(MysticStudioGame game) {
-//		this.game = game;
+		this.game = game;
 	}
 	
 	public void update(GameContainer container, int delta) throws FileNotFoundException, SlickException {
@@ -54,6 +54,7 @@ public abstract class Level {
 	}
 	
 	public void render(GameContainer container, Graphics g) {
+		
 		// background
 		if (background != null) {
 			g.drawImage(background, 0, 0);			
