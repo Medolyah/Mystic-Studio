@@ -2,14 +2,16 @@ package player.classes;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.Serializable;
 
-public class PlayerStats {
+public class PlayerStats implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 //	
 //	private Player player;
 //	private File saveFile;
-	private Scanner scanner;
-	
+
 	private int gameProgress;
 
 	private int playerLevel;
@@ -31,10 +33,10 @@ public class PlayerStats {
 	private int physicalAttackDmg;
 	private int magicalAttackDmg;
 	private int attackSpeed;
-	
+
 	private String characterClass;
 	private int currentGold;
-	
+
 //	private String reserve1;
 //	private String reserve2;
 //	private String reserve3;
@@ -43,57 +45,53 @@ public class PlayerStats {
 
 	// player stats for loading a character
 	public PlayerStats(Player player, File saveFile) throws FileNotFoundException {
-//		this.player = player;
-//		this.saveFile = saveFile;
-		readSaveFile(saveFile);
-//		player.setPlayerStats(this);
 	}
 
-	// playe stats for a new character
-	public PlayerStats() {
-		maxLife = 100;
-		currentLife = 100;
-		
-		maxEnergy = 100;
-		currentEnergy = 100;
-		
-		requiredXP = 100;
-		currentXP = 0;
+	// player stats for a new character
+	public PlayerStats(String characterClass) {
+		this.gameProgress = 0;
+		this.playerLevel = 1;
+
+		this.currentXP = 0;
+		this.requiredXP = 100;
+
+		this.maxLife = 100;
+		this.currentLife = 100;
+
+		this.maxEnergy = 50;
+		this.currentEnergy = 50;
+
+		this.strengh = 10;
+		this.intelligence = 10;
+		this.dexterity = 10;
+
+		this.physicalArmour = 10;
+		this.magicalArmour = 10;
+		this.attackSpeed = 1;
+		this.currentGold = 0;
+
+		switch (characterClass) {
+		case "warrior":
+			this.physicalAttackDmg = 25;
+			this.magicalAttackDmg = 0;
+			this.characterClass = "warrior";
+			break;
+		case "mage":
+			this.physicalAttackDmg = 0;
+			this.magicalAttackDmg = 25;
+			this.characterClass = "mage";
+			break;
+		case "ranger":
+			this.physicalAttackDmg = 25;
+			this.magicalAttackDmg = 0;
+			this.characterClass = "ranger";
+			break;
+		default:
+			break;
+		}
+
 	}
 
-	private void readSaveFile(File saveFile) throws FileNotFoundException {
-
-		scanner = new Scanner(saveFile);
-		
-		// save file lines 1 - 5
-		gameProgress = scanner.nextInt();
-		playerLevel = scanner.nextInt();
-		currentXP = scanner.nextInt();
-		requiredXP = scanner.nextInt();
-		maxLife = scanner.nextInt();
-		currentLife = maxLife;
-		// lines 6 - 10
-		maxEnergy = scanner.nextInt();
-		currentEnergy = maxEnergy;
-		strengh = scanner.nextInt();
-		intelligence = scanner.nextInt();
-		dexterity = scanner.nextInt();
-		physicalArmour = scanner.nextInt();
-		// lines 11 - 15
-		magicalArmour = scanner.nextInt();
-		physicalAttackDmg = scanner.nextInt();
-		magicalAttackDmg = scanner.nextInt();
-		attackSpeed = scanner.nextInt();
-		characterClass = scanner.next();
-		// lines 16 - 17
-		currentGold = scanner.nextInt();
-		// lines 17 - 19 are empty for reserve
-//		reserve1 = scanner.next();
-//		reserve2 = scanner.next();
-//		reserve3 = scanner.next();
-		
-	}
-	
 	public int getGameProgress() {
 		return gameProgress;
 	}
@@ -116,7 +114,7 @@ public class PlayerStats {
 
 	public void setCurrentXP(int xpChange) {
 		if (currentXP + xpChange >= requiredXP) {
-			currentXP = currentXP + xpChange - requiredXP; 
+			currentXP = currentXP + xpChange - requiredXP;
 		} else {
 			currentXP += xpChange;
 		}
@@ -243,15 +241,15 @@ public class PlayerStats {
 	public String getCharacterClass() {
 		return characterClass;
 	}
-	
+
 	public void setCharacterClass(String characterClass) {
 		this.characterClass = characterClass;
 	}
-	
+
 	public int getCurrentGold() {
 		return currentGold;
 	}
-	
+
 	public void setCurrentGold(int gold) {
 		this.currentGold = gold;
 	}

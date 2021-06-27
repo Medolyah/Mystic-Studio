@@ -149,7 +149,7 @@ public class MainMenu extends Menu {
 		credits = new Credits();
 	}
 
-	public void runGame(int levelNumber, File saveFile) throws FileNotFoundException, SlickException {
+	public void runGame(File saveFile) throws FileNotFoundException, SlickException {
 
 		// set level
 		Level level;

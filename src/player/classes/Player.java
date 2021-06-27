@@ -1,7 +1,10 @@
 package player.classes;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -180,7 +183,7 @@ public class Player extends GraphicObject {
 		}
 		if (deltaSwordImage && deltaAttack > getAttackSpeed() * 750) {
 			if (deltaAttackDelay == 0) {
-				game.getLevel().hitEnemy(hitbox, this.getPhysDamage());
+				game.getLevel().hitEnemy(hitbox, this.getPhysDamage() + this.getMagicDamage());
 				GameSound attackSound = new GameSound("res/sounds/attack.wav");
 				attackSound.playSound();
 			}
@@ -415,8 +418,14 @@ public class Player extends GraphicObject {
 		}
 	}
 
-	public void setPlayerStats(Player player, File saveFile) throws FileNotFoundException {
-		stats = new PlayerStats(player, saveFile);
+	public void setPlayerStats(Player player, File saveFile) {
+		ObjectInputStream in;
+		try {
+			in = new ObjectInputStream(new FileInputStream(saveFile));
+			stats = (PlayerStats) in.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public int getGameProgress() {

@@ -177,7 +177,7 @@ public abstract class Level {
 						lootDrop.playSound();
 					}
 					iterator.remove();
-					break;
+//					break;
 				}
 			}
 		}

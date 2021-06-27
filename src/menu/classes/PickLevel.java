@@ -44,9 +44,10 @@ public class PickLevel extends Menu {
 				continueGame(container);
 			} else if (levelOneButton.isClicked(container.getInput())) {
 				levelOne();
-			} else if (levelTwoButton.isClicked(container.getInput()) && game.getPlayer().getGameProgress() >= 2) {
-				levelTwo();
-			}
+			} else if (levelTwoButton != null)
+				if (levelTwoButton.isClicked(container.getInput()) && game.getPlayer().getGameProgress() >= 2) {
+					levelTwo();
+				}
 		}
 	}
 

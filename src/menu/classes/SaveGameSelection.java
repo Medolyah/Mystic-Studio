@@ -6,7 +6,6 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -29,7 +28,6 @@ public class SaveGameSelection extends Menu {
 	private boolean active = false;
 
 	private File saveFile;
-	private Scanner scanner;
 
 	private Font titleFont;
 	private TrueTypeFont ttTitleFont;
@@ -158,13 +156,11 @@ public class SaveGameSelection extends Menu {
 		default:
 			break;
 		}
-		scanner = new Scanner(saveFile);
-		int gameProgress = scanner.nextInt();
-		game.getMainMenu().runGame(gameProgress, saveFile);
+		game.getMainMenu().runGame(saveFile);
 	}
 
 	private void newGame(int saveGameSlot) throws SlickException, FileNotFoundException {
-		characterSelection = new CharacterSelection(game);
+		characterSelection = new CharacterSelection(game, saveGameSlot);
 		characterSelectionMenu = true;
 
 	}

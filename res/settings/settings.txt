@@ -1,2 +1,2 @@
-musicVolume 0
+musicVolume 2
 soundVolume 59

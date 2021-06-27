@@ -135,18 +135,6 @@ public class MysticStudioGame {
 			}
 		}
 		
-		// level picker
-		// TODO pick level
-//		if (input.isKeyPressed(Input.KEY_J)) {
-//			if (level != null && player != null) {
-//				if (pickLevel == null) {
-//					pickLevel = new PickLevel(this);
-//				} else {
-//					pickLevel = null;
-//				}
-//			}
-//		}
-		
 		// inventory and stats
 		if (input.isKeyPressed(Input.KEY_I) || input.isKeyPressed(Input.KEY_C)) {
 			if (level != null && player != null) {
@@ -187,13 +175,7 @@ public class MysticStudioGame {
 			overlay.render(container, g);
 		}
 		
-		// window menu
-		if (windowMenu != null) {
-			windowMenu.render(container, g);
-		}
-		
 		// level picker
-		// TODO
 		if (pickLevel != null) {
 			pickLevel.render(container, g);
 		}
@@ -206,6 +188,11 @@ public class MysticStudioGame {
 		// game over
 		if (gameOver != null) {
 			gameOver.render(container, g);
+		}
+		
+		// window menu
+		if (windowMenu != null) {
+			windowMenu.render(container, g);
 		}
 	}
 

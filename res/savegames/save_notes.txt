@@ -135,10 +135,10 @@ Inventory
 122 | right ring stat value 2
 123 | right ring stat name 3
 124 | right ring stat value 3
-125 | amulet name
-126 | amulet stat name 1
-127 | amulet stat value 1
-128 | amulet stat name 2
-129 | amulet stat value 2
-120 | amulet stat name 3
-121 | amulet stat value 3
+125 | weapon name
+126 | weapon stat name 1
+127 | weapon stat value 1
+128 | weapon stat name 2
+129 | weapon stat value 2
+120 | weapon stat name 3
+121 | weapon stat value 3

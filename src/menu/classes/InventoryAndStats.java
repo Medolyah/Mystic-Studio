@@ -35,7 +35,7 @@ public class InventoryAndStats extends Menu {
 			backgroundImage = new Image("res/images/Inventory-Mage.png");
 			break;
 		case "ranger":
-			backgroundImage = new Image("res/images/Inventory-Ranger.png");
+			backgroundImage = new Image("res/images/Inventory-Warrior.png");
 			break;
 		default:
 			break;

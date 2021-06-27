@@ -92,13 +92,13 @@ public class Npc extends GraphicObject {
 			// if enemy is in aggro range it will run to the player
 			if (aggroBox.intersects(game.getPlayer().hitbox)) {
 				if (aggroBox.getCenterX() >= game.getPlayer().hitbox.getCenterX()) {
-					if (xPos - 3 >= xMinPos) {
-						xPos -= 2;
+					if (xPos - 5 >= xMinPos) {
+						xPos -= 4;
 						setxPos(xPos);
 					}
 				} else {
-					if (xPos + 3 <= xMaxPos) {
-						xPos += 2;
+					if (xPos + 5 <= xMaxPos) {
+						xPos += 4;
 						setxPos(xPos);
 					}
 				}

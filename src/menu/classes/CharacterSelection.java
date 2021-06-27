@@ -5,8 +5,9 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Formatter;
+import java.io.ObjectOutputStream;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -20,6 +21,7 @@ import org.newdawn.slick.geom.Shape;
 
 import basic.classes.MysticButton;
 import basic.classes.MysticStudioGame;
+import player.classes.PlayerStats;
 
 @SuppressWarnings("deprecation")
 public class CharacterSelection extends Menu {
@@ -27,6 +29,7 @@ public class CharacterSelection extends Menu {
 	private MysticStudioGame game;
 	private boolean active = false;
 	private File saveFile;
+	private int saveGameSlot;
 
 	private Font titleFont;
 	private TrueTypeFont ttTitleFont;
@@ -39,8 +42,9 @@ public class CharacterSelection extends Menu {
 
 //	private PlayerStats playerStats;
 
-	public CharacterSelection(MysticStudioGame game) throws SlickException, FileNotFoundException {
+	public CharacterSelection(MysticStudioGame game, int saveGameSlot) throws SlickException, FileNotFoundException {
 		this.game = game;
+		this.saveGameSlot = saveGameSlot;
 		this.active = true;
 		backgroundImage = new Image("res/images/Main_Menu.png");
 
@@ -102,52 +106,50 @@ public class CharacterSelection extends Menu {
 	private void checkClicked(GameContainer container) throws FileNotFoundException, SlickException {
 		if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			if (knightButton.isClicked(container.getInput())) {
+				initializeSaveFile("warrior");
 				saveFile = new File("res/savegames/save1.txt");
-				initializeSaveFile(saveFile, "warrior");
-				game.getMainMenu().runGame(0, saveFile);
+				game.getMainMenu().runGame(saveFile);
 			} else if (mageButton.isClicked(container.getInput())) {
+				initializeSaveFile("mage");
 				saveFile = new File("res/savegames/save2.txt");
-				initializeSaveFile(saveFile, "mage");
-				game.getMainMenu().runGame(0, saveFile);
+				game.getMainMenu().runGame(saveFile);
 			} else if (rangerButton.isClicked(container.getInput())) {
+				initializeSaveFile("ranger");
 				saveFile = new File("res/savegames/save3.txt");
-				initializeSaveFile(saveFile, "ranger");
-				game.getMainMenu().runGame(99, saveFile);
+				game.getMainMenu().runGame(saveFile);
 			}
 		}
 	}
 
-	private File initializeSaveFile(File saveFile, String charackterClass) throws FileNotFoundException {
+	private void initializeSaveFile(String characterClass) throws FileNotFoundException {
+		PlayerStats playerStats = new PlayerStats(characterClass);
 
-//		Formatter formatter = new Formatter(saveFile);
-//		switch (charackterClass) {
-//		case "warrior":
-//			formatter.format(
-//					// lines 1-10
-//					"%d%d%d%d%d%d%d%d%d%d"
-//					// lines 10 - 20
-//					+ "%d%d%d%d%s%d"
-//					//+ "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
-//					// lines 1 - 10
-//					,0 , 1, 0, 100, 100, 50, 20, 10, 10, 10,
-//					// lines 11 -20
-//					10, 20, 0, 1, "warrior", 0);
-//			break;
-//			
-//		case "mage":
-//			
-//			break;
-//			
-//		case "ranger":
-//			
-//			break;
-//
-//		default:
-//			break;
-//		}
-//		formatter.close();
-
-		return saveFile;
+		try {
+			switch (saveGameSlot) {
+			case 1:
+				FileOutputStream fileOut1 = new FileOutputStream("res/savegames/save1.txt");
+				ObjectOutputStream objectOut1 = new ObjectOutputStream(fileOut1);
+				objectOut1.writeObject(playerStats);
+				break;
+				
+			case 2:
+				FileOutputStream fileOut2 = new FileOutputStream("res/savegames/save2.txt");
+				ObjectOutputStream objectOut2 = new ObjectOutputStream(fileOut2);
+				objectOut2.writeObject(playerStats);
+				break;
+				
+			case 3:
+				FileOutputStream fileOut3 = new FileOutputStream("res/savegames/save3.txt");
+				ObjectOutputStream objectOut3 = new ObjectOutputStream(fileOut3);
+				objectOut3.writeObject(playerStats);
+				break;
+				
+			default:
+				break;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	public boolean getActive() {
