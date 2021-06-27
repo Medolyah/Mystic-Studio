@@ -16,6 +16,7 @@ import basic.classes.GraphicObject;
 import basic.classes.MysticStudioGame;
 import level.classes.InteractionObject;
 import level.classes.Level;
+import level.classes.Level.LevelType;
 
 public class Player extends GraphicObject {
 
@@ -340,6 +341,11 @@ public class Player extends GraphicObject {
 	}
 
 	private boolean checkBorderDistance(GameContainer container, Movement movement) {
+		
+		// only for platformer mode
+		if (environment.getLevelType() != LevelType.PLATFORMER) {
+			return false;
+		}
 
 		// check if the player is to close to the screen border so the screen has to be
 		// moved
