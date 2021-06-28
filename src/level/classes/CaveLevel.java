@@ -280,4 +280,8 @@ public class CaveLevel extends Level {
 		ttTextFont.drawString(container.getWidth() / 2 - 100, 50, "Enemy level: 3 - 5", fontColor);
 
 	}
+
+	@Override
+	public void openExit() {		
+	}
 }

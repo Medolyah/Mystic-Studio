@@ -51,6 +51,9 @@ public abstract class Level {
 		for (Npc npc : npcs) {
 			npc.update(container, delta);
 		}
+		for (InteractionObject interactionObject : interactionObjects) {
+			interactionObject.update(container, delta);
+		}
 	}
 	
 	public void render(GameContainer container, Graphics g) {
@@ -172,11 +175,14 @@ public abstract class Level {
 				GameSound attackSound = new GameSound("res/sounds/playerHitsEnemy.wav");
 				attackSound.playSound();
 				if (kill) {
+					game.getPlayer().setCurrentXP(levelNumber * 5);
 					if (npc.equals(boss)) {
+						game.getPlayer().setCurrentXP(levelNumber * 10);
 						GameSound lootDrop = new GameSound("res/sounds/lootDrop.wav");
 						lootDrop.playSound();
 						if (levelNumber > game.getPlayer().getGameProgress()) {
 							game.getPlayer().setGameProgress(levelNumber);
+							openExit();
 						}
 					}
 					iterator.remove();
@@ -200,4 +206,10 @@ public abstract class Level {
 	public ArrayList<GraphicObject> getTextures() {
 		return textures;
 	}
+	
+	public Npc getBoss() {
+		return this.boss;
+	}
+	
+	protected abstract void openExit();
 }
