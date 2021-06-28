@@ -8,15 +8,13 @@ public class PlayerStats implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-//	
-//	private Player player;
-//	private File saveFile;
-
 	private int gameProgress;
 
 	private int playerLevel;
 	private int currentXP;
 	private int requiredXP;
+	private int freeStatPoints;
+	private int freeSkillPoints;
 
 	private int maxLife;
 	private int currentLife;
@@ -51,6 +49,13 @@ public class PlayerStats implements Serializable {
 	public PlayerStats(String characterClass) {
 		this.gameProgress = 0;
 		this.playerLevel = 1;
+		
+		this.freeSkillPoints = 0;
+		this.freeStatPoints = 0;
+
+		this.strengh = 10;
+		this.intelligence = 10;
+		this.dexterity = 10;
 
 		this.currentXP = 0;
 		this.requiredXP = 100;
@@ -60,10 +65,6 @@ public class PlayerStats implements Serializable {
 
 		this.maxEnergy = 50;
 		this.currentEnergy = 50;
-
-		this.strengh = 10;
-		this.intelligence = 10;
-		this.dexterity = 10;
 
 		this.physicalArmour = 10;
 		this.magicalArmour = 10;
@@ -104,8 +105,13 @@ public class PlayerStats implements Serializable {
 		return playerLevel;
 	}
 
-	public void setPlayerLevel(int playerLevel) {
-		this.playerLevel = playerLevel;
+	private void setPlayerLevel() {
+		playerLevel += 1;
+		requiredXP = playerLevel * 100;
+		freeStatPoints += 10;
+		freeSkillPoints += 1;
+		currentLife = maxLife;
+		currentEnergy = maxEnergy;
 	}
 
 	public int getCurrentXP() {
@@ -115,6 +121,7 @@ public class PlayerStats implements Serializable {
 	public void setCurrentXP(int xpChange) {
 		if (currentXP + xpChange >= requiredXP) {
 			currentXP = currentXP + xpChange - requiredXP;
+			setPlayerLevel();
 		} else {
 			currentXP += xpChange;
 		}
@@ -178,24 +185,30 @@ public class PlayerStats implements Serializable {
 		return strengh;
 	}
 
-	public void setStrengh(int strengh) {
-		this.strengh = strengh;
+	public void setStrengh() {
+		this.strengh += 1;
+		this.freeStatPoints -= 1;
+		updateStats();
 	}
 
 	public int getIntelligence() {
 		return intelligence;
 	}
 
-	public void setIntelligence(int intelligence) {
-		this.intelligence = intelligence;
+	public void setIntelligence() {
+		this.intelligence += 1;
+		this.freeStatPoints -= 1;
+		updateStats();
 	}
 
 	public int getDexterity() {
 		return dexterity;
 	}
 
-	public void setDexterity(int dexterity) {
-		this.dexterity = dexterity;
+	public void setDexterity() {
+		this.dexterity += 1;
+		this.freeStatPoints -= 1;
+		updateStats();
 	}
 
 	public int getPhysicalArmour() {
@@ -252,5 +265,49 @@ public class PlayerStats implements Serializable {
 
 	public void setCurrentGold(int gold) {
 		this.currentGold = gold;
+	}
+
+	public int getFreeStatPoints() {
+		return freeStatPoints;
+	}
+
+	public void setFreeStatPoints() {
+		if (freeStatPoints - 1 >= 0) {
+			this.freeStatPoints -= 1;	
+		}
+	}
+
+	public int getFreeSkillPoints() {
+		return freeSkillPoints;
+	}
+
+	public void setFreeSkillPoints() {
+		if (freeSkillPoints - 1 >= 0) {
+			this.freeSkillPoints -= 1;	
+		}
+	}
+	
+	private void updateStats() {
+		maxLife = 100 + 10 * (strengh - 10);
+		maxEnergy = 50 + 5 * (intelligence - 10);
+		physicalArmour = strengh - 10;
+		magicalArmour = intelligence - 10;
+		attackSpeed = dexterity / 10;
+		switch (characterClass) {
+		case "warrior":
+			physicalAttackDmg = 25 + 5 * (strengh - 10);
+			magicalAttackDmg = 0 + 5 * (intelligence - 10);
+			break;
+		case "mage":
+			physicalAttackDmg = 0 + 5 * (strengh - 10);
+			magicalAttackDmg = 25 + 5 * (intelligence - 10);
+			break;
+		case "ranger":
+			physicalAttackDmg = 25 + 5 * (strengh - 10);
+			magicalAttackDmg = 0 + 5 * (intelligence - 10);
+			break;
+		default:
+			break;
+		}
 	}
 }

@@ -11,22 +11,35 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.geom.Rectangle;
 
+import basic.classes.MysticButton;
 import basic.classes.MysticStudioGame;
+import basic.classes.SavingGame;
 
 @SuppressWarnings("deprecation")
 public class InventoryAndStats extends Menu {
 
 	private MysticStudioGame game;
-	
+	private SavingGame savingGame;
+
 	private Font textFont;
 	private TrueTypeFont ttTextFont;
 	private Color fontColor;
 	private Color valueColor;
 
+	private Image levelButtonImage;
+	private MysticButton levelStrength;
+	private MysticButton levelIntellegence;
+	private MysticButton levelDexterity;
+
 	public InventoryAndStats(MysticStudioGame game) throws SlickException, FileNotFoundException {
+		this.game = game;
+		this.savingGame = new SavingGame(game);
+		
 		switch (game.getPlayer().getCharacterClass()) {
 		case "warrior":
 			backgroundImage = new Image("res/images/Inventory-Warrior.png");
@@ -43,41 +56,65 @@ public class InventoryAndStats extends Menu {
 		backgroundImagePosX = 1420;
 		backgroundImagePosY = 0;
 
-
 		try {
 			textFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/distantGalaxy.ttf")).deriveFont(18f);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(textFont);
+			
+			levelButtonImage = new Image("res/images/Plus-Button.png");
 		} catch (IOException | FontFormatException e) {
 			e.printStackTrace();
 		}
 		ttTextFont = new TrueTypeFont(textFont, true);
-		fontColor =  new Color(0.75f, 0.75f, 0.75f);
-		valueColor =  new Color(0.75f, 0.25f, 0.25f);
-		
-		this.game = game;
+		fontColor = new Color(0.75f, 0.75f, 0.75f);
+		valueColor = new Color(0.75f, 0.25f, 0.25f);
+
+		levelStrength = new MysticButton(1700, 450, new Rectangle(1700, 450, 25, 25), levelButtonImage);
+		levelIntellegence = new MysticButton(1700, 475, new Rectangle(1700, 475, 25, 25), levelButtonImage);
+		levelDexterity = new MysticButton(1700, 500, new Rectangle(1700, 500, 25, 25), levelButtonImage);
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException, IOException {
-		
+		if (game.getPlayer() != null) {
+			if (game.getPlayer().getFreeStatPoints() > 0) {
+				if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+					if (levelStrength.isClicked(container.getInput())) {
+						game.getPlayer().setStrengh();
+					} else if (levelIntellegence.isClicked(container.getInput())) {
+						game.getPlayer().setIntellegence();
+					} else if (levelDexterity.isClicked(container.getInput())) {
+						game.getPlayer().setDexterity();
+					}
+					// save the skilling
+					savingGame.saveGame();
+				}
+			}
+		}
 
 	}
 
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		g.drawImage(backgroundImage, backgroundImagePosX, backgroundImagePosY);
-		
+
 		g.setColor(Color.black);
 		// equipment
 		renderEquipment(container, g);
 
 		// inventory
 		renderInventory(container, g);
-		
+
 		// statistics
 		renderStatistics(container, g);
-		
+
+		// level up buttons
+		if (game.getPlayer().getFreeStatPoints() > 0) {
+			levelStrength.render(container, g);
+			levelIntellegence.render(container, g);
+			levelDexterity.render(container, g);
+		}
+
 	}
-	
+
 	private void renderEquipment(GameContainer container, Graphics g) {
 		// helmet
 		g.drawRect(1600, 70, 37, 37);
@@ -95,9 +132,9 @@ public class InventoryAndStats extends Menu {
 		g.drawRect(1600, 220, 37, 37);
 		// boots
 		g.drawRect(1650, 220, 37, 37);
-		
+
 	}
-	
+
 	private void renderInventory(GameContainer container, Graphics g) {
 		// helmet
 		g.drawRect(1750, 70, 37, 37);
@@ -115,11 +152,11 @@ public class InventoryAndStats extends Menu {
 		g.drawRect(1750, 220, 37, 37);
 		// boots
 		g.drawRect(1800, 220, 37, 37);
-		
+
 	}
-	
+
 	private void renderStatistics(GameContainer container, Graphics g) {
-		
+
 		// text labels
 		ttTextFont.drawString(1620, 304, "Level:", fontColor);
 		ttTextFont.drawString(1750, 304, "XP:", fontColor);
@@ -135,10 +172,14 @@ public class InventoryAndStats extends Menu {
 		ttTextFont.drawString(1450, 575, "Physical Damage:", fontColor);
 		ttTextFont.drawString(1450, 600, "Magical Damage:", fontColor);
 		ttTextFont.drawString(1450, 625, "Attack Speed:", fontColor);
-		
+
+		ttTextFont.drawString(1750, 450, "Stat points", fontColor);
+		ttTextFont.drawString(1750, 550, "Skill points", fontColor);
+
 		// value labels
 		ttTextFont.drawString(1690, 304, "" + game.getPlayer().getPlayerLevel(), valueColor);
-		ttTextFont.drawString(1790, 304, "" + game.getPlayer().getCurrentXP() + "/" + game.getPlayer().getRequiredXP(), valueColor);
+		ttTextFont.drawString(1790, 304, "" + game.getPlayer().getCurrentXP() + "/" + game.getPlayer().getRequiredXP(),
+				valueColor);
 		ttTextFont.drawString(1650, 350, "" + game.getPlayer().getMaxLife(), valueColor);
 		ttTextFont.drawString(1650, 375, "" + game.getPlayer().getCurrentLife(), valueColor);
 		ttTextFont.drawString(1650, 400, "" + game.getPlayer().getMaxEnergy(), valueColor);
@@ -151,7 +192,9 @@ public class InventoryAndStats extends Menu {
 		ttTextFont.drawString(1650, 575, "" + game.getPlayer().getPhysDamage(), valueColor);
 		ttTextFont.drawString(1650, 600, "" + game.getPlayer().getMagicDamage(), valueColor);
 		ttTextFont.drawString(1650, 625, "" + game.getPlayer().getAttackSpeed(), valueColor);
-		
+
+		ttTextFont.drawString(1750, 475, "" + game.getPlayer().getFreeStatPoints(), valueColor);
+		ttTextFont.drawString(1750, 575, "" + game.getPlayer().getFreeSkillPoints(), valueColor);
 	}
-	
+
 }

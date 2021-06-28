@@ -23,12 +23,12 @@ import player.classes.Player.Movement;
 public abstract class Level {
 
 	public enum LevelType {
-		BIRDS_EYE_VIEW,
-		PLATFORMER
+		BIRDS_EYE_VIEW, PLATFORMER
 	}
-	
+
 	protected int levelNumber;
 	protected ArrayList<GraphicObject> textures;
+	protected GraphicObject exitWall;
 	protected ArrayList<Npc> npcs;
 	protected Npc boss;
 	protected ArrayList<InteractionObject> interactionObjects;
@@ -36,17 +36,17 @@ public abstract class Level {
 	protected Image background;
 	protected String levelName;
 	protected GameMusic levelMusic;
-	
+
 	protected MysticStudioGame game;
-	
+
 	protected Font textFont;
 	protected TrueTypeFont ttTextFont;
 	protected Color fontColor;
-	
+
 	public Level(MysticStudioGame game) {
 		this.game = game;
 	}
-	
+
 	public void update(GameContainer container, int delta) throws FileNotFoundException, SlickException {
 		for (Npc npc : npcs) {
 			npc.update(container, delta);
@@ -55,36 +55,36 @@ public abstract class Level {
 			interactionObject.update(container, delta);
 		}
 	}
-	
+
 	public void render(GameContainer container, Graphics g) {
-		
+
 		// background
 		if (background != null) {
-			g.drawImage(background, 0, 0);			
+			g.drawImage(background, 0, 0);
 		}
-		
-		// textures/object 
+
+		// textures/object
 		if (getTextures() != null) {
 			for (GraphicObject graphicObject : getTextures()) {
 				graphicObject.render(container, g);
-			}			
+			}
 		}
-		
-		// textures/object
+
+		// interaction objects
 		if (getInteractionObjects() != null) {
-			for (InteractionObject interactionObject: getInteractionObjects()) {
+			for (InteractionObject interactionObject : getInteractionObjects()) {
 				interactionObject.render(container, g);
-			}			
+			}
 		}
-		
-		// textures/object 
+
+		// npcs
 		if (npcs != null) {
-			for (Npc npc: npcs) {
+			for (Npc npc : npcs) {
 				npc.render(container, g);
-			}			
+			}
 		}
 	}
-	
+
 	public void moveObjects(Movement movement) {
 
 		switch (movement) {
@@ -164,7 +164,7 @@ public abstract class Level {
 			break;
 		}
 	}
-	
+
 	public void hitEnemy(Shape playerHitbox, int damage) throws FileNotFoundException, SlickException {
 		Iterator<Npc> iterator = npcs.iterator();
 		boolean kill = false;
@@ -180,9 +180,9 @@ public abstract class Level {
 						game.getPlayer().setCurrentXP(levelNumber * 10);
 						GameSound lootDrop = new GameSound("res/sounds/lootDrop.wav");
 						lootDrop.playSound();
+						openExit();
 						if (levelNumber > game.getPlayer().getGameProgress()) {
 							game.getPlayer().setGameProgress(levelNumber);
-							openExit();
 						}
 					}
 					iterator.remove();
@@ -190,7 +190,7 @@ public abstract class Level {
 			}
 		}
 	}
-	
+
 	public ArrayList<Npc> getEnemyList() {
 		return this.npcs;
 	}
@@ -206,10 +206,18 @@ public abstract class Level {
 	public ArrayList<GraphicObject> getTextures() {
 		return textures;
 	}
-	
+
 	public Npc getBoss() {
 		return this.boss;
 	}
-	
-	protected abstract void openExit();
+
+	protected void openExit() {
+		Iterator<GraphicObject> iterator = textures.iterator();
+		while (iterator.hasNext()) {
+			GraphicObject graphicObject = iterator.next();
+			if (graphicObject.equals(exitWall)) {
+				iterator.remove();
+			}
+		}
+	}
 }

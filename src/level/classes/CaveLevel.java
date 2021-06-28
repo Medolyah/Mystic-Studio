@@ -76,7 +76,11 @@ public class CaveLevel extends Level {
 			// right level wall 3 - end wall
 			getTextures().add(new GraphicObject(10400, 2050, new Rectangle(10400, 2050, 60, 400), caveWall01));
 			getTextures().add(new GraphicObject(10400, 2450, new Rectangle(10400, 2450, 60, 400), caveWall01));
-			getTextures().add(new GraphicObject(10400, 2750, new Rectangle(10400, 2750, 60, 400), caveWall01));
+			getTextures().add(exitWall = new GraphicObject(10400, 2750, new Rectangle(10400, 2750, 60, 400), caveWall01));
+			
+			getTextures().add(new GraphicObject(11200, 2050, new Rectangle(11200, 2050, 60, 400), caveWall01));
+			getTextures().add(new GraphicObject(11200, 2450, new Rectangle(11200, 2450, 60, 400), caveWall01));
+			getTextures().add(new GraphicObject(11200, 2750, new Rectangle(11200, 2750, 60, 400), caveWall01));
 			// first down stairs wall
 			getTextures().add(new GraphicObject(2540, 550, new Rectangle(2540, 550, 60, 200), caveHalfWall01));
 			getTextures().add(new GraphicObject(2540, 1000, new Rectangle(2540, 1000, 60, 200), caveHalfWall01));
@@ -249,6 +253,9 @@ public class CaveLevel extends Level {
 			// hole 1-2
 			npcs.add(new Npc(game, 6900, 1100, new Rectangle(6900, 1100, 300, 145), devilEye1, 6900, 8100, 2, 100, new Circle(0, 0, 200), 1));
 			
+			// boss
+			npcs.add(boss = new Npc(game, 9000, 2850, new Rectangle(9000, 2850, 300, 145), devilEye1, 9000, 10000, 3, 1000, new Circle(0, 0, 200), 2));
+			
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -263,7 +270,7 @@ public class CaveLevel extends Level {
 		// interaction objects
 		interactionObjects = new ArrayList<InteractionObject>();
 		try {
-			getInteractionObjects().add(new InteractionObject(10150, 2895, new Rectangle(10150, 2895, 150, 250),
+			getInteractionObjects().add(new InteractionObject(10500, 2895, new Rectangle(10500, 2895, 150, 250),
 					new Image("res/images/Basement_Door.png"), game, "CaveLevel"));
 		} catch (SlickException e) {
 			e.printStackTrace();
@@ -279,9 +286,5 @@ public class CaveLevel extends Level {
 		ttTextFont.drawString(container.getWidth() / 2 - 100, 20, levelName, fontColor);
 		ttTextFont.drawString(container.getWidth() / 2 - 100, 50, "Enemy level: 3 - 5", fontColor);
 
-	}
-
-	@Override
-	public void openExit() {		
 	}
 }

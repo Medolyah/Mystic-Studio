@@ -1,9 +1,6 @@
 package level.classes;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -12,17 +9,21 @@ import org.newdawn.slick.geom.Shape;
 import audio.classes.GameSound;
 import basic.classes.GraphicObject;
 import basic.classes.MysticStudioGame;
+import basic.classes.SavingGame;
 import menu.classes.PickLevel;
 
 public class InteractionObject extends GraphicObject {
 
 	private MysticStudioGame game;
+	private SavingGame savingGame;
+	
 	private String interaction;
 
 	public InteractionObject(int xPos, int yPos, Shape hitbox, Image image, MysticStudioGame game, String interaction) {
 		super(xPos, yPos, hitbox, image);
 		this.game = game;
 		this.interaction = interaction;
+		this.savingGame = new SavingGame(game);
 	}
 
 	public void executeInteraction() throws FileNotFoundException, SlickException {
@@ -34,19 +35,19 @@ public class InteractionObject extends GraphicObject {
 			game.setLevel(level, 1600, 300);
 			break;
 		case "BasementLevel":
-			saveGame();
+			savingGame.saveGame();
 			level = new Village(game);
 			game.setLevel(level, 1500, 600);
 			break;
 		case "CaveLevel":
-			saveGame();
+			savingGame.saveGame();
 			level = new Village(game);
 			game.setLevel(level, 1500, 600);
 			break;
 		case "Village":
 			level = new Village(game);
 			game.setLevel(level, 1500, 600);
-			saveGame();
+			savingGame.saveGame();
 			break;
 		case "SelectLevel":
 			PickLevel pickLevel = new PickLevel(game);
@@ -66,31 +67,6 @@ public class InteractionObject extends GraphicObject {
 			break;
 		default:
 			break;
-		}
-	}
-
-	private void saveGame() {
-
-		FileOutputStream fileOut1 = null;
-		try {
-			switch (game.getSaveGameNumber()) {
-			case 1:
-				fileOut1 = new FileOutputStream("res/savegames/save1.txt");
-				break;
-			case 2:
-				fileOut1 = new FileOutputStream("res/savegames/save2.txt");
-				break;
-			case 3:
-				fileOut1 = new FileOutputStream("res/savegames/save3.txt");
-				break;
-			default:
-				break;
-			}
-			ObjectOutputStream objectOut1 = new ObjectOutputStream(fileOut1);
-			objectOut1.writeObject(game.getPlayer().getPlayerStats());
-			objectOut1.close();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 }

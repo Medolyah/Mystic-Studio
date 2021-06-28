@@ -95,20 +95,16 @@ public class MysticStudioGame {
 		// level
 		if (level != null) {
 			level.update(container, delta);
-			// if the boss was killed, the exit will open
-//			if (level.getBoss() == null) {
-//				level.openExit();
-//			}
 		}
 
 		// player
 		if (player != null) {
 			player.update(container, delta);
 			if (player.getCurrentLife() <= 0) {
+				inventory = null;
 				player = null;
 				level = null;
 				overlay = null;
-				inventory = null;
 				pickLevel = null;
 				windowMenu = null;
 				mainMenu = new MainMenu(this);

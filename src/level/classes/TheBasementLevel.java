@@ -117,6 +117,10 @@ public class TheBasementLevel extends Level {
 					new Image("res/images/Basement_Platform_03.png")));
 			getTextures().add(new GraphicObject(5600, -900, new Rectangle(5600, -900, 400, 60),
 					new Image("res/images/Basement_Platform_02.png")));
+			getTextures().add(new GraphicObject(6000, -900, new Rectangle(6000, -900, 400, 60),
+					new Image("res/images/Basement_Platform_02.png")));
+			getTextures().add(new GraphicObject(6400, -900, new Rectangle(6400, -900, 400, 60),
+					new Image("res/images/Basement_Platform_02.png")));
 
 			// walls
 			getTextures().add(new GraphicObject(-200, 600, new Rectangle(-200, 800, 60, 400),
@@ -168,9 +172,13 @@ public class TheBasementLevel extends Level {
 			getTextures().add(new GraphicObject(2800, -840, new Rectangle(2800, -840, 60, 60),
 					new Image("res/images/Basement_Wall_Block.png")));
 			// end boss wall
-			getTextures().add(new GraphicObject(6000, -1240, new Rectangle(6000, -1240, 60, 400),
+			getTextures().add(exitWall = new GraphicObject(6000, -1240, new Rectangle(6000, -1240, 60, 400),
 					new Image("res/images/Basement_Wall_01.png")));
 			getTextures().add(new GraphicObject(6000, -1640, new Rectangle(6000, -1640, 60, 400),
+					new Image("res/images/Basement_Wall_01.png")));
+			getTextures().add(new GraphicObject(6800, -1240, new Rectangle(6800, -1240, 60, 400),
+					new Image("res/images/Basement_Wall_01.png")));
+			getTextures().add(new GraphicObject(6800, -1640, new Rectangle(6800, -1640, 60, 400),
 					new Image("res/images/Basement_Wall_01.png")));
 
 			// main floor
@@ -263,6 +271,8 @@ public class TheBasementLevel extends Level {
 		try {
 			getInteractionObjects().add(new InteractionObject(180, 750, new Rectangle(180, 750, 150, 250),
 					new Image("res/images/Basement_Door.png"), game, "BasementLevel"));
+			getInteractionObjects().add(new InteractionObject(6200, -1145, new Rectangle(6200, -1145, 150, 250),
+					new Image("res/images/Basement_Door.png"), game, "BasementLevel"));
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -276,14 +286,5 @@ public class TheBasementLevel extends Level {
 		// Level infos
 		ttTextFont.drawString(container.getWidth() / 2 - 100, 20, levelName, fontColor);
 		ttTextFont.drawString(container.getWidth() / 2 - 100, 50, "Enemy level: 1 - 3", fontColor);
-	}
-	
-	protected void openExit() {
-		try {
-			getInteractionObjects().add(new InteractionObject(5750, -1145, new Rectangle(5750, -1145, 150, 250),
-					new Image("res/images/Basement_Door.png"), game, "BasementLevel"));
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 	}
 }

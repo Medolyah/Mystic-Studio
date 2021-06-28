@@ -181,7 +181,7 @@ public class Player extends GraphicObject {
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			deltaSwordImage = true;
 		}
-		if (deltaSwordImage && deltaAttack > getAttackSpeed() * 750) {
+		if (deltaSwordImage && deltaAttack > 1000 / getAttackSpeed()) {
 			if (deltaAttackDelay == 0) {
 				game.getLevel().hitEnemy(hitbox, this.getPhysDamage() + this.getMagicDamage());
 				GameSound attackSound = new GameSound("res/sounds/attack.wav");
@@ -523,5 +523,25 @@ public class Player extends GraphicObject {
 	
 	public PlayerStats getPlayerStats() {
 		return stats;
+	}
+
+	public int getFreeStatPoints() {
+		return stats.getFreeStatPoints();
+	}
+
+	public int getFreeSkillPoints() {
+		return stats.getFreeSkillPoints();
+	}
+
+	public void setStrengh() {
+		stats.setStrengh();		
+	}
+
+	public void setIntellegence() {
+		stats.setIntelligence();		
+	}
+
+	public void setDexterity() {
+		stats.setDexterity();		
 	}
 }

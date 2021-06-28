@@ -68,9 +68,4 @@ public class TestLevel1 extends Level {
 		}
 	}
 
-	@Override
-	public void openExit() {
-		
-	}
-
 }

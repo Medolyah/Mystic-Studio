@@ -98,8 +98,4 @@ public class Village extends Level {
 		}
 	}
 
-	@Override
-	public void openExit() {		
-	}
-
 }
