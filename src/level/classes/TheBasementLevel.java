@@ -27,6 +27,7 @@ public class TheBasementLevel extends Level {
 	public TheBasementLevel(MysticStudioGame game) {
 		super(game);
 		levelName = "Level 1: The Basement";
+		levelNumber = 1;
 
 		try {
 			textFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/distantGalaxy.ttf")).deriveFont(25f);
@@ -262,8 +263,10 @@ public class TheBasementLevel extends Level {
 		try {
 			getInteractionObjects().add(new InteractionObject(180, 750, new Rectangle(180, 750, 150, 250),
 					new Image("res/images/Basement_Door.png"), game, ""));
-			getInteractionObjects().add(new InteractionObject(5750, -1145, new Rectangle(5750, -1145, 150, 250),
-					new Image("res/images/Basement_Door.png"), game, "BasementLevel"));
+			if (boss == null) {
+				getInteractionObjects().add(new InteractionObject(5750, -1145, new Rectangle(5750, -1145, 150, 250),
+						new Image("res/images/Basement_Door.png"), game, "BasementLevel"));				
+			}
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

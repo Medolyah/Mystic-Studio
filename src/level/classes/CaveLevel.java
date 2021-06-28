@@ -27,6 +27,7 @@ public class CaveLevel extends Level {
 	public CaveLevel(MysticStudioGame game) {
 		super(game);
 		levelName = "Level 2: Cave";
+		levelNumber = 2;
 
 		try {
 			textFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/distantGalaxy.ttf")).deriveFont(25f);

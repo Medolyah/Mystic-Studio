@@ -146,12 +146,15 @@ public class SaveGameSelection extends Menu {
 		switch (saveGameSlot) {
 		case 1:
 			saveFile = new File("res/savegames/save1.txt");
+			game.setSaveGameNumber(1);
 			break;
 		case 2:
 			saveFile = new File("res/savegames/save2.txt");
+			game.setSaveGameNumber(2);
 			break;
 		case 3:
 			saveFile = new File("res/savegames/save3.txt");
+			game.setSaveGameNumber(3);
 			break;
 		default:
 			break;

@@ -130,18 +130,21 @@ public class CharacterSelection extends Menu {
 				FileOutputStream fileOut1 = new FileOutputStream("res/savegames/save1.txt");
 				ObjectOutputStream objectOut1 = new ObjectOutputStream(fileOut1);
 				objectOut1.writeObject(playerStats);
+				game.setSaveGameNumber(1);
 				break;
 				
 			case 2:
 				FileOutputStream fileOut2 = new FileOutputStream("res/savegames/save2.txt");
 				ObjectOutputStream objectOut2 = new ObjectOutputStream(fileOut2);
 				objectOut2.writeObject(playerStats);
+				game.setSaveGameNumber(2);
 				break;
 				
 			case 3:
 				FileOutputStream fileOut3 = new FileOutputStream("res/savegames/save3.txt");
 				ObjectOutputStream objectOut3 = new ObjectOutputStream(fileOut3);
 				objectOut3.writeObject(playerStats);
+				game.setSaveGameNumber(3);
 				break;
 				
 			default:

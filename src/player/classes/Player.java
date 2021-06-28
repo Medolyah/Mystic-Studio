@@ -520,4 +520,8 @@ public class Player extends GraphicObject {
 	public String getCharacterClass() {
 		return stats.getCharacterClass();
 	}
+	
+	public PlayerStats getPlayerStats() {
+		return stats;
+	}
 }

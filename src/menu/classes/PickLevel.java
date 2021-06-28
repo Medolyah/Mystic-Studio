@@ -45,7 +45,7 @@ public class PickLevel extends Menu {
 			} else if (levelOneButton.isClicked(container.getInput())) {
 				levelOne();
 			} else if (levelTwoButton != null)
-				if (levelTwoButton.isClicked(container.getInput()) && game.getPlayer().getGameProgress() >= 2) {
+				if (levelTwoButton.isClicked(container.getInput()) && game.getPlayer().getGameProgress() >= 1) {
 					levelTwo();
 				}
 		}
@@ -55,7 +55,7 @@ public class PickLevel extends Menu {
 		g.drawImage(backgroundImage, backgroundImagePosX, backgroundImagePosY);
 		continueButton.render(container, g);
 		levelOneButton.render(container, g);
-		if (game.getPlayer().getGameProgress() >= 2) {
+		if (game.getPlayer().getGameProgress() >= 1) {
 			levelTwoButton.render(container, g);
 		}
 	}
@@ -70,7 +70,7 @@ public class PickLevel extends Menu {
 		Shape levelOneButtonShape = new Rectangle(760, 600, 400, 61);
 		levelOneButton = new MysticButton(760, 600, levelOneButtonShape, levelOneButtonImage);
 
-		if (game.getPlayer().getGameProgress() >= 2) {
+		if (game.getPlayer().getGameProgress() >= 1) {
 			Image levelTwoButtonImage = new Image("res/images/Level1.png");
 			Shape levelTwoButtonShape = new Rectangle(760, 700, 400, 61);
 			levelTwoButton = new MysticButton(760, 700, levelTwoButtonShape, levelTwoButtonImage);

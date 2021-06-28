@@ -38,6 +38,7 @@ public class MysticStudioGame {
 	private PickLevel pickLevel;
 	private InventoryAndStats inventory;
 	private GameOver gameOver;
+	private int saveGameNumer;
 
 	public MysticStudioGame(GameContainer container) throws SlickException, FileNotFoundException {
 
@@ -312,4 +313,11 @@ public class MysticStudioGame {
 		return this.pickLevel;
 	}
 
+	public void setSaveGameNumber(int saveGameNumber) {
+		this.saveGameNumer = saveGameNumber;
+	}
+	
+	public int getSaveGameNumber() {
+		return this.saveGameNumer;
+	}
 }

@@ -27,6 +27,7 @@ public abstract class Level {
 		PLATFORMER
 	}
 	
+	protected int levelNumber;
 	protected ArrayList<GraphicObject> textures;
 	protected ArrayList<Npc> npcs;
 	protected Npc boss;
@@ -174,9 +175,11 @@ public abstract class Level {
 					if (npc.equals(boss)) {
 						GameSound lootDrop = new GameSound("res/sounds/lootDrop.wav");
 						lootDrop.playSound();
+						if (levelNumber > game.getPlayer().getGameProgress()) {
+							game.getPlayer().setGameProgress(levelNumber);
+						}
 					}
 					iterator.remove();
-//					break;
 				}
 			}
 		}
