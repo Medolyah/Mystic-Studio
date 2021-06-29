@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -11,12 +12,16 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
 import audio.classes.GameMusic;
 import audio.classes.GameSound;
 import basic.classes.GraphicObject;
+import basic.classes.MysticButton;
 import basic.classes.MysticStudioGame;
+import itmes.classes.GoldCoin;
+import itmes.classes.InGameItem;
 import player.classes.Player.Movement;
 
 @SuppressWarnings("deprecation")
@@ -32,6 +37,7 @@ public abstract class Level {
 	protected ArrayList<Npc> npcs;
 	protected Npc boss;
 	protected ArrayList<InteractionObject> interactionObjects;
+	protected ArrayList<InGameItem> inGameItems;
 	protected LevelType levelType;
 	protected Image background;
 	protected String levelName;
@@ -45,6 +51,7 @@ public abstract class Level {
 
 	public Level(MysticStudioGame game) {
 		this.game = game;
+		inGameItems = new ArrayList<InGameItem>();
 	}
 
 	public void update(GameContainer container, int delta) throws FileNotFoundException, SlickException {
@@ -53,6 +60,10 @@ public abstract class Level {
 		}
 		for (InteractionObject interactionObject : interactionObjects) {
 			interactionObject.update(container, delta);
+		}
+		lootCollected(container, delta);
+		for (InGameItem inGameItem : inGameItems) {
+			inGameItem.update(container, delta);
 		}
 	}
 
@@ -83,6 +94,11 @@ public abstract class Level {
 				npc.render(container, g);
 			}
 		}
+		
+		// items
+		for (InGameItem inGameItem : inGameItems) {
+			inGameItem.render(container, g);;
+		}
 	}
 
 	public void moveObjects(Movement movement) {
@@ -94,7 +110,7 @@ public abstract class Level {
 					object.setyPos(object.getyPos() - 1);
 				}
 			}
-			if (getInteractionObjects() != null) {
+			if (interactionObjects != null) {
 				for (InteractionObject object : getInteractionObjects()) {
 					object.setyPos(object.getyPos() - 1);
 				}
@@ -102,6 +118,11 @@ public abstract class Level {
 			if (npcs != null) {
 				for (Npc npc : npcs) {
 					npc.setyPos(npc.getyPos() - 1);
+				}
+			}
+			if (getInGameItems() != null) {
+				for (InGameItem inGameItem : inGameItems) {
+					inGameItem.getItemIcon().setyPos(inGameItem.getItemIcon().getyPos() - 1);
 				}
 			}
 			break;
@@ -119,6 +140,11 @@ public abstract class Level {
 			if (npcs != null) {
 				for (Npc npc : npcs) {
 					npc.setyPos(npc.getyPos() + 1);
+				}
+			}
+			if (getInGameItems() != null) {
+				for (InGameItem inGameItem : inGameItems) {
+					inGameItem.getItemIcon().setyPos(inGameItem.getItemIcon().getyPos() + 1);
 				}
 			}
 			break;
@@ -140,6 +166,11 @@ public abstract class Level {
 					npc.setxMaxPos(npc.getxMaxPos() + 1);
 				}
 			}
+			if (getInGameItems() != null) {
+				for (InGameItem inGameItem : inGameItems) {
+					inGameItem.getItemIcon().setxPos(inGameItem.getItemIcon().getxPos() + 1);
+				}
+			}
 			break;
 		case LEFT:
 			if (getTextures() != null) {
@@ -157,6 +188,11 @@ public abstract class Level {
 					npc.setxPos(npc.getxPos() - 1);
 					npc.setxMinPos(npc.getxMinPos() - 1);
 					npc.setxMaxPos(npc.getxMaxPos() - 1);
+				}
+			}
+			if (getInGameItems() != null) {
+				for (InGameItem inGameItem : inGameItems) {
+					inGameItem.getItemIcon().setxPos(inGameItem.getItemIcon().getxPos() - 1);
 				}
 			}
 			break;
@@ -186,6 +222,7 @@ public abstract class Level {
 						}
 					}
 					iterator.remove();
+					isDrop();
 				}
 			}
 		}
@@ -207,8 +244,45 @@ public abstract class Level {
 		return textures;
 	}
 
+	public ArrayList<InGameItem> getInGameItems() {
+		return this.inGameItems;
+	}
+
 	public Npc getBoss() {
 		return this.boss;
+	}
+
+	protected void isDrop() {
+		Random random = new Random();
+		int rn = random.nextInt(11) + 1;
+		if (rn > 7) {
+			int xPos = game.getPlayer().getxPos() + rn * rn;
+			int yPos = game.getPlayer().getyPos() + 150;
+			Shape hitbox = new Circle(xPos, yPos, 13);
+			try {
+				Image itemImage = new Image("res/images/Gold-Coin.png");
+				GoldCoin coin = new GoldCoin(game, "Gold", new MysticButton(xPos, yPos, hitbox, itemImage),
+						new int[] { 1 });
+				inGameItems.add(coin);
+			} catch (SlickException | FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	protected void lootCollected(GameContainer container, int delta) {
+		Iterator<InGameItem> iterator = inGameItems.iterator();
+		while (iterator.hasNext()) {
+			InGameItem currentInGameItem = iterator.next();
+			try {
+				if (currentInGameItem.getItemIcon().isClicked(container.getInput())) {
+					iterator.remove();
+					game.getPlayer().setCurrentGold(levelNumber);
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	protected void openExit() {

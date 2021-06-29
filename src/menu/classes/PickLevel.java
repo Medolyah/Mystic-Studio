@@ -24,6 +24,7 @@ public class PickLevel extends Menu {
 	private MysticButton continueButton;
 	private MysticButton levelOneButton;
 	private MysticButton levelTwoButton;
+	private MysticButton levelThreeButton;
 
 	private boolean exit = false;
 
@@ -44,10 +45,15 @@ public class PickLevel extends Menu {
 				continueGame(container);
 			} else if (levelOneButton.isClicked(container.getInput())) {
 				levelOne();
-			} else if (levelTwoButton != null)
+			} else if (levelTwoButton != null) {
 				if (levelTwoButton.isClicked(container.getInput()) && game.getPlayer().getGameProgress() >= 1) {
 					levelTwo();
+				}				
+			} else if (levelThreeButton != null) {
+				if (levelThreeButton.isClicked(container.getInput()) && game.getPlayer().getGameProgress() >= 2) {
+//					levelThree();
 				}
+			}
 		}
 	}
 
@@ -58,22 +64,31 @@ public class PickLevel extends Menu {
 		if (game.getPlayer().getGameProgress() >= 1) {
 			levelTwoButton.render(container, g);
 		}
+		if (game.getPlayer().getGameProgress() >= 2) {
+			levelThreeButton.render(container, g);
+		}
 	}
 
 	private void menuButtons() throws SlickException, FileNotFoundException {
 
 		Image continueButtonImage = new Image("res/images/Continue_Button.png");
-		Shape continueButtonShape = new Rectangle(760, 500, 400, 61);
-		continueButton = new MysticButton(760, 500, continueButtonShape, continueButtonImage);
+		Shape continueButtonShape = new Rectangle(760, 425, 400, 61);
+		continueButton = new MysticButton(760, 425, continueButtonShape, continueButtonImage);
 
 		Image levelOneButtonImage = new Image("res/images/Level1.png");
-		Shape levelOneButtonShape = new Rectangle(760, 600, 400, 61);
-		levelOneButton = new MysticButton(760, 600, levelOneButtonShape, levelOneButtonImage);
+		Shape levelOneButtonShape = new Rectangle(760, 500, 400, 61);
+		levelOneButton = new MysticButton(760, 500, levelOneButtonShape, levelOneButtonImage);
 
 		if (game.getPlayer().getGameProgress() >= 1) {
-			Image levelTwoButtonImage = new Image("res/images/Level1.png");
-			Shape levelTwoButtonShape = new Rectangle(760, 700, 400, 61);
-			levelTwoButton = new MysticButton(760, 700, levelTwoButtonShape, levelTwoButtonImage);
+			Image levelTwoButtonImage = new Image("res/images/Level2.png");
+			Shape levelTwoButtonShape = new Rectangle(760, 575, 400, 61);
+			levelTwoButton = new MysticButton(760, 575, levelTwoButtonShape, levelTwoButtonImage);
+		}
+
+		if (game.getPlayer().getGameProgress() >= 2) {
+			Image levelThreeButtonImage = new Image("res/images/Level3.png");
+			Shape levelThreeButtonShape = new Rectangle(760, 650, 400, 61);
+			levelThreeButton = new MysticButton(760, 650, levelThreeButtonShape, levelThreeButtonImage);
 		}
 
 	}

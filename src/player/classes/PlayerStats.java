@@ -264,7 +264,7 @@ public class PlayerStats implements Serializable {
 	}
 
 	public void setCurrentGold(int gold) {
-		this.currentGold = gold;
+		this.currentGold += gold;
 	}
 
 	public int getFreeStatPoints() {

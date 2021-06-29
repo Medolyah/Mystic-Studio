@@ -548,4 +548,8 @@ public class Player extends GraphicObject {
 	public int getCurrenGold() {
 		return stats.getCurrentGold();
 	}
+
+	public void setCurrentGold(int gold) {
+		stats.setCurrentGold(gold);
+	}
 }
