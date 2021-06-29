@@ -21,6 +21,7 @@ public class Npc extends GraphicObject {
 
 	private int currentHP;
 	private int maxHP;
+	private int damage;
 	private Shape aggroBox;
 	
 	// type 0 = object, type 1 = normal enemy, type 2 = boss
@@ -29,7 +30,7 @@ public class Npc extends GraphicObject {
 	private int deltaEnemyHit;
 
 	public Npc(MysticStudioGame game, int xPos, int yPos, Shape hitbox, Image image, int xMinPos, int xMaxPos,
-			int xVelocity, int maxHP, Shape aggroBox, int type) {
+			int xVelocity, int maxHP, int damage, Shape aggroBox, int type) {
 		super(xPos, yPos, hitbox, image);
 		this.game = game;
 		this.xMinPos = xMinPos;
@@ -37,6 +38,7 @@ public class Npc extends GraphicObject {
 		this.xVelocity = xVelocity;
 		this.maxHP = maxHP;
 		this.currentHP = this.maxHP;
+		this.damage = damage;
 		this.aggroBox = aggroBox;
 		this.type = type;
 		
@@ -124,7 +126,7 @@ public class Npc extends GraphicObject {
 				switch (type) {
 				case 1:
 					try {
-						game.getPlayer().setCurrentLife(-5);
+						game.getPlayer().setCurrentLife(damage);
 					} catch (FileNotFoundException | SlickException e) {
 						e.printStackTrace();
 					}
@@ -132,7 +134,7 @@ public class Npc extends GraphicObject {
 					break;
 				case 2:
 					try {
-						game.getPlayer().setCurrentLife(-10);
+						game.getPlayer().setCurrentLife(damage);
 					} catch (FileNotFoundException | SlickException e) {
 						e.printStackTrace();
 					}

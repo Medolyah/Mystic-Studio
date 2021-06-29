@@ -48,9 +48,9 @@ public class Village extends Level {
 			Image gateRight2 = new Image("res/images/Gate-Right2.png");
 			
 			// houses
-			getTextures().add(new GraphicObject(100, 50, new Rectangle(100, 50, 148, 377), villageTower));
-			getTextures().add(new GraphicObject(100, 650, new Rectangle(100, 650, 435, 321), villageHouse01));
-			getTextures().add(new GraphicObject(1000, 200, new Rectangle(1000, 200, 520, 241), villageHouse02));
+			getTextures().add(new GraphicObject(100, 50, new Rectangle(100, 50, 148, 157), villageTower));
+			getTextures().add(new GraphicObject(100, 650, new Rectangle(100, 650, 435, 101), villageHouse01));
+			getTextures().add(new GraphicObject(1000, 200, new Rectangle(1000, 200, 520, 21), villageHouse02));
 			
 			// walls
 			getTextures().add(new GraphicObject(0, 0, new Rectangle(0, 0, 60, 400), villageWallLeftRight));

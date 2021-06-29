@@ -544,4 +544,8 @@ public class Player extends GraphicObject {
 	public void setDexterity() {
 		stats.setDexterity();		
 	}
+
+	public int getCurrenGold() {
+		return stats.getCurrentGold();
+	}
 }

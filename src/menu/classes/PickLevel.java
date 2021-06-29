@@ -30,7 +30,7 @@ public class PickLevel extends Menu {
 	private MysticStudioGame game;
 
 	public PickLevel(MysticStudioGame game) throws SlickException, FileNotFoundException {
-		backgroundImage = new Image("res/images/Window-Menu.png");
+		backgroundImage = new Image("res/images/LevelPicker-Menu.png");
 		backgroundImagePosX = 710;
 		backgroundImagePosY = 240;
 		this.game = game;

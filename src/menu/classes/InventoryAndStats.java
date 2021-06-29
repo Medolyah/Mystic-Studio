@@ -160,6 +160,7 @@ public class InventoryAndStats extends Menu {
 		// text labels
 		ttTextFont.drawString(1620, 304, "Level:", fontColor);
 		ttTextFont.drawString(1750, 304, "XP:", fontColor);
+		ttTextFont.drawString(1750, 329, "Gold:", fontColor);
 		ttTextFont.drawString(1450, 350, "Maximum Life:", fontColor);
 		ttTextFont.drawString(1450, 375, "Current Life:", fontColor);
 		ttTextFont.drawString(1450, 400, "Maximum Energy:", fontColor);
@@ -180,6 +181,7 @@ public class InventoryAndStats extends Menu {
 		ttTextFont.drawString(1690, 304, "" + game.getPlayer().getPlayerLevel(), valueColor);
 		ttTextFont.drawString(1790, 304, "" + game.getPlayer().getCurrentXP() + "/" + game.getPlayer().getRequiredXP(),
 				valueColor);
+		ttTextFont.drawString(1820, 329, "" + game.getPlayer().getCurrenGold(), valueColor);
 		ttTextFont.drawString(1650, 350, "" + game.getPlayer().getMaxLife(), valueColor);
 		ttTextFont.drawString(1650, 375, "" + game.getPlayer().getCurrentLife(), valueColor);
 		ttTextFont.drawString(1650, 400, "" + game.getPlayer().getMaxEnergy(), valueColor);

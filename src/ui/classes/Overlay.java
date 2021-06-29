@@ -24,6 +24,7 @@ public class Overlay {
 	private Image background; 
 	private Image testItem1;
 	private Image testItem2;
+	private Image goldCoin;
 	
 	private Font textFont;
 	private TrueTypeFont ttTextFont;
@@ -70,6 +71,8 @@ public class Overlay {
 		// test item
 		testItem1 = new Image("res/images/Healing_small.png");
 		testItem2 = new Image("res/images/Mana_small.png");
+		
+		goldCoin = new Image("res/images/Gold-Coin.png");
 	}
 
 	public void update(GameContainer container, int delta) {
@@ -151,6 +154,11 @@ public class Overlay {
 		
 		ttTextFont.drawString(955, 1062, "LMB", fontColor);
 		ttTextFont.drawString(1005, 1062, "RMB", fontColor);
+		
+		ttTextFont.drawString(125, 1040, "LVL");
+		ttTextFont.drawString(135, 1060, "" + player.getPlayerLevel());
+		g.drawImage(goldCoin, 1720, 1045);
+		ttTextFont.drawString(1750, 1050, "" + player.getCurrenGold());
 	}
 
 }

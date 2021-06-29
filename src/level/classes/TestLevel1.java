@@ -47,7 +47,7 @@ public class TestLevel1 extends Level {
 		// npcs
 		npcs = new ArrayList<Npc>();
 		try {
-			npcs.add(new Npc(game, 1000, 600, new Circle(100, 100, 50), new Image("res/images/Spider2.png"), 900, 1800, 3, 100, new Circle(0, 0, 200), 1));				
+			npcs.add(new Npc(game, 1000, 600, new Circle(100, 100, 50), new Image("res/images/Spider2.png"), 900, 1800, 3, 100, -5, new Circle(0, 0, 200), 1));				
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

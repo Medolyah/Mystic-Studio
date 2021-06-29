@@ -228,31 +228,31 @@ public class TheBasementLevel extends Level {
 			Image spider2 = new Image("res/images/Spider2.png");
 			Image devilEye1 = new Image("res/images/Devil-eye1.png");
 
-			npcs.add(new Npc(game, 1650, 500, new Circle(1650, 910, 60), spider2, 1650, 1900, 2, 100, new Circle(0, 0, 200), 1));
-			npcs.add(new Npc(game, 1650, 550, new Circle(1650, 910, 60), spider2, 1650, 1900, 3, 100, new Circle(0, 0, 200), 1));
-			npcs.add(new Npc(game, 1900, 550, new Circle(1900, 910, 60), spider2, 1650, 1900, 2, 100, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 1650, 500, new Circle(1650, 910, 60), spider2, 1650, 1900, 2, 100, -5, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 1650, 550, new Circle(1650, 910, 60), spider2, 1650, 1900, 3, 100, -5, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 1900, 550, new Circle(1900, 910, 60), spider2, 1650, 1900, 2, 100, -5, new Circle(0, 0, 200), 1));
 
-			npcs.add(new Npc(game, 2000, 950, new Circle(1900, 910, 60), spider2, 2000, 3500, 2, 100, new Circle(0, 0, 200), 1));
-			npcs.add(new Npc(game, 2500, 925, new Circle(1900, 910, 60), spider2, 2000, 3500, 2, 100, new Circle(0, 0, 200), 1));
-			npcs.add(new Npc(game, 3000, 950, new Circle(1900, 910, 60), spider2, 2000, 3500, 4, 100, new Circle(0, 0, 200), 1));
-			npcs.add(new Npc(game, 3500, 925, new Circle(1900, 910, 60), spider2, 2000, 3500, 2, 100, new Circle(0, 0, 200), 1));
-			npcs.add(new Npc(game, 2500, 900, new Circle(1900, 910, 60), spider2, 2000, 3500, 1, 100, new Circle(0, 0, 200), 1));
-			npcs.add(new Npc(game, 2000, 925, new Circle(1900, 910, 60), spider2, 2000, 3500, 3, 100, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 2000, 950, new Circle(1900, 910, 60), spider2, 2000, 3500, 2, 100, -5, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 2500, 925, new Circle(1900, 910, 60), spider2, 2000, 3500, 2, 100, -5, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 3000, 950, new Circle(1900, 910, 60), spider2, 2000, 3500, 4, 100, -5, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 3500, 925, new Circle(1900, 910, 60), spider2, 2000, 3500, 2, 100, -5, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 2500, 900, new Circle(1900, 910, 60), spider2, 2000, 3500, 1, 100, -5, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 2000, 925, new Circle(1900, 910, 60), spider2, 2000, 3500, 3, 100, -5, new Circle(0, 0, 200), 1));
 
-			npcs.add(new Npc(game, 4750, 950, new Circle(4750, 910, 60), spider2, 4750, 4750, 0, 100, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 4750, 950, new Circle(4750, 910, 60), spider2, 4750, 4750, 0, 100, -5, new Circle(0, 0, 200), 1));
 
-			npcs.add(new Npc(game, 3600, 100, new Circle(3600, 910, 60), spider2, 3600, 3900, 2, 100, new Circle(0, 0, 200), 1));
-			npcs.add(new Npc(game, 3200, 0, new Circle(3200, 910, 60), spider2, 3200, 3500, 1, 100, new Circle(0, 0, 200), 1));
-			npcs.add(new Npc(game, 2800, -50, new Circle(2800, 910, 60), spider2, 2800, 3100, 3, 100, new Circle(0, 0, 200), 1));
-			npcs.add(new Npc(game, 2400, -100, new Circle(2400, 910, 60), spider2, 2400, 2700, 3, 100, new Circle(0, 0, 200), 1));
-			npcs.add(new Npc(game, 600, -150, new Circle(600, 910, 60), spider2, 600, 1000, 3, 100, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 3600, 100, new Circle(3600, 910, 60), spider2, 3600, 3900, 2, 100, -5, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 3200, 0, new Circle(3200, 910, 60), spider2, 3200, 3500, 1, 100, -5, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 2800, -50, new Circle(2800, 910, 60), spider2, 2800, 3100, 3, 100, -5, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 2400, -100, new Circle(2400, 910, 60), spider2, 2400, 2700, 3, 100, -5, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 600, -150, new Circle(600, 910, 60), spider2, 600, 1000, 3, 100, -5, new Circle(0, 0, 200), 1));
 
-			npcs.add(new Npc(game, 850, -650, new Circle(800, 910, 60), spider2, 850, 1100, 1, 100, new Circle(0, 0, 200), 1));
-			npcs.add(new Npc(game, 1150, -720, new Circle(1150, 910, 60), spider2, 1150, 1450, 2, 100, new Circle(0, 0, 200), 1));
-			npcs.add(new Npc(game, 1550, -800, new Circle(1550, 910, 60), spider2, 1550, 1900, 2, 100, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 850, -650, new Circle(800, 910, 60), spider2, 850, 1100, 1, 100, -5, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 1150, -720, new Circle(1150, 910, 60), spider2, 1150, 1450, 2, 100, -5, new Circle(0, 0, 200), 1));
+			npcs.add(new Npc(game, 1550, -800, new Circle(1550, 910, 60), spider2, 1550, 1900, 2, 100, -5, new Circle(0, 0, 200), 1));
 			
 			// boss
-			npcs.add(boss = new Npc(game, 3000, -1212, new Rectangle(3000, -1212, 300, 145), devilEye1, 3000, 5400, 3, 250,
+			npcs.add(boss = new Npc(game, 3000, -1212, new Rectangle(3000, -1212, 300, 145), devilEye1, 3000, 5400, 3, 250, -10,
 					new Circle(0, 0, 200), 2));
 
 		} catch (SlickException e) {
