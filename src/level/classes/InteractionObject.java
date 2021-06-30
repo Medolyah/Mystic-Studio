@@ -59,10 +59,13 @@ public class InteractionObject extends GraphicObject {
 			break;
 		case "merchant":
 			GameSound merchantSound = new GameSound("res/voice-files/merchant.wav");
+			game.setShop();
 			merchantSound.playSound();
 			break;
 		case "Quest01":
 			GameSound quest01Sound = new GameSound("res/voice-files/quest01.wav");
+			game.getPlayer().setCurrentLife(9999);
+			game.getPlayer().setCurrentEnergy(9999);
 			quest01Sound.playSound();
 			break;
 		default:

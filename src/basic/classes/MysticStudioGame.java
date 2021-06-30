@@ -18,6 +18,7 @@ import menu.classes.Intro;
 import menu.classes.InventoryAndStats;
 import menu.classes.MainMenu;
 import menu.classes.PickLevel;
+import menu.classes.Shop;
 import menu.classes.WindowMenu;
 import player.classes.Player;
 import ui.classes.Overlay;
@@ -39,6 +40,7 @@ public class MysticStudioGame {
 	private InventoryAndStats inventory;
 	private GameOver gameOver;
 	private int saveGameNumer;
+	private Shop shop;
 
 	public MysticStudioGame(GameContainer container) throws SlickException, FileNotFoundException {
 
@@ -125,14 +127,29 @@ public class MysticStudioGame {
 			inventory.update(container, delta);
 		}
 		
+		// shop
+		if (shop != null) {
+			shop.update(container, delta);
+		}
+		
 		// ESC: end game
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
-			if (level != null && player != null) {
+			if (shop == null && level != null && player != null) {
 				if (windowMenu == null) {
 					windowMenu = new WindowMenu(this);					
 				} else {
 					windowMenu = null;
 				}
+			}
+			if (shop != null) {
+				shop = null;
+			}
+		}
+		
+		// close shop other than ESC
+		if (input.isKeyPressed(Input.KEY_A) | input.isKeyPressed(Input.KEY_S) | input.isKeyPressed(Input.KEY_D) | input.isKeyPressed(Input.KEY_W)) {
+			if (shop != null) {
+				shop = null;
 			}
 		}
 		
@@ -184,6 +201,11 @@ public class MysticStudioGame {
 		// inventory and stats
 		if (inventory != null && level != null && player != null) {
 			inventory.render(container, g);
+		}
+		
+		// shop
+		if (shop != null) {
+			shop.render(container, g);
 		}
 		
 		// game over
@@ -319,5 +341,13 @@ public class MysticStudioGame {
 	
 	public int getSaveGameNumber() {
 		return this.saveGameNumer;
+	}
+
+	public void setShop() {
+		try {
+			shop = new Shop(this);
+		} catch (SlickException | FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 }

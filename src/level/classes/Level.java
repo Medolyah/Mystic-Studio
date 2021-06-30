@@ -217,6 +217,9 @@ public abstract class Level {
 						GameSound lootDrop = new GameSound("res/sounds/lootDrop.wav");
 						lootDrop.playSound();
 						openExit();
+						for (int i = 0; i < 20; i++) {
+							isDrop();
+						}
 						if (levelNumber > game.getPlayer().getGameProgress()) {
 							game.getPlayer().setGameProgress(levelNumber);
 						}
@@ -261,7 +264,7 @@ public abstract class Level {
 			Shape hitbox = new Circle(xPos, yPos, 13);
 			try {
 				Image itemImage = new Image("res/images/Gold-Coin.png");
-				GoldCoin coin = new GoldCoin(game, "Gold", new MysticButton(xPos, yPos, hitbox, itemImage),
+				GoldCoin coin = new GoldCoin("Gold", new MysticButton(xPos, yPos, hitbox, itemImage),
 						new int[] { 1 });
 				inGameItems.add(coin);
 			} catch (SlickException | FileNotFoundException e) {

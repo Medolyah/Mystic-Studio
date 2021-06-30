@@ -31,6 +31,15 @@ public class InventoryAndStats extends Menu {
 	private Color fontColor;
 	private Color valueColor;
 
+	private Image weaponButtonImage;
+	private Image helmetButtonImage;
+	private Image bodyArmourButtonImage;
+//	private Image pantsButtonImage;
+	private Image bootsButtonImage;
+	private Image glovesButtonImage;
+	private Image leftRingButtonImage;
+	private Image rightRingButtonImage;
+
 	private Image levelButtonImage;
 	private MysticButton levelStrength;
 	private MysticButton levelIntellegence;
@@ -39,7 +48,7 @@ public class InventoryAndStats extends Menu {
 	public InventoryAndStats(MysticStudioGame game) throws SlickException, FileNotFoundException {
 		this.game = game;
 		this.savingGame = new SavingGame(game);
-		
+
 		switch (game.getPlayer().getCharacterClass()) {
 		case "warrior":
 			backgroundImage = new Image("res/images/Inventory-Warrior.png");
@@ -48,7 +57,7 @@ public class InventoryAndStats extends Menu {
 			backgroundImage = new Image("res/images/Inventory-Mage.png");
 			break;
 		case "ranger":
-			backgroundImage = new Image("res/images/Inventory-Warrior.png");
+			backgroundImage = new Image("res/images/Inventory-Ranger.png");
 			break;
 		default:
 			break;
@@ -60,8 +69,17 @@ public class InventoryAndStats extends Menu {
 			textFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/distantGalaxy.ttf")).deriveFont(18f);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(textFont);
-			
+
 			levelButtonImage = new Image("res/images/Plus-Button.png");
+
+			weaponButtonImage = new Image("res/images/Wood-Sword-Inventory.png");
+			helmetButtonImage = new Image("res/images/Helmet-Inventory.png");
+			bodyArmourButtonImage = new Image("res/images/BodyArmour-Inventory.png");
+//			pantsButtonImage = new Image("res/images/Pants-Inventory.png");
+			bootsButtonImage = new Image("res/images/Boots-Inventory.png");
+			glovesButtonImage = new Image("res/images/Gloves-Inventory.png");
+			leftRingButtonImage = new Image("res/images/Ring1-Inventory.png");
+			rightRingButtonImage = new Image("res/images/Ring2-Inventory.png");
 		} catch (IOException | FontFormatException e) {
 			e.printStackTrace();
 		}
@@ -152,6 +170,39 @@ public class InventoryAndStats extends Menu {
 		g.drawRect(1750, 220, 37, 37);
 		// boots
 		g.drawRect(1800, 220, 37, 37);
+
+		if (game.getPlayer().getWeapon() > 0) {
+			g.drawImage(weaponButtonImage, 1750, 70);
+			ttTextFont.drawString(1616, 86, "" + game.getPlayer().getWeapon(), fontColor);
+		}
+		if (game.getPlayer().getHelmet() > 0) {
+			g.drawImage(helmetButtonImage, 1800, 70);
+			ttTextFont.drawString(1666, 86, "" + game.getPlayer().getHelmet(), fontColor);
+		}
+		if (game.getPlayer().getBodyArmour() > 0) {
+			g.drawImage(bodyArmourButtonImage, 1750, 120);
+			ttTextFont.drawString(1616, 136, "" + game.getPlayer().getBodyArmour(), fontColor);
+		}
+//		if (game.getPlayer().getPants() > 0) {
+//		g.drawImage(pantsButtonImage, 1800, 120);
+//		ttTextFont.drawString(1666, 136, "" + game.getPlayer().getPants(), fontColor);
+//		}
+		if (game.getPlayer().getBoots() > 0) {
+			g.drawImage(bootsButtonImage, 1750, 170);
+			ttTextFont.drawString(1616, 186, "" + game.getPlayer().getBoots(), fontColor);
+		}
+		if (game.getPlayer().getGloves() > 0) {
+			g.drawImage(glovesButtonImage, 1800, 170);
+			ttTextFont.drawString(1666, 186, "" + game.getPlayer().getGloves(), fontColor);
+		}
+		if (game.getPlayer().getLeftRing() > 0) {
+			g.drawImage(leftRingButtonImage, 1750, 220);
+			ttTextFont.drawString(1616, 236, "" + game.getPlayer().getLeftRing(), fontColor);
+		}
+		if (game.getPlayer().getRightRing() > 0) {
+			g.drawImage(rightRingButtonImage, 1800, 220);
+			ttTextFont.drawString(1666, 236, "" + game.getPlayer().getRightRing(), fontColor);
+		}
 
 	}
 

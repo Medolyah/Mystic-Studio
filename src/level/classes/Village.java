@@ -89,8 +89,8 @@ public class Village extends Level {
 					new Image("res/images/Gate-Top.png"), game, "SelectLevel"));
 			getInteractionObjects().add(new InteractionObject(535, 800, new Rectangle(535, 800, 100, 200),
 					new Image("res/images/smith.png"), game, "Quest01"));
-			getInteractionObjects().add(new InteractionObject(1200, 450, new Rectangle(1200, 450, 100, 200),
-					new Image("res/images/merchant.png"), game, "merchant"));
+			getInteractionObjects().add(new InteractionObject(1200, 450, new Rectangle(1200, 450, 127, 200),
+					new Image("res/images/forester-small.png"), game, "merchant"));
 			getInteractionObjects().add(new InteractionObject(1600, 800, new Rectangle(1600, 800, 100, 200),
 					new Image("res/images/villager01.png"), game, "villager"));
 		} catch (SlickException e) {
