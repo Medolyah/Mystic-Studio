@@ -89,7 +89,7 @@ public class Intro {
 				 */
 			} else if (waitForIntro > 2000) {
 				waitForIntro += delta;
-				introImage = new Image("res/images/Titelbild_ohne_Menu_FS.png");
+				introImage = new Image("res/images/Main_Menu.png");
 				/*
 				 * Otherwise just count the time
 				 */

@@ -65,15 +65,15 @@ public class SaveGameSelection extends Menu {
 		}
 		ttTitleFont = new TrueTypeFont(titleFont, true);
 
-		Image save1Image = new Image("res/images/Confirm_Button.png");
+		Image save1Image = new Image("res/images/Savegame1.png");
 		Shape save1Shape = new Rectangle(790, 700, 400, 61);
 		saveGame1Button = new MysticButton(790, 700, save1Shape, save1Image);
 
-		Image save2Image = new Image("res/images/Confirm_Button.png");
+		Image save2Image = new Image("res/images/Savegame2.png");
 		Shape save2Shape = new Rectangle(790, 800, 400, 61);
 		saveGame2Button = new MysticButton(790, 800, save2Shape, save2Image);
 
-		Image save3Image = new Image("res/images/Confirm_Button.png");
+		Image save3Image = new Image("res/images/Savegame3.png");
 		Shape save3Shape = new Rectangle(790, 900, 400, 61);
 		saveGame3Button = new MysticButton(790, 900, save3Shape, save3Image);
 

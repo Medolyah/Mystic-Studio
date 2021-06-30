@@ -161,6 +161,32 @@ public class MainMenu extends Menu {
 
 		// set player stats for the current player
 		game.getPlayer().setPlayerStats(game.getPlayer(), saveFile);
+		switch (game.getPlayer().getCharacterClass()) {
+		case "warrior":
+			game.getPlayer().setMoveLeftImg1(new Image("res/images/Knight-left-walk-1.png"));
+			game.getPlayer().setMoveLeftImg2(new Image("res/images/Knight-left-walk-2.png"));
+			game.getPlayer().setMoveRightImg1(new Image("res/images/Knight-right-walk-1.png"));
+			game.getPlayer().setMoveRightImg2(new Image("res/images/Knight-right-walk-2.png"));
+			game.getPlayer().setSwordImage(new Image("res/images/Wood-Sword.png"));
+			break;
+		case "mage":
+			game.getPlayer().setMoveLeftImg1(new Image("res/images/Mage-left-walk-1.png"));
+			game.getPlayer().setMoveLeftImg2(new Image("res/images/Mage-left-walk-2.png"));
+			game.getPlayer().setMoveRightImg1(new Image("res/images/Mage-right-walk-1.png"));
+			game.getPlayer().setMoveRightImg2(new Image("res/images/Mage-right-walk-2.png"));
+			game.getPlayer().setSwordImage(new Image("res/images/Magic-Wand.png"));
+			break;
+		case "ranger":
+			game.getPlayer().setMoveLeftImg1(new Image("res/images/Knight-left-walk-1.png"));
+			game.getPlayer().setMoveLeftImg2(new Image("res/images/Knight-left-walk-2.png"));
+			game.getPlayer().setMoveRightImg1(new Image("res/images/Knight-right-walk-1.png"));
+			game.getPlayer().setMoveRightImg2(new Image("res/images/Knight-right-walk-2.png"));
+			game.getPlayer().setSwordImage(new Image("res/images/Wood-Sword.png"));
+			break;
+
+		default:
+			break;
+		}
 
 		// set overlay
 		game.setOverlay(new Overlay(player));

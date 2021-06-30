@@ -74,7 +74,7 @@ public class CharacterSelection extends Menu {
 		Shape mageShape = new Rectangle(900, 700, 150, 250);
 		mageButton = new MysticButton(900, 700, mageShape, mageImage);
 
-		Image rangerImage = new Image("res/images/Knight_Profile.png");
+		Image rangerImage = new Image("res/images/Ranger_Profile.png");
 		Shape rangerShape = new Rectangle(1100, 700, 150, 250);
 		rangerButton = new MysticButton(1100, 700, rangerShape, rangerImage);
 	}
@@ -82,9 +82,10 @@ public class CharacterSelection extends Menu {
 	public void update(GameContainer container, int delta) throws SlickException, FileNotFoundException {
 		if (container.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
 			active = false;
-		} else {
+		} else if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			checkClicked(container);
 		}
+		
 	}
 
 	public void render(GameContainer container, Graphics g) throws SlickException {
@@ -104,21 +105,34 @@ public class CharacterSelection extends Menu {
 	}
 
 	private void checkClicked(GameContainer container) throws FileNotFoundException, SlickException {
-		if (container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			if (knightButton.isClicked(container.getInput())) {
+		boolean selected = false;
+		if (knightButton.isClicked(container.getInput())) {
 				initializeSaveFile("warrior");
-				saveFile = new File("res/savegames/save1.txt");
-				game.getMainMenu().runGame(saveFile);
+				selected = true;
 			} else if (mageButton.isClicked(container.getInput())) {
 				initializeSaveFile("mage");
-				saveFile = new File("res/savegames/save2.txt");
-				game.getMainMenu().runGame(saveFile);
+				selected = true;
 			} else if (rangerButton.isClicked(container.getInput())) {
 				initializeSaveFile("ranger");
-				saveFile = new File("res/savegames/save3.txt");
-				game.getMainMenu().runGame(saveFile);
+				selected = true;
 			}
-		}
+			if (selected) {
+				switch (saveGameSlot) {
+				case 1:
+					saveFile = new File("res/savegames/save1.txt");				
+					break;
+				case 2:
+					saveFile = new File("res/savegames/save2.txt");				
+					break;
+				case 3:
+					saveFile = new File("res/savegames/save3.txt");				
+					break;
+				default:
+					break;
+				}
+				game.getMainMenu().runGame(saveFile);
+			
+			}
 	}
 
 	private void initializeSaveFile(String characterClass) throws FileNotFoundException {
@@ -146,7 +160,6 @@ public class CharacterSelection extends Menu {
 				objectOut3.writeObject(playerStats);
 				game.setSaveGameNumber(3);
 				break;
-				
 			default:
 				break;
 			}

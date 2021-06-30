@@ -48,9 +48,9 @@ public class Village extends Level {
 			Image gateRight2 = new Image("res/images/Gate-Right2.png");
 			
 			// houses
-			getTextures().add(new GraphicObject(100, 50, new Rectangle(100, 50, 148, 377), villageTower));
-			getTextures().add(new GraphicObject(100, 650, new Rectangle(100, 650, 435, 321), villageHouse01));
-			getTextures().add(new GraphicObject(1000, 200, new Rectangle(1000, 200, 520, 241), villageHouse02));
+			getTextures().add(new GraphicObject(100, 50, new Rectangle(100, 50, 148, 157), villageTower));
+			getTextures().add(new GraphicObject(100, 650, new Rectangle(100, 650, 435, 101), villageHouse01));
+			getTextures().add(new GraphicObject(1000, 200, new Rectangle(1000, 200, 520, 21), villageHouse02));
 			
 			// walls
 			getTextures().add(new GraphicObject(0, 0, new Rectangle(0, 0, 60, 400), villageWallLeftRight));
@@ -89,8 +89,8 @@ public class Village extends Level {
 					new Image("res/images/Gate-Top.png"), game, "SelectLevel"));
 			getInteractionObjects().add(new InteractionObject(535, 800, new Rectangle(535, 800, 100, 200),
 					new Image("res/images/smith.png"), game, "Quest01"));
-			getInteractionObjects().add(new InteractionObject(1200, 450, new Rectangle(1200, 450, 100, 200),
-					new Image("res/images/merchant.png"), game, "merchant"));
+			getInteractionObjects().add(new InteractionObject(1200, 450, new Rectangle(1200, 450, 127, 200),
+					new Image("res/images/forester-small.png"), game, "merchant"));
 			getInteractionObjects().add(new InteractionObject(1600, 800, new Rectangle(1600, 800, 100, 200),
 					new Image("res/images/villager01.png"), game, "villager"));
 		} catch (SlickException e) {

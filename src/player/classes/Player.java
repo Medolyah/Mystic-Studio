@@ -53,6 +53,7 @@ public class Player extends GraphicObject {
 
 	public Player(Level environment, int xPos, int yPos, Shape hitbox, Image image, MysticStudioGame game) {
 		super(xPos, yPos, hitbox, image);
+		this.game = game;
 		this.environment = environment;
 
 		// set y-velocity and acceleration
@@ -75,7 +76,6 @@ public class Player extends GraphicObject {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		this.game = game;
 	}
 
 	@Override
@@ -181,7 +181,7 @@ public class Player extends GraphicObject {
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			deltaSwordImage = true;
 		}
-		if (deltaSwordImage && deltaAttack > getAttackSpeed() * 750) {
+		if (deltaSwordImage && deltaAttack > 1000 / getAttackSpeed()) {
 			if (deltaAttackDelay == 0) {
 				game.getLevel().hitEnemy(hitbox, this.getPhysDamage() + this.getMagicDamage());
 				GameSound attackSound = new GameSound("res/sounds/attack.wav");
@@ -465,7 +465,7 @@ public class Player extends GraphicObject {
 		return stats.getCurrentEnergy();
 	}
 
-	private void setCurrentEnergy(int energyChange) {
+	public void setCurrentEnergy(int energyChange) {
 		stats.setCurrentEnergy(energyChange);
 	}
 
@@ -524,4 +524,118 @@ public class Player extends GraphicObject {
 	public PlayerStats getPlayerStats() {
 		return stats;
 	}
+
+	public int getFreeStatPoints() {
+		return stats.getFreeStatPoints();
+	}
+
+	public int getFreeSkillPoints() {
+		return stats.getFreeSkillPoints();
+	}
+
+	public void setStrengh() {
+		stats.setStrengh();		
+	}
+
+	public void setIntellegence() {
+		stats.setIntelligence();		
+	}
+
+	public void setDexterity() {
+		stats.setDexterity();		
+	}
+
+	public int getCurrenGold() {
+		return stats.getCurrentGold();
+	}
+
+	public void setCurrentGold(int gold) {
+		stats.setCurrentGold(gold);
+	}
+
+	public int getWeapon() {
+		return stats.getWeapon();
+	}
+
+	public int getHelmet() {
+		return stats.getHelmet();
+	}
+
+	public int getBodyArmour() {
+		return stats.getBodyArmour();
+	}
+
+//	public EquipmentItem getPants() {
+//		return stats.getPants();
+//	}
+
+	public int getBoots() {
+		return stats.getBoots();
+	}
+
+	public int getGloves() {
+		return stats.getGloves();
+	}
+
+	public int getLeftRing() {
+		return stats.getLeftRing();
+	}
+
+	public int getRightRing() {
+		return stats.getRightRing();
+	}
+
+	public void setWeapon() {
+		stats.setWeapon();
+	}
+	
+	public void setHelmet() {
+		stats.setHelmet();
+	}
+	
+	public void setBodyArmour() {
+		stats.setBodyArmour();
+	}
+	
+//	public void setPants() {
+//		stats.setPants();
+//	}
+	
+	public void setBoots() {
+		stats.setBoots();
+	}
+	
+	public void setGloves() {
+		stats.setGloves();
+	}
+	
+	public void setLeftRing() {
+		stats.setLeftRing();
+	}
+	
+	public void setRightRing() {
+		stats.setRightRing();
+	}
+
+	public void setMoveLeftImg1(Image moveLeftImg1) {
+		this.moveLeftImg1 = moveLeftImg1;
+	}
+
+	public void setMoveLeftImg2(Image moveLeftImg2) {
+		this.moveLeftImg2 = moveLeftImg2;
+	}
+
+	public void setMoveRightImg1(Image moveRightImg1) {
+		this.moveRightImg1 = moveRightImg1;
+	}
+
+	public void setMoveRightImg2(Image moveRightImg2) {
+		this.moveRightImg2 = moveRightImg2;
+	}
+
+	public void setSwordImage(Image swordImage) {
+		this.swordImage = swordImage;
+	}
+	
+	
 }

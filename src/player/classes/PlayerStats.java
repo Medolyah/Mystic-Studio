@@ -8,15 +8,13 @@ public class PlayerStats implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-//	
-//	private Player player;
-//	private File saveFile;
-
 	private int gameProgress;
 
 	private int playerLevel;
 	private int currentXP;
 	private int requiredXP;
+	private int freeStatPoints;
+	private int freeSkillPoints;
 
 	private int maxLife;
 	private int currentLife;
@@ -34,14 +32,33 @@ public class PlayerStats implements Serializable {
 	private int magicalAttackDmg;
 	private int attackSpeed;
 
+	private int itemMaxLife;
+	private int itemMaxEnergy;
+
+	private int itemPhysicalArmour;
+	private int itemMagicalArmour;
+
+	private int itemPhysicalAttackDmg;
+	private int itemMagicalAttackDmg;
+	private int itemAttackSpeed;
+
 	private String characterClass;
 	private int currentGold;
 
-//	private String reserve1;
-//	private String reserve2;
-//	private String reserve3;
-//	private String reserve4;
-//	private String reserve5;
+	// private String reserve1;
+	// private String reserve2;
+	// private String reserve3;
+	// private String reserve4;
+	// private String reserve5;
+
+	private int weapon;
+	private int helmet;
+	private int bodyArmour;
+	// private int pants;
+	private int boots;
+	private int gloves;
+	private int leftRing;
+	private int rightRing;
 
 	// player stats for loading a character
 	public PlayerStats(Player player, File saveFile) throws FileNotFoundException {
@@ -52,6 +69,13 @@ public class PlayerStats implements Serializable {
 		this.gameProgress = 0;
 		this.playerLevel = 1;
 
+		this.freeSkillPoints = 0;
+		this.freeStatPoints = 0;
+
+		this.strengh = 10;
+		this.intelligence = 10;
+		this.dexterity = 10;
+
 		this.currentXP = 0;
 		this.requiredXP = 100;
 
@@ -60,10 +84,6 @@ public class PlayerStats implements Serializable {
 
 		this.maxEnergy = 50;
 		this.currentEnergy = 50;
-
-		this.strengh = 10;
-		this.intelligence = 10;
-		this.dexterity = 10;
 
 		this.physicalArmour = 10;
 		this.magicalArmour = 10;
@@ -89,7 +109,24 @@ public class PlayerStats implements Serializable {
 		default:
 			break;
 		}
+		this.weapon = 1;
+		this.helmet = 0;
+		this.bodyArmour = 0;
+		// this.pants = 0;
+		this.boots = 0;
+		this.gloves = 0;
+		this.leftRing = 0;
+		this.rightRing = 0;
 
+		this.itemMaxLife = 0;
+		this.itemMaxEnergy = 0;
+
+		this.itemPhysicalArmour = 0;
+		this.itemMagicalArmour = 0;
+
+		this.itemPhysicalAttackDmg = 0;
+		this.itemMagicalAttackDmg = 0;
+		this.itemAttackSpeed = 0;
 	}
 
 	public int getGameProgress() {
@@ -104,8 +141,13 @@ public class PlayerStats implements Serializable {
 		return playerLevel;
 	}
 
-	public void setPlayerLevel(int playerLevel) {
-		this.playerLevel = playerLevel;
+	private void setPlayerLevel() {
+		playerLevel += 1;
+		requiredXP = playerLevel * 100;
+		freeStatPoints += 10;
+		freeSkillPoints += 1;
+		currentLife = maxLife;
+		currentEnergy = maxEnergy;
 	}
 
 	public int getCurrentXP() {
@@ -115,6 +157,7 @@ public class PlayerStats implements Serializable {
 	public void setCurrentXP(int xpChange) {
 		if (currentXP + xpChange >= requiredXP) {
 			currentXP = currentXP + xpChange - requiredXP;
+			setPlayerLevel();
 		} else {
 			currentXP += xpChange;
 		}
@@ -178,24 +221,30 @@ public class PlayerStats implements Serializable {
 		return strengh;
 	}
 
-	public void setStrengh(int strengh) {
-		this.strengh = strengh;
+	public void setStrengh() {
+		this.strengh += 1;
+		this.freeStatPoints -= 1;
+		updateStats();
 	}
 
 	public int getIntelligence() {
 		return intelligence;
 	}
 
-	public void setIntelligence(int intelligence) {
-		this.intelligence = intelligence;
+	public void setIntelligence() {
+		this.intelligence += 1;
+		this.freeStatPoints -= 1;
+		updateStats();
 	}
 
 	public int getDexterity() {
 		return dexterity;
 	}
 
-	public void setDexterity(int dexterity) {
-		this.dexterity = dexterity;
+	public void setDexterity() {
+		this.dexterity += 1;
+		this.freeStatPoints -= 1;
+		updateStats();
 	}
 
 	public int getPhysicalArmour() {
@@ -251,6 +300,279 @@ public class PlayerStats implements Serializable {
 	}
 
 	public void setCurrentGold(int gold) {
-		this.currentGold = gold;
+		this.currentGold += gold;
+	}
+
+	public int getFreeStatPoints() {
+		return freeStatPoints;
+	}
+
+	public void setFreeStatPoints() {
+		if (freeStatPoints - 1 >= 0) {
+			this.freeStatPoints -= 1;
+		}
+	}
+
+	public int getFreeSkillPoints() {
+		return freeSkillPoints;
+	}
+
+	public void setFreeSkillPoints() {
+		if (freeSkillPoints - 1 >= 0) {
+			this.freeSkillPoints -= 1;
+		}
+	}
+
+	private void updateStats() {
+		maxLife = 100 + 10 * (strengh - 10) + itemMaxLife;
+		maxEnergy = 50 + 5 * (intelligence - 10) + itemMaxEnergy;
+		physicalArmour = strengh + itemPhysicalArmour;
+		magicalArmour = intelligence + itemMagicalArmour;
+		attackSpeed = dexterity / 10 + itemAttackSpeed;
+		switch (characterClass) {
+		case "warrior":
+			physicalAttackDmg = 25 + 5 * (strengh - 10) + itemPhysicalAttackDmg;
+			magicalAttackDmg = 0 + 5 * (intelligence - 10) + itemMagicalAttackDmg;
+			break;
+		case "mage":
+			physicalAttackDmg = 0 + 5 * (strengh - 10) + itemPhysicalAttackDmg;
+			magicalAttackDmg = 25 + 5 * (intelligence - 10) + itemMagicalAttackDmg;
+			break;
+		case "ranger":
+			physicalAttackDmg = 25 + 5 * (strengh - 10) + itemPhysicalAttackDmg;
+			magicalAttackDmg = 0 + 5 * (intelligence - 10) + itemMagicalAttackDmg;
+			break;
+		default:
+			break;
+		}
+	}
+
+	public void upgradeEquipmentItem(String item) {
+
+		switch (item) {
+		case "Helmet":
+			this.helmet += 1;
+			break;
+		case "Body armour":
+			this.bodyArmour += 1;
+			break;
+		// case "Pants ":
+		// this.pants += 1;
+		// break;
+		case "Boots":
+			this.boots += 1;
+			break;
+		case "Gloves":
+			this.gloves += 1;
+			break;
+		case "Left ring":
+			this.leftRing += 1;
+			break;
+		case "Right ring":
+			this.rightRing += 1;
+			break;
+		default:
+			break;
+		}
+	}
+
+	public int getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon() {
+		if (weapon == 0) {
+			if (currentGold >= 10) {
+				currentGold -= 10;
+				this.weapon += 1;
+				switch (characterClass) {
+				case "warrior":
+					itemPhysicalAttackDmg += 1;
+					break;
+				case "mage":
+					itemMagicalAttackDmg += 1;
+					break;
+				case "ranger":
+					itemPhysicalAttackDmg += 1;
+					break;
+				default:
+					break;
+				}
+			}
+			updateStats();
+		} else if (currentGold >= weapon * 10) {
+			currentGold -= weapon * 10;
+			this.weapon += 1;
+			switch (characterClass) {
+			case "warrior":
+				itemPhysicalAttackDmg += 1;
+				break;
+			case "mage":
+				itemMagicalAttackDmg += 1;
+				break;
+			case "ranger":
+				itemPhysicalAttackDmg += 1;
+				break;
+			default:
+				break;
+			}
+			updateStats();
+		}
+	}
+
+	public int getHelmet() {
+		return helmet;
+	}
+
+	public void setHelmet() {
+		if (helmet == 0) {
+			if (currentGold >= 10) {
+				currentGold -= 10;
+				this.helmet += 1;
+				this.itemMaxLife += 5;
+				this.itemPhysicalArmour += 1;
+				this.itemMagicalArmour += 1;
+			}
+			updateStats();
+		} else if (currentGold >= helmet * 10) {
+			currentGold -= helmet * 10;
+			this.helmet += 1;
+			this.itemMaxLife += 5;
+			this.itemPhysicalArmour += 1;
+			this.itemMagicalArmour += 1;
+		}
+		updateStats();
+	}
+
+	public int getBodyArmour() {
+		return bodyArmour;
+	}
+
+	public void setBodyArmour() {
+		if (bodyArmour == 0) {
+			if (currentGold >= 10) {
+				currentGold -= 10;
+				this.bodyArmour += 1;
+				this.itemMaxLife += 8;
+				this.itemPhysicalArmour += 1;
+				this.itemMagicalArmour += 1;
+			}
+			updateStats();
+		} else if (currentGold >= bodyArmour * 10) {
+			currentGold -= bodyArmour * 10;
+			this.bodyArmour += 1;
+			this.itemMaxLife += 8;
+			this.itemPhysicalArmour += 1;
+			this.itemMagicalArmour += 1;
+		}
+		updateStats();
+	}
+
+	// public int getPants() {
+	// return pants;
+	// }
+
+	// public void setPants() {
+	// if (pants == 0) {
+	// if (currentGold >= 10) {
+	// currentGold -= 10;
+	// this.pants += 1;
+	// }
+	// } else if (currentGold >= pants * 10) {
+	// currentGold -= pants * 10;
+	// this.pants += 1;
+	// }
+	// }
+
+	public int getBoots() {
+		return boots;
+	}
+
+	public void setBoots() {
+		if (boots == 0) {
+			if (currentGold >= 10) {
+				currentGold -= 10;
+				this.boots += 1;
+				this.itemMaxLife += 3;
+				this.itemAttackSpeed += 2;
+			}
+			updateStats();
+		} else if (currentGold >= boots * 10) {
+			currentGold -= boots * 10;
+			this.boots += 1;
+			this.itemMaxLife += 2;
+			this.itemAttackSpeed += 2;
+		}
+		updateStats();
+	}
+
+	public int getGloves() {
+		return gloves;
+	}
+
+	public void setGloves() {
+		if (gloves == 0) {
+			if (currentGold >= 10) {
+				currentGold -= 10;
+				this.gloves += 1;
+				this.itemMaxLife += 2;
+				this.itemAttackSpeed += 3;
+			}
+			updateStats();
+		} else if (currentGold >= gloves * 10) {
+			currentGold -= gloves * 10;
+			this.gloves += 1;
+			this.itemMaxLife += 2;
+			this.itemAttackSpeed += 3;
+		}
+		updateStats();
+	}
+
+	public int getLeftRing() {
+		return leftRing;
+	}
+
+	public void setLeftRing() {
+		if (leftRing == 0) {
+			if (currentGold >= 10) {
+				currentGold -= 10;
+				this.leftRing += 1;
+				this.itemMaxEnergy += 5;
+				this.itemPhysicalArmour += 1;
+				this.itemMagicalArmour += 2;
+			}
+			updateStats();
+		} else if (currentGold >= leftRing * 10) {
+			currentGold -= leftRing * 10;
+			this.leftRing += 1;
+			this.itemMaxEnergy += 5;
+			this.itemPhysicalArmour += 1;
+			this.itemMagicalArmour += 2;
+		}
+		updateStats();
+	}
+
+	public int getRightRing() {
+		return rightRing;
+	}
+
+	public void setRightRing() {
+		if (rightRing == 0) {
+			if (currentGold >= 10) {
+				currentGold -= 10;
+				this.rightRing += 1;
+				this.itemMaxEnergy += 5;
+				this.itemPhysicalArmour += 2;
+				this.itemMagicalArmour += 1;
+			}
+			updateStats();
+		} else if (currentGold >= rightRing * 10) {
+			currentGold -= rightRing * 10;
+			this.rightRing += 1;
+			this.itemMaxEnergy += 5;
+			this.itemPhysicalArmour += 2;
+			this.itemMagicalArmour += 1;
+		}
+		updateStats();
 	}
 }
